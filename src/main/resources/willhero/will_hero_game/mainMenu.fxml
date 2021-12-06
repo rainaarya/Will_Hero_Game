@@ -44,22 +44,22 @@
             <Image url="@Cloud_1.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="84.0" fitWidth="193.0" layoutX="27.0" layoutY="523.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="island" fitHeight="84.0" fitWidth="193.0" layoutX="27.0" layoutY="523.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@T_Islands_02.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="52.0" fitWidth="42.0" layoutX="90.0" layoutY="475.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="princess" fitHeight="52.0" fitWidth="42.0" layoutX="90.0" layoutY="475.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@Princess.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="82.0" fitWidth="50.0" layoutX="157.0" layoutY="465.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="orc" fitHeight="82.0" fitWidth="50.0" layoutX="157.0" layoutY="465.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@HairBig.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="75.0" fitWidth="86.0" layoutX="14.0" layoutY="429.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="princessMsg" fitHeight="75.0" fitWidth="86.0" layoutX="14.0" layoutY="429.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@msg_princess.png" />
          </image>
@@ -70,16 +70,16 @@
          </image>
       </ImageView>
       <Button fx:id="helpButton" layoutX="340.0" layoutY="175.0" mnemonicParsing="false" opacity="0.0" prefHeight="42.0" prefWidth="42.0" style="-fx-background-radius: 100%;" text="Help" />
-      <ImageView fitHeight="99.0" fitWidth="95.0" layoutX="155.0" layoutY="218.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="99.0" fitWidth="95.0" layoutX="155.0" layoutY="190.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@play.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="106.0" layoutY="327.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="106.0" layoutY="299.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@playtest.png" />
          </image>
       </ImageView>
-      <Button fx:id="playButton" layoutX="155.0" layoutY="218.0" mnemonicParsing="false" opacity="0.0" prefHeight="95.0" prefWidth="95.0" style="-fx-background-radius: 100%;" text="playButton" />
+      <Button fx:id="playButton" layoutX="155.0" layoutY="190.0" mnemonicParsing="false" opacity="0.0" prefHeight="95.0" prefWidth="95.0" style="-fx-background-radius: 100%;" text="playButton" />
    </children>
 </AnchorPane>
