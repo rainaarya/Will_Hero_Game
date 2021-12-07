@@ -11,11 +11,16 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Controller implements Initializable {
 
@@ -33,6 +38,13 @@ public class Controller implements Initializable {
     private Stage stage;
     private Scene scene;
     private Parent root;
+
+    private Media media;
+    private MediaPlayer mediaPlayer;
+    private Timer timer;
+    private TimerTask task;
+    private boolean running;
+    private boolean checker;
 
 
 
@@ -52,6 +64,16 @@ public class Controller implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
+
+    public void switchToInfo(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("Information.fxml"));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+
 
 
 
@@ -77,15 +99,20 @@ public class Controller implements Initializable {
         tt2.play();
         tt3.play();
 
-
+        URL resource = getClass().getResource("GameMusic.mp4");
+        assert resource != null;
+        mediaPlayer = new MediaPlayer(new Media(resource.toString()));
     }
+
     public void PlayPauseMusic(ActionEvent event){
-        if(Music.isSelected()){
-            System.out.println("ON");
+        checker = Music.isSelected();
+        if(checker){
+            mediaPlayer.play();
         }
         else{
-            System.out.println("OFF");
+            mediaPlayer.pause();
         }
     }
+
 }
 

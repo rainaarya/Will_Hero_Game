@@ -69,7 +69,7 @@
             <Image url="@about.png" />
          </image>
       </ImageView>
-      <Button fx:id="helpButton" layoutX="340.0" layoutY="175.0" mnemonicParsing="false" opacity="0.0" prefHeight="42.0" prefWidth="42.0" style="-fx-background-radius: 100%;" text="Help" />
+      <Button fx:id="helpButton" layoutX="340.0" layoutY="175.0" mnemonicParsing="false" onAction="#switchToInfo" opacity="0.0" prefHeight="42.0" prefWidth="42.0" style="-fx-background-radius: 100%;" text="Help" />
       <ImageView fitHeight="99.0" fitWidth="95.0" layoutX="155.0" layoutY="190.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@play.png" />
