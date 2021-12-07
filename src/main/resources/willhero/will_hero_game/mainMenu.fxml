@@ -5,7 +5,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="631.0" prefWidth="405.0" style="-fx-background-color: #00FFFF;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="willhero.will_hero_game.Controller">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="631.0" prefWidth="405.0" style="-fx-background-color: #00FFFF;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="willhero.will_hero_game.Controller">
    <children>
       <ImageView fitHeight="128.0" fitWidth="193.0" layoutX="107.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -17,7 +17,7 @@
             <Image url="@gear.png" />
          </image>
       </ImageView>
-      <Button fx:id="settingsButton" layoutX="22.0" layoutY="170.0" mnemonicParsing="false" opacity="0.0" prefHeight="52.0" prefWidth="50.0" style="-fx-background-radius: 100%;" text="Button" />
+      <Button fx:id="settingsButton" layoutX="21.0" layoutY="170.0" mnemonicParsing="false" onAction="#switchToSettings" opacity="0.0" prefHeight="52.0" prefWidth="50.0" style="-fx-background-radius: 100%;" text="Settings" />
       <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fitHeight="42.0" fitWidth="95.0" layoutX="310.0" layoutY="95.0" pickOnBounds="true" preserveRatio="true">
          <image>
