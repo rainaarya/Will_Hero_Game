@@ -67,6 +67,8 @@ public class Controller implements Initializable {
     }
 
 
+
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // make all jump using TranslateTransition princessMsg, princess, orc, island
