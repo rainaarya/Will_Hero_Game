@@ -80,6 +80,6 @@
             <Image url="@playtest.png" />
          </image>
       </ImageView>
-      <Button fx:id="playButton" layoutX="155.0" layoutY="190.0" mnemonicParsing="false" opacity="0.0" prefHeight="95.0" prefWidth="95.0" style="-fx-background-radius: 100%;" text="playButton" />
+      <Button fx:id="playButton" layoutX="155.0" layoutY="190.0" mnemonicParsing="false" onAction="#switchToGame" opacity="0.0" prefHeight="95.0" prefWidth="95.0" style="-fx-background-radius: 100%;" text="playButton" />
    </children>
 </AnchorPane>
