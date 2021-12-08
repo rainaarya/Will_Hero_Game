@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="631.0" prefWidth="405.0" style="-fx-background-color: #00FFFF;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="willhero.will_hero_game.Controller">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="631.0" prefWidth="405.0" style="-fx-background-color: #00FFFF;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="willhero.will_hero_game.Settings">
    <children>
       <ImageView fitHeight="28.0" fitWidth="27.0" layoutX="29.0" layoutY="535.0" preserveRatio="true">
          <image>

@@ -1,26 +1,23 @@
 package willhero.will_hero_game;
 
+import javafx.animation.ParallelTransition;
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
+
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
-import java.util.Timer;
-import java.util.TimerTask;
+
 
 public class Controller implements Initializable {
 
@@ -32,30 +29,19 @@ public class Controller implements Initializable {
     private ImageView orc;
     @FXML
     private ImageView island;
-    @FXML
-    private CheckBox Music;
 
     private Stage stage;
     private Scene scene;
     private Parent root;
 
-    private Media media;
-    private MediaPlayer mediaPlayer;
-    private Timer timer;
-    private TimerTask task;
-    private boolean running;
-    private boolean checker;
-
-
-
-
-    public void switchToMain(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("mainMenu.fxml"));
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+    private TranslateTransition transition(ImageView imageView, double time, double ByY) {
+        TranslateTransition tt = new TranslateTransition(javafx.util.Duration.millis(time), imageView);
+        tt.setByY(ByY);
+        tt.setCycleCount(javafx.animation.Animation.INDEFINITE);
+        tt.setAutoReverse(true);
+        return tt;
     }
+
 
     public void switchToSettings(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("Settings.fxml"));
@@ -81,45 +67,21 @@ public class Controller implements Initializable {
     }
 
 
-
-
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // make all jump using TranslateTransition princessMsg, princess, orc, island
-        TranslateTransition tt1 = new TranslateTransition(javafx.util.Duration.millis(400), princessMsg);
-        tt1.setByY(-60);
-        tt1.setCycleCount(TranslateTransition.INDEFINITE);
-        tt1.setAutoReverse(true);
 
-        TranslateTransition tt2 = new TranslateTransition(javafx.util.Duration.millis(400), princess);
-        tt2.setByY(-60);
-        tt2.setCycleCount(TranslateTransition.INDEFINITE);
-        tt2.setAutoReverse(true);
+        ArrayList<TranslateTransition> transitions = new ArrayList<>();
+        transitions.add(transition(princessMsg, 400, -60));
+        transitions.add(transition(princess, 400, -60));
+        transitions.add(transition(orc, 500, -60));
 
-        TranslateTransition tt3 = new TranslateTransition(javafx.util.Duration.millis(500), orc);
-        tt3.setByY(-60);
-        tt3.setCycleCount(TranslateTransition.INDEFINITE);
-        tt3.setAutoReverse(true);
+        ParallelTransition pt = new ParallelTransition(transitions.toArray(new TranslateTransition[0]));
+        pt.play();
 
-        tt1.play();
-        tt2.play();
-        tt3.play();
 
-        URL resource = getClass().getResource("GameMusic.mp4");
-        assert resource != null;
-        mediaPlayer = new MediaPlayer(new Media(resource.toString()));
     }
 
-    public void PlayPauseMusic(ActionEvent event){
-        checker = Music.isSelected();
-        if(checker){
-            mediaPlayer.play();
-        }
-        else{
-            mediaPlayer.pause();
-        }
-    }
 
 }
 
