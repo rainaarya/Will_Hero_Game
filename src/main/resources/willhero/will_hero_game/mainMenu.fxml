@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="631.0" prefWidth="405.0" style="-fx-background-color: #00FFFF;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="willhero.will_hero_game.Controller">
    <children>
@@ -12,13 +13,11 @@
             <Image url="@willherologo.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="42.0" fitWidth="43.0" layoutX="25.0" layoutY="175.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="42.0" fitWidth="43.0" layoutX="18.0" layoutY="175.0" onMouseClicked="#switchToSettings" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@gear.png" />
          </image>
       </ImageView>
-      <Button fx:id="settingsButton" layoutX="21.0" layoutY="170.0" mnemonicParsing="false" onAction="#switchToSettings" opacity="0.0" prefHeight="52.0" prefWidth="50.0" style="-fx-background-radius: 100%;" text="Settings" />
-      <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fitHeight="42.0" fitWidth="95.0" layoutX="310.0" layoutY="95.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@Cloud_1.png" />
@@ -34,12 +33,12 @@
             <Image url="@Cloud_1.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="42.0" fitWidth="95.0" layoutY="265.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="42.0" fitWidth="95.0" layoutY="259.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@Cloud_1.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="42.0" fitWidth="95.0" layoutX="310.0" layoutY="556.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="42.0" fitWidth="95.0" layoutX="310.0" layoutY="475.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@Cloud_1.png" />
          </image>
@@ -64,13 +63,12 @@
             <Image url="@msg_princess.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="42.0" fitWidth="58.0" layoutX="340.0" layoutY="175.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="42.0" fitWidth="58.0" layoutX="341.0" layoutY="174.0" onMouseClicked="#switchToInfo" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@about.png" />
          </image>
       </ImageView>
-      <Button fx:id="helpButton" layoutX="340.0" layoutY="175.0" mnemonicParsing="false" onAction="#switchToInfo" opacity="0.0" prefHeight="42.0" prefWidth="42.0" style="-fx-background-radius: 100%;" text="Help" />
-      <ImageView fitHeight="99.0" fitWidth="95.0" layoutX="155.0" layoutY="190.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="99.0" fitWidth="95.0" layoutX="155.0" layoutY="190.0" onMouseClicked="#switchToGame" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@play.png" />
          </image>
@@ -80,6 +78,20 @@
             <Image url="@playtest.png" />
          </image>
       </ImageView>
-      <Button fx:id="playButton" layoutX="155.0" layoutY="190.0" mnemonicParsing="false" onAction="#switchToGame" opacity="0.0" prefHeight="95.0" prefWidth="95.0" style="-fx-background-radius: 100%;" text="playButton" />
+      <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="337.0" layoutY="564.0" onMouseClicked="#exitGame" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@exit.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="339.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Coin.png" />
+         </image>
+      </ImageView>
+      <Text layoutX="367.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" wrappingWidth="59.64215087890625">
+         <font>
+            <Font name="Gill Sans MT Bold" size="24.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>

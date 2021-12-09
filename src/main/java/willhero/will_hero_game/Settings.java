@@ -8,6 +8,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
@@ -55,7 +56,7 @@ public class Settings implements Initializable {
 
     }
 
-    public void switchToMain(ActionEvent event) throws IOException {
+    public void switchToMain(MouseEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("mainMenu.fxml"));
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);

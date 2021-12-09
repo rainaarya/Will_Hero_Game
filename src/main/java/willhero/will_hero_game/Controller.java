@@ -2,6 +2,7 @@ package willhero.will_hero_game;
 
 import javafx.animation.ParallelTransition;
 import javafx.animation.TranslateTransition;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,7 +11,7 @@ import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -42,8 +43,11 @@ public class Controller implements Initializable {
         return tt;
     }
 
+  
 
-    public void switchToSettings(ActionEvent event) throws IOException {
+
+    @FXML
+    public void switchToSettings(MouseEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("Settings.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
@@ -51,20 +55,31 @@ public class Controller implements Initializable {
         stage.show();
     }
 
-    public void switchToInfo(ActionEvent event) throws IOException {
+    @FXML
+    public void switchToInfo(MouseEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("Information.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
     }
-    public void switchToGame(ActionEvent event) throws IOException {
+
+    //exit the game
+    @FXML
+    public void exitGame(MouseEvent event) {
+        Platform.exit();
+        System.exit(0);
+    }
+
+    @FXML
+    public void switchToGame(MouseEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("Gameplay.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
     }
+
 
 
 
