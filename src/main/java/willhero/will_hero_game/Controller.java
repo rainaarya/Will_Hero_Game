@@ -73,7 +73,7 @@ public class Controller implements Initializable {
 
     @FXML
     public void switchToGame(MouseEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("Gameplay.fxml"));
+        root = FXMLLoader.load(getClass().getResource("GameplayNew.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
