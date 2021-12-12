@@ -57,6 +57,30 @@ public class Test implements Initializable {
             orcs.add(orc);
 
 
+
+            Trees tree1 = new Trees((float) obs1.getImageView().getLayoutBounds().getMinX() + 10, (float) obs1.getImageView().getLayoutBounds().getMinY());
+            tree1.getImageView().setLayoutY(tree1.getImageView().getLayoutY() - tree1.getImageView().getLayoutBounds().getHeight());
+            tree1.setObjectType("Tree");
+            tree1.display(gamePlayAnchorPane);
+            tree1.getImageView().toBack();
+            gameObjects.add(tree1);
+
+            Trees tree2 = new Trees((float) obs1.getImageView().getLayoutBounds().getMaxX() - 50, (float) obs1.getImageView().getLayoutBounds().getMinY());
+            tree2.getImageView().setLayoutY(tree2.getImageView().getLayoutY() - tree2.getImageView().getLayoutBounds().getHeight());
+            tree2.setObjectType("Tree");
+            tree2.display(gamePlayAnchorPane);
+            tree2.getImageView().toBack();
+            gameObjects.add(tree2);
+
+            Cloud cloud = new Cloud((float) obs1.getImageView().getLayoutBounds().getMinX() + 15, 50);
+            cloud.setObjectType("Cloud");
+            cloud.display(gamePlayAnchorPane);
+            cloud.getImageView().toBack();
+            gameObjects.add(cloud);
+
+
+
+
             previousX = previousX + distance + (float) obs1.getImageView().getBoundsInParent().getWidth();
         }
 
@@ -75,6 +99,11 @@ public class Test implements Initializable {
             }
             if (o instanceof Island) {
                 for (int j = 0; j < orcs.size(); j++) {
+                    o.onCollide(orcs.get(j));
+                }
+            }
+            if(o instanceof Orc){
+                for(int j=0;j<orcs.size();j++){
                     o.onCollide(orcs.get(j));
                 }
             }
@@ -138,16 +167,16 @@ public class Test implements Initializable {
                 moves++;
                 movesLabel.setText("Moves: " + moves);
                 //move all game objects to the left
-                Timeline timeline1 = new Timeline(new KeyFrame(Duration.millis(20), e1 -> {
+                Timeline timeline1 = new Timeline(new KeyFrame(Duration.millis(10), e1 -> {
                     for (int i = 0; i < gameObjects.size(); i++) {
 
-                        gameObjects.get(i).getImageView().setLayoutX(gameObjects.get(i).getImageView().getLayoutX() - 5);
+                        gameObjects.get(i).getImageView().setLayoutX(gameObjects.get(i).getImageView().getLayoutX() - 2);
 
 
                     }
                 }
                 ));
-                timeline1.setCycleCount(12);
+                timeline1.setCycleCount(30);
                 timeline1.play();
 
             }

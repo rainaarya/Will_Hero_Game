@@ -7,6 +7,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 public class Hero extends GameObjects{
     private transient String imagepath;
     transient ImageView imageView;
@@ -46,14 +48,19 @@ public class Hero extends GameObjects{
         @Override
         public void display(AnchorPane gamePane) {
             gamePane.getChildren().add(imageView);
-            yMovementTimeline = new Timeline(new KeyFrame(Duration.millis(8), e -> {
+            AtomicInteger moves = new AtomicInteger();
+            yMovementTimeline = new Timeline(new KeyFrame(Duration.millis(7), e -> {
                 //System.out.println(hero.getX() + ", " + hero.getY());
                 //System.out.println(hero.getLayoutX() + ", " + hero.getLayoutY());
                 //System.out.println(imageView.getX() + ", " + imageView.getY());
                 imageView.setY(imageView.getY() - dy);
-                if (imageView.getY() == -80) {
+                if(dy == 1) {
+                    moves.getAndIncrement();
+                }
+                if (moves.get() == 80) {
 
                     dy = -1;
+                    moves.set(0);
 
                 }
 //            if (hero.getY() == 0) {
@@ -64,6 +71,8 @@ public class Hero extends GameObjects{
 
                 if (imageView.getY() > 100) {
                     System.out.println("hero dead");
+                    xMovementTimeline.stop();
+                    yMovementTimeline.stop();
 
 
                 }
@@ -75,13 +84,13 @@ public class Hero extends GameObjects{
 
         //move hero timeline
         public void moveHero(int dx) {
-            xMovementTimeline = new Timeline(new KeyFrame(Duration.millis(10), e -> {
+            xMovementTimeline = new Timeline(new KeyFrame(Duration.millis(9), e -> {
 
-                imageView.setX(imageView.getX() + 15);
+                imageView.setX(imageView.getX() + 10);
 
             }
             ));
-            xMovementTimeline.setCycleCount(4);
+            xMovementTimeline.setCycleCount(6);
             xMovementTimeline.play();
 
         }

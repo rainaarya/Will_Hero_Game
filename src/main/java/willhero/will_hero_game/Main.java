@@ -15,6 +15,7 @@ public class Main extends Application {
             Scene scene = new Scene(fxmlLoader.load());
             stage.setTitle("Will Hero");
             stage.setScene(scene);
+            stage.getIcons().add(new javafx.scene.image.Image(getClass().getResourceAsStream("Knight.png")));
             stage.show();
         }
         catch(Exception e){

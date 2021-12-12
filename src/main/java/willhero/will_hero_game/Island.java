@@ -4,18 +4,27 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
+import java.util.Random;
+
 public class Island extends GameObjects {
-    private transient String imagepath;
     transient ImageView imageView;
+    private transient String path;
 
     public ImageView getImageView() {
         return imageView;
     }
 
+    private void setPathName() {
+        Random ran = new Random();
+        int x = ran.nextInt(4) + 1;
+        path = "T_Islands_0" + x + ".png";
+    }
+
 
     Island(float x, float y) {
         super(x, y);
-        imageView = new ImageView(new Image(getClass().getResourceAsStream("T_islands_01.png")));
+        setPathName();
+        imageView = new ImageView(new Image(getClass().getResourceAsStream(path)));
         imageView.setX(x);
         imageView.setY(y);
         imageView.setFitWidth(200);
@@ -29,13 +38,27 @@ public class Island extends GameObjects {
         if (anch != null) {
             if (collider instanceof Hero) {
                 if (((Hero) collider).getImageView().getBoundsInParent().intersects(imageView.getBoundsInParent())) {
-                    ((Hero) collider).dy = 1;
-                    return false;
+                    //System.out.println(((Hero) collider).getImageView().getBoundsInParent().getMaxY() + " " + imageView.getBoundsInParent().getMinY());
+
+                    if (((Hero) collider).getImageView().getBoundsInParent().getMaxY()-3 <= imageView.getBoundsInParent().getMinY()) {
+                        //System.out.println("on island");
+                        ((Hero) collider).dy = 1;
+                        return false;
+                    } else {
+                        return true;
+                    }
+
                 }
             } else if (collider instanceof Orc) {
                 if (((Orc) collider).getImageView().getBoundsInParent().intersects(imageView.getBoundsInParent())) {
-                    ((Orc) collider).dy = 1;
-                    return false;
+                    if (((Orc) collider).getImageView().getBoundsInParent().getMaxY()-3 <= imageView.getBoundsInParent().getMinY()) {
+                        //System.out.println("on island");
+                        ((Orc) collider).dy = 1;
+                        return false;
+                    }
+//
+//                    ((Orc) collider).dy = 1;
+//                    return false;
                 }
             }
 

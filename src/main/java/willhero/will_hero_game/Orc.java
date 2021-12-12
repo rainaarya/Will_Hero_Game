@@ -7,15 +7,16 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 
-public class Orc extends GameObjects{
+public class Orc extends GameObjects {
     private transient String imagepath;
     transient ImageView imageView;
+
     public ImageView getImageView() {
         return imageView;
     }
+
     public int dy = 1;
     private Timeline timeline2;
-
 
 
     Orc(float x, float y) {
@@ -40,6 +41,10 @@ public class Orc extends GameObjects{
                         timeline2.stop();
                         return true;
 
+                    } else if (Math.abs(((Hero) collider).getImageView().getBoundsInParent().getMaxY() - imageView.getBoundsInParent().getMinY()) <= 5) {
+                        System.out.println("hero is above orc");
+                        ((Hero) collider).dy = 1;
+
                     } else {
                         //System.out.println(imageView.getBoundsInParent().getMaxY() + ", " + ((Hero) collider).getImageView().getBoundsInParent().getMinY());
                         imageView.setX(imageView.getX() + 20);
@@ -47,6 +52,21 @@ public class Orc extends GameObjects{
 
                 }
 
+            }
+            if (collider instanceof Orc) {
+                if ((Orc) collider != this) {
+                    if (((Orc) collider).getImageView().getBoundsInParent().intersects(imageView.getBoundsInParent())) {
+                        if (((Orc) collider).getImageView().getLayoutX() > imageView.getLayoutX()) {
+                            ((Orc) collider).getImageView().setX(((Orc) collider).getImageView().getX() + 20);
+                            return false;
+                        }
+                        else {
+                            ((Orc) collider).getImageView().setX(imageView.getX() + 20);
+                            return false;
+                        }
+
+                    }
+                }
             }
 
         }
@@ -72,7 +92,7 @@ public class Orc extends GameObjects{
 
             // check if hero is on island
 
-            if (imageView.getY() > 100) {
+            if (imageView.getY() > 400) {
                 System.out.println("orc dead");
                 timeline2.stop();
                 imageView.setVisible(false);

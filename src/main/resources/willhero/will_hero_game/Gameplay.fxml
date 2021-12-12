@@ -46,7 +46,7 @@
       </ImageView>
       <ImageView fitHeight="84.0" fitWidth="21.0" layoutX="222.0" layoutY="280.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@Tree5.png" />
+            <Image url="@Tree3.png" />
          </image>
       </ImageView>
       <ImageView fx:id="floatIsland1" fitHeight="104.0" fitWidth="138.0" layoutX="441.0" layoutY="382.0" pickOnBounds="true" preserveRatio="true">
@@ -71,17 +71,17 @@
       </ImageView>
       <ImageView fitHeight="74.0" fitWidth="51.0" layoutX="634.0" layoutY="275.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@Tree8.png" />
+            <Image url="@Tree5.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="74.0" fitWidth="51.0" layoutX="773.0" layoutY="289.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@Tree10.png" />
+            <Image url="@Tree6.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="73.0" fitWidth="50.0" layoutX="339.0" layoutY="289.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@Tree10.png" />
+            <Image url="@Tree6.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="74.0" fitWidth="187.0" layoutX="181.0" layoutY="97.0" pickOnBounds="true" preserveRatio="true">
@@ -106,12 +106,12 @@
       </ImageView>
       <ImageView fx:id="topIsland1tree1" fitHeight="84.0" fitWidth="21.0" layoutX="473.0" layoutY="66.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@Tree5.png" />
+            <Image url="@Tree3.png" />
          </image>
       </ImageView>
       <ImageView fx:id="topIsland1tree2" fitHeight="74.0" fitWidth="51.0" layoutX="528.0" layoutY="77.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@Tree10.png" />
+            <Image url="@Tree6.png" />
          </image>
       </ImageView>
       <ImageView fx:id="weaponChest1" fitHeight="42.0" fitWidth="58.0" layoutX="700.0" layoutY="304.0" pickOnBounds="true" preserveRatio="true">
