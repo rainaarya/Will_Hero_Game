@@ -18,6 +18,17 @@ public class Hero extends GameObjects{
     public int dy = 1;
     private Timeline yMovementTimeline;
     private Timeline xMovementTimeline;
+    private int weapon1Level = 0;
+    private int weapon2Level = 0;
+    private int currentWeapon = 0;
+
+    public int getweapon1Level() {
+        return weapon1Level;
+    }
+    public int getweapon2Level() {
+        return weapon2Level;
+    }
+
 
     public Timeline getyMovementTimeline() {
         return yMovementTimeline;
@@ -95,4 +106,32 @@ public class Hero extends GameObjects{
 
         }
 
+
+    public void addWeapon(int weapon) {
+        if(weapon == 1) {
+            if(weapon1Level == 0) {
+                weapon1Level = 1;
+                currentWeapon = 1;
+            }
+            else if(weapon1Level == 1) {
+                weapon1Level = 2;
+                currentWeapon = 1;
+            }
+        }
+        else if(weapon == 2) {
+            if(weapon2Level == 0) {
+                weapon2Level = 1;
+                currentWeapon = 2;
+            }
+            else if(weapon2Level == 1) {
+                weapon2Level = 2;
+                currentWeapon = 2;
+            }
+        }
+
+    }
+
+    public int getcurrentWeapon() {
+        return currentWeapon;
+    }
 }

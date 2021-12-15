@@ -8,8 +8,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 
 public class Orc extends GameObjects {
-    private transient String imagepath;
-    transient ImageView imageView;
+    private String imagepath;
+    private ImageView imageView;
 
     public ImageView getImageView() {
         return imageView;
@@ -92,7 +92,7 @@ public class Orc extends GameObjects {
 
             // check if hero is on island
 
-            if (imageView.getY() > 400) {
+            if (imageView.getY() > 250) {
                 System.out.println("orc dead");
                 timeline2.stop();
                 imageView.setVisible(false);

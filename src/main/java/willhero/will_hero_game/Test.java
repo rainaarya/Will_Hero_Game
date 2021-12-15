@@ -22,9 +22,11 @@ public class Test implements Initializable {
     private ArrayList<GameObjects> gameObjects;
     private Hero hero;
     private ArrayList<Orc> orcs;
+    private ArrayList<Chest> chests;
     private float previousX = 0;
     private int moves = 0;
     private static int coins = 0;
+    private int numOfislands = 1;
     private boolean heroCollision = false;
     @FXML
     private AnchorPane gamePlayAnchorPane;
@@ -33,10 +35,43 @@ public class Test implements Initializable {
     @FXML
     private Text coinLabel;
 
+    private void addEnvironment(GameObjects obs1){
+        Trees tree1 = new Trees((float) obs1.getImageView().getLayoutBounds().getMinX() + 10, (float) obs1.getImageView().getLayoutBounds().getMinY());
+        tree1.getImageView().setLayoutY(tree1.getImageView().getLayoutY() - tree1.getImageView().getLayoutBounds().getHeight());
+        tree1.display(gamePlayAnchorPane);
+        tree1.getImageView().toBack();
+        gameObjects.add(tree1);
+
+        Trees tree2 = new Trees((float) obs1.getImageView().getLayoutBounds().getMaxX() - 50, (float) obs1.getImageView().getLayoutBounds().getMinY());
+        tree2.getImageView().setLayoutY(tree2.getImageView().getLayoutY() - tree2.getImageView().getLayoutBounds().getHeight());
+        tree2.display(gamePlayAnchorPane);
+        tree2.getImageView().toBack();
+        gameObjects.add(tree2);
+
+        Cloud cloud = new Cloud((float) obs1.getImageView().getLayoutBounds().getMinX() + 15, 50);
+        cloud.display(gamePlayAnchorPane);
+        cloud.getImageView().toBack();
+        gameObjects.add(cloud);
+
+    }
+
+    private void throwKnife(Hero hero) {
+        if (hero.getcurrentWeapon() == 1) {
+            ThrowingKnife knife = new ThrowingKnife(0, 0,hero);
+            knife.display(gamePlayAnchorPane);
+            gameObjects.add(knife);
+            knife.throwKnife();
+            //gameObjects.remove(knife);
+        }
+
+
+    }
+
 
     public static void setCoins(int coins) {
-        Test.coins++;
+        Test.coins += coins;
     }
+
     private void addObject(int c) {
         int distance = 100;
         ObjectFactory f = new ObjectFactory();
@@ -51,35 +86,44 @@ public class Test implements Initializable {
             gameObjects.add(obs1);
 
             Orc orc = new Orc((float) obs1.getImageView().getLayoutBounds().getMinX() + 35, 292);
-            orc.setObjectType("Orc");
             orc.display(gamePlayAnchorPane);
             gameObjects.add(orc);
             orcs.add(orc);
 
+            addEnvironment(obs1);
+
+            previousX = previousX + distance + (float) obs1.getImageView().getBoundsInParent().getWidth();
+        }
+        if (c == 2) {
+            obs1 = f.createObject(1, previousX + distance, 333);
+            obs1.display(gamePlayAnchorPane);
+            gameObjects.add(obs1);
+
+            WeaponChest chest = new WeaponChest((float) obs1.getImageView().getLayoutBounds().getMinX() + 50, (float) obs1.getImageView().getLayoutBounds().getMinY());
+            chest.getImageView().setLayoutY(chest.getImageView().getLayoutY() - chest.getImageView().getLayoutBounds().getHeight());
+            chest.display(gamePlayAnchorPane);
+            chest.getImageView().toBack();
+            gameObjects.add(chest);
+            chests.add(chest);
+
+            addEnvironment(obs1);
 
 
-            Trees tree1 = new Trees((float) obs1.getImageView().getLayoutBounds().getMinX() + 10, (float) obs1.getImageView().getLayoutBounds().getMinY());
-            tree1.getImageView().setLayoutY(tree1.getImageView().getLayoutY() - tree1.getImageView().getLayoutBounds().getHeight());
-            tree1.setObjectType("Tree");
-            tree1.display(gamePlayAnchorPane);
-            tree1.getImageView().toBack();
-            gameObjects.add(tree1);
+            previousX = previousX + distance + (float) obs1.getImageView().getBoundsInParent().getWidth();
+        }
+        if (c == 3) {
+            obs1 = f.createObject(1, previousX + distance, 333);
+            obs1.display(gamePlayAnchorPane);
+            gameObjects.add(obs1);
 
-            Trees tree2 = new Trees((float) obs1.getImageView().getLayoutBounds().getMaxX() - 50, (float) obs1.getImageView().getLayoutBounds().getMinY());
-            tree2.getImageView().setLayoutY(tree2.getImageView().getLayoutY() - tree2.getImageView().getLayoutBounds().getHeight());
-            tree2.setObjectType("Tree");
-            tree2.display(gamePlayAnchorPane);
-            tree2.getImageView().toBack();
-            gameObjects.add(tree2);
+            CoinChest chest = new CoinChest((float) obs1.getImageView().getLayoutBounds().getMinX() + 100, (float) obs1.getImageView().getLayoutBounds().getMinY());
+            chest.getImageView().setLayoutY(chest.getImageView().getLayoutY() - chest.getImageView().getLayoutBounds().getHeight());
+            chest.display(gamePlayAnchorPane);
+            chest.getImageView().toBack();
+            gameObjects.add(chest);
+            chests.add(chest);
 
-            Cloud cloud = new Cloud((float) obs1.getImageView().getLayoutBounds().getMinX() + 15, 50);
-            cloud.setObjectType("Cloud");
-            cloud.display(gamePlayAnchorPane);
-            cloud.getImageView().toBack();
-            gameObjects.add(cloud);
-
-
-
+            addEnvironment(obs1);
 
             previousX = previousX + distance + (float) obs1.getImageView().getBoundsInParent().getWidth();
         }
@@ -100,10 +144,19 @@ public class Test implements Initializable {
             if (o instanceof Island) {
                 for (int j = 0; j < orcs.size(); j++) {
                     o.onCollide(orcs.get(j));
+
+                }
+                for (int j = 0; j < chests.size(); j++) {
+                    o.onCollide(chests.get(j));
                 }
             }
-            if(o instanceof Orc){
-                for(int j=0;j<orcs.size();j++){
+            if (o instanceof Orc) {
+                for (int j = 0; j < orcs.size(); j++) {
+                    o.onCollide(orcs.get(j));
+                }
+            }
+            if (o instanceof ThrowingKnife) {
+                for (int j = 0; j < orcs.size(); j++) {
                     o.onCollide(orcs.get(j));
                 }
             }
@@ -124,12 +177,27 @@ public class Test implements Initializable {
 
         gameObjects = new ArrayList<>();
         orcs = new ArrayList<>();
+        chests = new ArrayList<>();
         hero = new Hero(140, 292);
         hero.display(gamePlayAnchorPane);
         gameObjects.add(hero);
-        addObject(1);
-        addObject(1);
-        addObject(1);
+//        addObject(1);
+//        addObject(1);
+//        addObject(1);
+//        addObject(2);
+//        addObject(1);
+//        addObject(1);
+//        addObject(1);
+//        addObject(1);
+//        addObject(1);
+        while (numOfislands <= 10) {
+            if (numOfislands % 3 == 0) {
+                addObject((int) (Math.random() * 2) + 2);
+            } else {
+                addObject(1);
+            }
+            numOfislands++;
+        }
 
 //        Island island = new Island(75, 333);
 //        island.display(gamePlayAnchorPane);
@@ -146,7 +214,7 @@ public class Test implements Initializable {
 //        gameObjects.add(orc);
 
 
-        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(10), e -> {
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1), e -> {
             coinLabel.setText("" + coins);
             if (detectCollision()) {
                 heroCollision = true;
@@ -164,6 +232,7 @@ public class Test implements Initializable {
             if (!heroCollision) {
 
                 hero.moveHero(60);
+                throwKnife(hero);
                 moves++;
                 movesLabel.setText("Moves: " + moves);
                 //move all game objects to the left

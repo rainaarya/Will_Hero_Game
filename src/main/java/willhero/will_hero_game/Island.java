@@ -61,6 +61,11 @@ public class Island extends GameObjects {
 //                    return false;
                 }
             }
+            else if (collider instanceof Chest) {
+                if (((Chest) collider).getImageView().getBoundsInParent().intersects(imageView.getBoundsInParent())) {
+                    ((Chest) collider).setDy(1);
+                }
+            }
 
         }
         return false;
