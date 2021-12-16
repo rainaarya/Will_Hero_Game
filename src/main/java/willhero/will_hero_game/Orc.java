@@ -37,12 +37,12 @@ public class Orc extends GameObjects {
             if (collider instanceof Hero) {
                 if (((Hero) collider).getImageView().getBoundsInParent().intersects(imageView.getBoundsInParent())) {
                     if (Math.abs(((Hero) collider).getImageView().getBoundsInParent().getMinY() - imageView.getBoundsInParent().getMaxY()) <= 3) {
-                        System.out.println("hero is below orc");
+                        //System.out.println("hero is below orc");
                         timeline2.stop();
                         return true;
 
                     } else if (Math.abs(((Hero) collider).getImageView().getBoundsInParent().getMaxY() - imageView.getBoundsInParent().getMinY()) <= 5) {
-                        System.out.println("hero is above orc");
+                        //System.out.println("hero is above orc");
                         ((Hero) collider).dy = 1;
 
                     } else {

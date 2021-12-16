@@ -7,6 +7,7 @@ import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -23,6 +24,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.ResourceBundle;
+import java.util.Scanner;
 
 public class Test implements Initializable {
 
@@ -37,6 +39,10 @@ public class Test implements Initializable {
     private int numOfislands = 1;
     private Integer heroCollision = 0;
     private static boolean serialised = false;
+    private Timeline timeline;
+    private Timeline temporary;
+    private GameObjects collidedObject;
+    private Integer timesRevived = 0;
 
     @FXML
     private AnchorPane gamePlayAnchorPane;
@@ -44,6 +50,8 @@ public class Test implements Initializable {
     private Text movesLabel;
     @FXML
     private Text coinLabel;
+    @FXML
+    private Group reviveGroup;
 
 
     public static void setSerialised(boolean serialised) {
@@ -58,6 +66,7 @@ public class Test implements Initializable {
             Integer coins_temp = coins;
             out.writeObject(coins_temp);
             out.writeObject(heroCollision);
+            out.writeObject(timesRevived);
 
             for (GameObjects obj : gameObjects) {
                 out.writeObject(obj);
@@ -78,6 +87,7 @@ public class Test implements Initializable {
         moves = gameInfo.get(0);
         coins = gameInfo.get(1);
         heroCollision = gameInfo.get(2);
+        timesRevived = gameInfo.get(3);
 
         gameObjects = deserialiseHelper.regenerateGameObjects();
         orcs = new ArrayList<>();
@@ -95,11 +105,9 @@ public class Test implements Initializable {
             } else if (obj.getObjectType().equals("WeaponChest")) {
                 chests.add((WeaponChest) obj);
                 obj.getImageView().toBack();
-            }
-            else if(obj.getObjectType().equals("Trees")){
+            } else if (obj.getObjectType().equals("Trees")) {
                 obj.getImageView().toBack();
-            }
-            else if(obj.getObjectType().equals("Cloud")){
+            } else if (obj.getObjectType().equals("Cloud")) {
                 obj.getImageView().toBack();
             }
 
@@ -207,6 +215,84 @@ public class Test implements Initializable {
 
     }
 
+    @FXML
+    void reviveHero(MouseEvent event) {
+        if (coins >= 1 && timesRevived == 0) {
+            System.out.println("Lets Revive you!");
+            if (collidedObject instanceof Orc) {
+                collidedObject.getImageView().setY(260); //disappear
+                collidedObject.setXY((float) collidedObject.getImageView().getX(), (float) collidedObject.getImageView().getY());
+            }
+
+            Island prevIsland = null;
+            for (int i = 0; i < gameObjects.size(); i++) {
+                if (gameObjects.get(i) instanceof Island) {
+                    if (((Island) gameObjects.get(i)).getImageView().getBoundsInParent().getMinX() < hero.getImageView().getBoundsInParent().getMinX()) {
+                        prevIsland = (Island) gameObjects.get(i);
+                    }
+                    else {
+                        break;
+                    }
+                }
+
+            }
+            if (prevIsland != null) {
+                boolean loop = true;
+                int amttraveled = 0;
+                while (loop) {
+                    if (prevIsland.getImageView().getBoundsInParent().getMinX() < hero.getImageView().getBoundsInParent().getMinX()) {
+                        hero.getImageView().setX(hero.getImageView().getX() - 1);
+                        hero.setXY((float) hero.getImageView().getX(), (float) hero.getImageView().getY());
+                        amttraveled++;
+                    } else {
+                        loop = false;
+                    }
+                    if (amttraveled % 60 == 0) { //every 60 frames as hero moves 60 pixels for 1 move
+                        moves--;
+                    }
+                }
+                hero.getImageView().setY(-80);
+                hero.setXY((float) hero.getImageView().getX(), (float) hero.getImageView().getY());
+
+
+                heroCollision = 0;
+
+                for (int i = 0; i < gameObjects.size(); i++) {
+
+                        gameObjects.get(i).getImageView().setLayoutX(gameObjects.get(i).getImageView().getLayoutX() + amttraveled);
+                        gameObjects.get(i).setLayoutXY((float) gameObjects.get(i).getImageView().getLayoutX(), (float) gameObjects.get(i).getImageView().getLayoutY());
+
+                }
+
+                coins-=1;
+                timesRevived++;
+                hero.getxMovementTimeline().play();
+                hero.getyMovementTimeline().play();
+
+            }
+            temporary.stop();
+            timeline.play();
+
+        } else {
+            if(timesRevived == 1) {
+                System.out.println("You have already used your revive!");
+            }
+            if(coins < 1) {
+                System.out.println("You do not have enough coins to revive!");
+            }
+        }
+        reviveGroup.setVisible(false);
+        reviveGroup.setDisable(true);
+
+    }
+
+    private void reviveScreen() {
+        reviveGroup.setVisible(true);
+        reviveGroup.setDisable(false);
+        reviveGroup.toFront();
+
+    }
+
 
     public boolean detectCollision() {
         boolean tmp = false;
@@ -216,6 +302,7 @@ public class Test implements Initializable {
             tmp = o.onCollide(hero);
             if (tmp) {
                 orcCollision = true;
+                collidedObject = o;
             }
             if (o instanceof Island) {
                 for (int j = 0; j < orcs.size(); j++) {
@@ -311,8 +398,14 @@ public class Test implements Initializable {
 //        orcs.add(orc);
 //        gameObjects.add(orc);
 
+        temporary = new Timeline(new KeyFrame(Duration.millis(6), e -> {
+            detectCollision();
+        }
+        ));
+        temporary.setCycleCount(Timeline.INDEFINITE);
 
-        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(6), e -> {
+
+        timeline = new Timeline(new KeyFrame(Duration.millis(6), e -> {
             coinLabel.setText("" + coins);
             movesLabel.setText("Moves: " + moves);
             if (detectCollision()) {
@@ -320,6 +413,36 @@ public class Test implements Initializable {
                 heroCollision = 1;
                 hero.getxMovementTimeline().stop();
                 hero.getyMovementTimeline().stop();
+                timeline.stop();
+                temporary.play();
+                reviveScreen();
+
+//                System.out.println("Lets Revive you!");
+//                if (collidedObject instanceof Orc) {
+//                    collidedObject.getImageView().setY(260); //disappear
+//                }
+//
+//                Island prevIsland = null;
+//                for (int i = 0; i < gameObjects.size(); i++) {
+//                    if (gameObjects.get(i) instanceof Island) {
+//                        if (((Island) gameObjects.get(i)).getImageView().getBoundsInParent().getMinX() < hero.getImageView().getBoundsInParent().getMinX()) {
+//                            prevIsland = (Island) gameObjects.get(i);
+//                        }
+//                    }
+//
+//                }
+//                if (prevIsland != null) {
+//                    hero.getImageView().setLayoutX(prevIsland.getImageView().getBoundsInParent().getMinX() + 10);
+//                    hero.getImageView().setX(0);
+//                    hero.getImageView().setLayoutY(prevIsland.getImageView().getBoundsInParent().getMinY() - 100);
+//                    heroCollision = 0;//
+//
+//                    hero.getxMovementTimeline().play();
+//                    hero.getyMovementTimeline().play();
+//
+//                }
+
+
             }
         }
         ));

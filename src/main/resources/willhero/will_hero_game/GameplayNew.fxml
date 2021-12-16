@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Group?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -28,5 +29,27 @@
             <Font name="Gill Sans MT Bold" size="29.0" />
          </font>
       </Text>
+      <Group fx:id="reviveGroup" disable="true" visible="false">
+         <children>
+            <AnchorPane layoutX="231.0" layoutY="20.0" prefHeight="459.0" prefWidth="415.0" style="-fx-background-color: #333333;">
+               <children>
+                  <Group>
+                     <children>
+                        <ImageView fitHeight="98.0" fitWidth="325.0" layoutX="56.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@pause.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="52.0" fitWidth="202.0" layoutX="110.0" layoutY="124.0" onMouseClicked="#reviveHero" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@button_resume-game.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Group>
+               </children>
+            </AnchorPane>
+         </children>
+      </Group>
    </children>
 </AnchorPane>

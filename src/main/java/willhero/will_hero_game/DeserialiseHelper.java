@@ -14,6 +14,7 @@ public class DeserialiseHelper {
     private Integer moves;
     private Integer coins;
     private Integer heroCollision;
+    private Integer timesRevived;
     private ArrayList<GameObjects> finalList = new ArrayList<>();
 
 
@@ -25,6 +26,7 @@ public class DeserialiseHelper {
             moves = (Integer) in.readObject();
             coins = (Integer) in.readObject();
             heroCollision = (Integer) in.readObject();
+            timesRevived = (Integer) in.readObject();
 
             while (true) {
                 try {
@@ -56,6 +58,7 @@ public class DeserialiseHelper {
         gameInfo.add(moves);
         gameInfo.add(coins);
         gameInfo.add(heroCollision);
+        gameInfo.add(timesRevived);
         return gameInfo;
 
     }
