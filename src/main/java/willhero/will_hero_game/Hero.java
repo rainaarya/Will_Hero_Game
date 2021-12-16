@@ -27,10 +27,23 @@ public class Hero extends GameObjects {
     public int getweapon1Level() {
         return weapon1Level;
     }
-
     public int getweapon2Level() {
         return weapon2Level;
     }
+    public int getcurrentWeapon() {
+        return currentWeapon;
+    }
+
+    public void setweapon1Level(int level) {
+        this.weapon1Level = level;
+    }
+    public void setweapon2Level(int level) {
+        this.weapon2Level = level;
+    }
+    public void setcurrentWeapon(int weapon) {
+        this.currentWeapon = weapon;
+    }
+
 
 
     public Timeline getyMovementTimeline() {
@@ -137,7 +150,5 @@ public class Hero extends GameObjects {
 
     }
 
-    public int getcurrentWeapon() {
-        return currentWeapon;
-    }
+
 }

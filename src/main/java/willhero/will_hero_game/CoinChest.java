@@ -33,5 +33,16 @@ public class CoinChest extends Chest {
         return false;
     }
 
+    public void setCollided(boolean collided) {
+        this.collided = collided;
+        if (collided) {
+            getImageView().setImage(new Image(getClass().getResourceAsStream("coinchest_opened.png")));
+        }
+    }
+
+    public boolean getCollided() {
+        return collided;
+    }
+
 
 }

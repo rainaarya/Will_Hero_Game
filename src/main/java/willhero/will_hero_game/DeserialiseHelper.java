@@ -33,6 +33,9 @@ public class DeserialiseHelper {
                         hero = new Hero(tmp.getLayoutX(), tmp.getLayoutY());
                         hero.getImageView().setX(tmp.getCoordinatesX());
                         hero.getImageView().setY(tmp.getCoordinatesY());
+                        hero.setcurrentWeapon(((Hero) tmp).getcurrentWeapon());
+                        hero.setweapon1Level(((Hero) tmp).getweapon1Level());
+                        hero.setweapon2Level(((Hero) tmp).getweapon2Level());
                         finalList.add(hero);
                     }
                     myList.add(tmp);
@@ -78,11 +81,13 @@ public class DeserialiseHelper {
                 CoinChest coinChest = new CoinChest(obj.getLayoutX(), obj.getLayoutY());
                 coinChest.getImageView().setX(obj.getCoordinatesX());
                 coinChest.getImageView().setY(obj.getCoordinatesY());
+                coinChest.setCollided(((CoinChest) obj).getCollided());
                 finalList.add(coinChest);
             } else if (obj.getObjectType().equals("WeaponChest")) {
                 WeaponChest weaponChest = new WeaponChest(obj.getLayoutX(), obj.getLayoutY());
                 weaponChest.getImageView().setX(obj.getCoordinatesX());
                 weaponChest.getImageView().setY(obj.getCoordinatesY());
+                weaponChest.setCollided(((WeaponChest) obj).getCollided());
                 finalList.add(weaponChest);
             } else if (obj.getObjectType().equals("Island")) {
                 Island island = new Island(obj.getLayoutX(), obj.getLayoutY());
@@ -100,8 +105,7 @@ public class DeserialiseHelper {
                 throwingKnife.getImageView().setX(obj.getCoordinatesX());
                 throwingKnife.getImageView().setY(obj.getCoordinatesY());
                 finalList.add(throwingKnife);
-            }
-            else if(obj.getObjectType().equals("Trees")){
+            } else if (obj.getObjectType().equals("Trees")) {
                 Trees trees = new Trees(obj.getLayoutX(), obj.getLayoutY());
                 trees.getImageView().setX(obj.getCoordinatesX());
                 trees.getImageView().setY(obj.getCoordinatesY());

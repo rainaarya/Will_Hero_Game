@@ -38,5 +38,17 @@ public class WeaponChest extends Chest {
         return false;
     }
 
+    public void setCollided(boolean collided) {
+        this.collided = collided;
+        if (collided) {
+            getImageView().setImage(new Image(getClass().getResourceAsStream("weaponchest_open.png")));
+        }
+
+    }
+
+    public boolean getCollided() {
+        return collided;
+    }
+
 
 }
