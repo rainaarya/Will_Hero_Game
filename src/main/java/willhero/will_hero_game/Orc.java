@@ -47,8 +47,15 @@ public class Orc extends GameObjects {
 
                     } else {
                         //System.out.println(imageView.getBoundsInParent().getMaxY() + ", " + ((Hero) collider).getImageView().getBoundsInParent().getMinY());
-                        imageView.setX(imageView.getX() + 20);
-                        setXY((float) imageView.getX(), (float) imageView.getY());
+                        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(5), e -> {
+                            imageView.setX(imageView.getX() + 2);
+                            setXY((float) imageView.getX(), (float) imageView.getY());
+                        }
+                        ));
+                        timeline.setCycleCount(5);
+                        timeline.play();
+                        //imageView.setX(imageView.getX() + 30);
+                        //setXY((float) imageView.getX(), (float) imageView.getY());
                     }
 
                 }

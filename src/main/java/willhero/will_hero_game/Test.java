@@ -147,7 +147,7 @@ public class Test implements Initializable {
     }
 
     private void addObject(int c) {
-        int distance = 100;
+        int distance = 120;
         ObjectFactory f = new ObjectFactory();
         GameObjects obs1 = null;
 //        if(c==6||c==9)obs1=f.createObstacle(c,263,prevobstacley-(2*distance));
@@ -159,7 +159,7 @@ public class Test implements Initializable {
             obs1.display(gamePlayAnchorPane);
             gameObjects.add(obs1);
 
-            Orc orc = new Orc((float) obs1.getImageView().getBoundsInParent().getMinX() + 35, 292);
+            Orc orc = new Orc((float) obs1.getImageView().getBoundsInParent().getMinX() + 100, 292);
             orc.display(gamePlayAnchorPane);
             gameObjects.add(orc);
             orcs.add(orc);
@@ -287,7 +287,7 @@ public class Test implements Initializable {
 //        addObject(1);
 //        addObject(1);
 //        addObject(1);
-            while (numOfislands <= 10) {
+            while (numOfislands <= 20) {
                 if (numOfislands % 3 == 0) {
                     addObject((int) (Math.random() * 2) + 2);
                 } else {
@@ -312,7 +312,7 @@ public class Test implements Initializable {
 //        gameObjects.add(orc);
 
 
-        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(5), e -> {
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(6), e -> {
             coinLabel.setText("" + coins);
             movesLabel.setText("Moves: " + moves);
             if (detectCollision()) {

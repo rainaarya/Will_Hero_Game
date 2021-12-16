@@ -42,7 +42,7 @@ public class Island extends GameObjects {
                 if (((Hero) collider).getImageView().getBoundsInParent().intersects(imageView.getBoundsInParent())) {
                     //System.out.println(((Hero) collider).getImageView().getBoundsInParent().getMaxY() + " " + imageView.getBoundsInParent().getMinY());
 
-                    if (((Hero) collider).getImageView().getBoundsInParent().getMaxY()-3 <= imageView.getBoundsInParent().getMinY()) {
+                    if (((Hero) collider).getImageView().getBoundsInParent().getMaxY()-20 <= imageView.getBoundsInParent().getMinY()) {
                         //System.out.println("on island");
                         ((Hero) collider).dy = 1;
                         return false;
