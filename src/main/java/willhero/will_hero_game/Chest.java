@@ -10,9 +10,9 @@ import javafx.util.Duration;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public abstract class Chest extends GameObjects {
-    private ImageView imageView;
-    private int dy;
-    private Timeline timeline;
+    private transient ImageView imageView;
+    private int dy = 1;
+    private transient Timeline timeline;
 
     public Chest(float x, float y, String imagePath) {
         super(x, y);
@@ -27,11 +27,13 @@ public abstract class Chest extends GameObjects {
 
     public abstract boolean onCollide(GameObjects collider);
 
-    private void motion() {
-        //jumping animation
-
+    @Override
+    public void display(AnchorPane gamePane) {
+        gamePane.getChildren().add(imageView);
+        System.out.println("Chest added to gamePane");
         timeline = new Timeline(new KeyFrame(Duration.millis(18), e -> {
             imageView.setY(imageView.getY() - dy);
+            setXY((float) imageView.getX(), (float) imageView.getY());
             if (imageView.getY() == -18) {
                 dy = -1;
             }
@@ -40,12 +42,6 @@ public abstract class Chest extends GameObjects {
         ));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
-    }
-
-    @Override
-    public void display(AnchorPane gamePane) {
-        gamePane.getChildren().add(imageView);
-        motion();
     }
 
     @Override

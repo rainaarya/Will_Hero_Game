@@ -9,9 +9,9 @@ import javafx.util.Duration;
 import java.util.Random;
 
 public class ThrowingKnife extends GameObjects {
-    transient ImageView imageView;
+    private transient ImageView imageView;
     private transient String path;
-    private Timeline timeline;
+    private transient Timeline timeline;
     private Hero hero;
 
     public ImageView getImageView() {
@@ -45,11 +45,13 @@ public class ThrowingKnife extends GameObjects {
                 if (((Orc) collider).getImageView().getBoundsInParent().intersects(imageView.getBoundsInParent())) {
                     //TranslateTransition translateTransition = new TranslateTransition(Duration.millis(500), ((Orc) collider).getImageView());
                     ((Orc) collider).getImageView().setY(260);
+                    ((Orc) collider).setXY((float) ((Orc) collider).getImageView().getX(), (float) ((Orc) collider).getImageView().getY());
 
 
                     if (hero.getweapon1Level() == 1) {
                         timeline.stop();
                         imageView.setY(260);
+                        setXY((float) imageView.getX(), (float) imageView.getY());
                         imageView.setVisible(false);
                     }
                     if(hero.getweapon1Level() == 2){
@@ -70,6 +72,7 @@ public class ThrowingKnife extends GameObjects {
         gamePane.getChildren().add(imageView);
         timeline = new Timeline(new KeyFrame(Duration.millis(12), e -> {
             imageView.setX(imageView.getX() + 4);
+            setXY((float) imageView.getX(), (float) imageView.getY());
         }
         ));
         timeline.setCycleCount(70);
@@ -85,12 +88,14 @@ public class ThrowingKnife extends GameObjects {
         if (hero.getweapon1Level() == 1) {
             imageView.setLayoutX(hero.getImageView().getBoundsInParent().getMaxX());
             imageView.setLayoutY(hero.getImageView().getBoundsInParent().getMinY() + hero.getImageView().getBoundsInParent().getHeight() / 2);
+            setLayoutXY((float) imageView.getLayoutX(), (float) imageView.getLayoutY());
             imageView.setVisible(true);
             timeline.play();
         } else if (hero.getweapon1Level() == 2) {
             imageView.setImage(new Image(getClass().getResourceAsStream("ThrowingKnifeUpgrade.png")));
             imageView.setLayoutX(hero.getImageView().getBoundsInParent().getMaxX());
             imageView.setLayoutY(hero.getImageView().getBoundsInParent().getMinY() + hero.getImageView().getBoundsInParent().getHeight() / 2);
+            setLayoutXY((float) imageView.getLayoutX(), (float) imageView.getLayoutY());
             imageView.setVisible(true);
             timeline.play();
         }

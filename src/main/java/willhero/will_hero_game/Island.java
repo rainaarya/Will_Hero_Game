@@ -7,8 +7,8 @@ import javafx.scene.layout.AnchorPane;
 import java.util.Random;
 
 public class Island extends GameObjects {
-    transient ImageView imageView;
-    private transient String path;
+    private transient ImageView imageView;
+    private String path;
 
     public ImageView getImageView() {
         return imageView;
@@ -23,10 +23,12 @@ public class Island extends GameObjects {
 
     Island(float x, float y) {
         super(x, y);
-        setPathName();
+        if(path == null) {
+            setPathName();
+        }
         imageView = new ImageView(new Image(getClass().getResourceAsStream(path)));
-        imageView.setX(x);
-        imageView.setY(y);
+        imageView.setLayoutX(x);
+        imageView.setLayoutY(y);
         imageView.setFitWidth(200);
         imageView.setPreserveRatio(true);
         setObjectType("Island");

@@ -5,13 +5,20 @@ import javafx.animation.SequentialTransition;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Random;
@@ -24,10 +31,13 @@ public class Test implements Initializable {
     private ArrayList<Orc> orcs;
     private ArrayList<Chest> chests;
     private float previousX = 0;
-    private int moves = 0;
-    private static int coins = 0;
+    private Integer moves = 0;
+    private static Integer coins = 0;
+    private Integer coins_temp;
     private int numOfislands = 1;
-    private boolean heroCollision = false;
+    private Integer heroCollision = 0;
+    private static boolean serialised = false;
+
     @FXML
     private AnchorPane gamePlayAnchorPane;
     @FXML
@@ -35,20 +45,84 @@ public class Test implements Initializable {
     @FXML
     private Text coinLabel;
 
-    private void addEnvironment(GameObjects obs1){
-        Trees tree1 = new Trees((float) obs1.getImageView().getLayoutBounds().getMinX() + 10, (float) obs1.getImageView().getLayoutBounds().getMinY());
-        tree1.getImageView().setLayoutY(tree1.getImageView().getLayoutY() - tree1.getImageView().getLayoutBounds().getHeight());
+
+    public static void setSerialised(boolean serialised) {
+        Test.serialised = serialised;
+    }
+
+    public void serialize() throws IOException {
+        ObjectOutputStream out = null;
+        try {
+            out = new ObjectOutputStream(new FileOutputStream("save.ser"));
+            out.writeObject(moves);
+            Integer coins_temp = coins;
+            out.writeObject(coins_temp);
+            out.writeObject(heroCollision);
+
+            for (GameObjects obj : gameObjects) {
+                out.writeObject(obj);
+            }
+
+        } finally {
+            assert out != null;
+            out.close();
+        }
+
+    }
+
+    public void deserialize() throws IOException, ClassNotFoundException {
+        DeserialiseHelper deserialiseHelper = new DeserialiseHelper();
+        deserialiseHelper.deserialize("save.ser");
+
+        ArrayList<Integer> gameInfo = deserialiseHelper.getGameInfo();
+        moves = gameInfo.get(0);
+        coins = gameInfo.get(1);
+        heroCollision = gameInfo.get(2);
+
+        gameObjects = deserialiseHelper.regenerateGameObjects();
+        orcs = new ArrayList<>();
+        chests = new ArrayList<>();
+        for (GameObjects obj : gameObjects) {
+            obj.display(gamePlayAnchorPane);
+
+            if (obj.getObjectType().equals("Hero")) {
+                hero = (Hero) obj;
+            } else if (obj.getObjectType().equals("Orc")) {
+                orcs.add((Orc) obj);
+            } else if (obj.getObjectType().equals("CoinChest")) {
+                chests.add((CoinChest) obj);
+                obj.getImageView().toBack();
+            } else if (obj.getObjectType().equals("WeaponChest")) {
+                chests.add((WeaponChest) obj);
+                obj.getImageView().toBack();
+            }
+            else if(obj.getObjectType().equals("Trees")){
+                obj.getImageView().toBack();
+            }
+            else if(obj.getObjectType().equals("Cloud")){
+                obj.getImageView().toBack();
+            }
+
+        }
+        previousX = (int) gameObjects.get((gameObjects.size() - 1)).getImageView().getBoundsInParent().getMaxX(); //check??
+    }
+
+    private void addEnvironment(GameObjects obs1) {
+        Trees tree1 = new Trees((float) obs1.getImageView().getBoundsInParent().getMinX() + 10, (float) obs1.getImageView().getBoundsInParent().getMinY());
+        tree1.getImageView().setLayoutY(tree1.getImageView().getLayoutY() - tree1.getImageView().getBoundsInParent().getHeight());
+        tree1.setLayoutXY((float) tree1.getImageView().getLayoutX(), (float) tree1.getImageView().getLayoutY());
         tree1.display(gamePlayAnchorPane);
         tree1.getImageView().toBack();
         gameObjects.add(tree1);
 
-        Trees tree2 = new Trees((float) obs1.getImageView().getLayoutBounds().getMaxX() - 50, (float) obs1.getImageView().getLayoutBounds().getMinY());
-        tree2.getImageView().setLayoutY(tree2.getImageView().getLayoutY() - tree2.getImageView().getLayoutBounds().getHeight());
+        Trees tree2 = new Trees((float) obs1.getImageView().getBoundsInParent().getMaxX() - 50, (float) obs1.getImageView().getBoundsInParent().getMinY());
+        tree2.getImageView().setLayoutY(tree2.getImageView().getLayoutY() - tree2.getImageView().getBoundsInParent().getHeight());
+        tree2.setLayoutXY((float) tree2.getImageView().getLayoutX(), (float) tree2.getImageView().getLayoutY());
         tree2.display(gamePlayAnchorPane);
         tree2.getImageView().toBack();
         gameObjects.add(tree2);
 
-        Cloud cloud = new Cloud((float) obs1.getImageView().getLayoutBounds().getMinX() + 15, 50);
+        Cloud cloud = new Cloud((float) obs1.getImageView().getBoundsInParent().getMinX() + 15, 50);
         cloud.display(gamePlayAnchorPane);
         cloud.getImageView().toBack();
         gameObjects.add(cloud);
@@ -57,7 +131,7 @@ public class Test implements Initializable {
 
     private void throwKnife(Hero hero) {
         if (hero.getcurrentWeapon() == 1) {
-            ThrowingKnife knife = new ThrowingKnife(0, 0,hero);
+            ThrowingKnife knife = new ThrowingKnife(0, 0, hero);
             knife.display(gamePlayAnchorPane);
             gameObjects.add(knife);
             knife.throwKnife();
@@ -85,7 +159,7 @@ public class Test implements Initializable {
             obs1.display(gamePlayAnchorPane);
             gameObjects.add(obs1);
 
-            Orc orc = new Orc((float) obs1.getImageView().getLayoutBounds().getMinX() + 35, 292);
+            Orc orc = new Orc((float) obs1.getImageView().getBoundsInParent().getMinX() + 35, 292);
             orc.display(gamePlayAnchorPane);
             gameObjects.add(orc);
             orcs.add(orc);
@@ -99,8 +173,9 @@ public class Test implements Initializable {
             obs1.display(gamePlayAnchorPane);
             gameObjects.add(obs1);
 
-            WeaponChest chest = new WeaponChest((float) obs1.getImageView().getLayoutBounds().getMinX() + 50, (float) obs1.getImageView().getLayoutBounds().getMinY());
-            chest.getImageView().setLayoutY(chest.getImageView().getLayoutY() - chest.getImageView().getLayoutBounds().getHeight());
+            WeaponChest chest = new WeaponChest((float) obs1.getImageView().getBoundsInParent().getMinX() + 50, (float) obs1.getImageView().getBoundsInParent().getMinY());
+            chest.getImageView().setLayoutY(chest.getImageView().getLayoutY() - chest.getImageView().getBoundsInParent().getHeight());
+            chest.setLayoutXY((float) chest.getImageView().getLayoutX(), (float) chest.getImageView().getLayoutY());
             chest.display(gamePlayAnchorPane);
             chest.getImageView().toBack();
             gameObjects.add(chest);
@@ -116,8 +191,9 @@ public class Test implements Initializable {
             obs1.display(gamePlayAnchorPane);
             gameObjects.add(obs1);
 
-            CoinChest chest = new CoinChest((float) obs1.getImageView().getLayoutBounds().getMinX() + 100, (float) obs1.getImageView().getLayoutBounds().getMinY());
-            chest.getImageView().setLayoutY(chest.getImageView().getLayoutY() - chest.getImageView().getLayoutBounds().getHeight());
+            CoinChest chest = new CoinChest((float) obs1.getImageView().getBoundsInParent().getMinX() + 100, (float) obs1.getImageView().getBoundsInParent().getMinY());
+            chest.getImageView().setLayoutY(chest.getImageView().getLayoutY() - chest.getImageView().getBoundsInParent().getHeight());
+            chest.setLayoutXY((float) chest.getImageView().getLayoutX(), (float) chest.getImageView().getLayoutY());
             chest.display(gamePlayAnchorPane);
             chest.getImageView().toBack();
             gameObjects.add(chest);
@@ -172,15 +248,36 @@ public class Test implements Initializable {
 //
 //    }
 
+    @FXML
+    public void pause(MouseEvent event) throws IOException {
+        serialize();
+        System.out.println(hero.getImageView().getLayoutX() + " " + hero.getImageView().getLayoutY() + " " + hero.getImageView().getX() + " " + hero.getImageView().getY());
+        //exit the game
+        System.exit(0);
+
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        gameObjects = new ArrayList<>();
-        orcs = new ArrayList<>();
-        chests = new ArrayList<>();
-        hero = new Hero(140, 292);
-        hero.display(gamePlayAnchorPane);
-        gameObjects.add(hero);
+        if (serialised) {
+            System.out.println("serialised");
+            try {
+                deserialize();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+
+        } else {
+
+            gameObjects = new ArrayList<>();
+            orcs = new ArrayList<>();
+            chests = new ArrayList<>();
+            hero = new Hero(140, 292);
+            hero.display(gamePlayAnchorPane);
+            gameObjects.add(hero);
 //        addObject(1);
 //        addObject(1);
 //        addObject(1);
@@ -190,13 +287,14 @@ public class Test implements Initializable {
 //        addObject(1);
 //        addObject(1);
 //        addObject(1);
-        while (numOfislands <= 10) {
-            if (numOfislands % 3 == 0) {
-                addObject((int) (Math.random() * 2) + 2);
-            } else {
-                addObject(1);
+            while (numOfislands <= 10) {
+                if (numOfislands % 3 == 0) {
+                    addObject((int) (Math.random() * 2) + 2);
+                } else {
+                    addObject(1);
+                }
+                numOfislands++;
             }
-            numOfislands++;
         }
 
 //        Island island = new Island(75, 333);
@@ -214,10 +312,12 @@ public class Test implements Initializable {
 //        gameObjects.add(orc);
 
 
-        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1), e -> {
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(5), e -> {
             coinLabel.setText("" + coins);
+            movesLabel.setText("Moves: " + moves);
             if (detectCollision()) {
-                heroCollision = true;
+                System.out.println("collision");
+                heroCollision = 1;
                 hero.getxMovementTimeline().stop();
                 hero.getyMovementTimeline().stop();
             }
@@ -229,18 +329,18 @@ public class Test implements Initializable {
 
         //add mouse click to anchor pane
         gamePlayAnchorPane.setOnMouseClicked(e -> {
-            if (!heroCollision) {
+            if (heroCollision == 0) {
 
                 hero.moveHero(60);
                 throwKnife(hero);
                 moves++;
-                movesLabel.setText("Moves: " + moves);
+
                 //move all game objects to the left
                 Timeline timeline1 = new Timeline(new KeyFrame(Duration.millis(10), e1 -> {
                     for (int i = 0; i < gameObjects.size(); i++) {
 
                         gameObjects.get(i).getImageView().setLayoutX(gameObjects.get(i).getImageView().getLayoutX() - 2);
-
+                        gameObjects.get(i).setLayoutXY((float) gameObjects.get(i).getImageView().getLayoutX(), (float) gameObjects.get(i).getImageView().getLayoutY());
 
                     }
                 }
@@ -250,6 +350,7 @@ public class Test implements Initializable {
 
             }
         });
+
 
     }
 }

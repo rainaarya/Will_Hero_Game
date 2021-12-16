@@ -10,8 +10,8 @@ import javafx.util.Duration;
 import java.util.Random;
 
 public class Cloud extends GameObjects {
-    transient ImageView imageView;
-    private transient String path;
+    private transient ImageView imageView;
+    private String path;
 
     public ImageView getImageView() {
         return imageView;
@@ -26,7 +26,9 @@ public class Cloud extends GameObjects {
 
     Cloud(float x, float y) {
         super(x, y);
-        setPathName();
+        if (path == null) {
+            setPathName();
+        }
         imageView = new ImageView(new Image(getClass().getResourceAsStream(path)));
         imageView.setLayoutX(x);
         imageView.setLayoutY(y);

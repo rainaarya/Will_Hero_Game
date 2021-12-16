@@ -73,7 +73,7 @@
             <Image url="@play.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="42.0" fitWidth="212.0" layoutX="102.0" layoutY="326.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="42.0" fitWidth="212.0" layoutX="102.0" layoutY="326.0" onMouseClicked="#loadGame" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@loadgame.png" />
          </image>

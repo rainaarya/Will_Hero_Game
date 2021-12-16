@@ -8,7 +8,7 @@
 
 <AnchorPane fx:id="gamePlayAnchorPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="495.0" prefWidth="846.0" style="-fx-background-color: #00FFFF;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="willhero.will_hero_game.Test">
    <children>
-      <ImageView fitHeight="52.0" fitWidth="58.0" layoutX="29.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="pause" fitHeight="52.0" fitWidth="58.0" layoutX="29.0" layoutY="29.0" onMouseClicked="#pause" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@pause-button.png" />
          </image>

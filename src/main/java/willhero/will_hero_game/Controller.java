@@ -34,6 +34,7 @@ public class Controller implements Initializable {
     private Stage stage;
     private Scene scene;
     private Parent root;
+    private static Test gameController;
 
     private TranslateTransition transition(ImageView imageView, double time, double ByY) {
         TranslateTransition tt = new TranslateTransition(javafx.util.Duration.millis(time), imageView);
@@ -74,6 +75,17 @@ public class Controller implements Initializable {
     @FXML
     public void switchToGame(MouseEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("GameplayNew.fxml"));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+    @FXML
+    public void loadGame(MouseEvent event) throws IOException {
+        Test.setSerialised(true);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("GameplayNew.fxml"));
+        root = loader.load();
+
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);

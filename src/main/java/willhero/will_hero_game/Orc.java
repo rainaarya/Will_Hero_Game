@@ -9,14 +9,14 @@ import javafx.util.Duration;
 
 public class Orc extends GameObjects {
     private String imagepath;
-    private ImageView imageView;
+    private transient ImageView imageView;
 
     public ImageView getImageView() {
         return imageView;
     }
 
     public int dy = 1;
-    private Timeline timeline2;
+    private transient Timeline timeline2;
 
 
     Orc(float x, float y) {
@@ -48,6 +48,7 @@ public class Orc extends GameObjects {
                     } else {
                         //System.out.println(imageView.getBoundsInParent().getMaxY() + ", " + ((Hero) collider).getImageView().getBoundsInParent().getMinY());
                         imageView.setX(imageView.getX() + 20);
+                        setXY((float) imageView.getX(), (float) imageView.getY());
                     }
 
                 }
@@ -58,10 +59,11 @@ public class Orc extends GameObjects {
                     if (((Orc) collider).getImageView().getBoundsInParent().intersects(imageView.getBoundsInParent())) {
                         if (((Orc) collider).getImageView().getLayoutX() > imageView.getLayoutX()) {
                             ((Orc) collider).getImageView().setX(((Orc) collider).getImageView().getX() + 20);
+                            ((Orc) collider).setXY((float) ((Orc) collider).getImageView().getX(), (float) ((Orc) collider).getImageView().getY());
                             return false;
-                        }
-                        else {
+                        } else {
                             ((Orc) collider).getImageView().setX(imageView.getX() + 20);
+                            ((Orc) collider).setXY((float) ((Orc) collider).getImageView().getX(), (float) ((Orc) collider).getImageView().getY());
                             return false;
                         }
 
@@ -76,34 +78,37 @@ public class Orc extends GameObjects {
     @Override
     public void display(AnchorPane gamePane) {
         gamePane.getChildren().add(imageView);
-        timeline2 = new Timeline(new KeyFrame(Duration.millis(8), e -> {
-            //System.out.println(hero.getX() + ", " + hero.getY());
-            //System.out.println(hero.getLayoutX() + ", " + hero.getLayoutY());
-            //System.out.println(imageView.getX() + ", " + imageView.getY());
-            imageView.setY(imageView.getY() - dy);
-            if (imageView.getY() == -100) {
+        if (imageView.getY() < 250) {
+            timeline2 = new Timeline(new KeyFrame(Duration.millis(8), e -> {
+                //System.out.println(hero.getX() + ", " + hero.getY());
+                //System.out.println(hero.getLayoutX() + ", " + hero.getLayoutY());
+                //System.out.println(imageView.getX() + ", " + imageView.getY());
+                imageView.setY(imageView.getY() - dy);
+                setXY((float) imageView.getX(), (float) imageView.getY());
+                if (imageView.getY() == -100) {
 
-                dy = -1;
+                    dy = -1;
 
-            }
+                }
 //            if (hero.getY() == 0) {
 //                dy.set(1);
 //            }
 
-            // check if hero is on island
+                // check if hero is on island
 
-            if (imageView.getY() > 250) {
-                System.out.println("orc dead");
-                timeline2.stop();
-                imageView.setVisible(false);
-                Test.setCoins(1);
+                if (imageView.getY() > 250) {
+                    System.out.println("orc dead");
+                    timeline2.stop();
+                    imageView.setVisible(false);
+                    Test.setCoins(1);
 
 
+                }
             }
+            ));
+            timeline2.setCycleCount(Timeline.INDEFINITE);
+            timeline2.play();
         }
-        ));
-        timeline2.setCycleCount(Timeline.INDEFINITE);
-        timeline2.play();
     }
 
 }
