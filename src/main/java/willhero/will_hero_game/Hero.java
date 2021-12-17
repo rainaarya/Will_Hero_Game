@@ -7,11 +7,13 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 
+import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Hero extends GameObjects {
     private transient ImageView imageView;
     private int moves;
+    private ArrayList<GameObjects> gameObjects;
 
     public ImageView getImageView() {
         return imageView;
@@ -44,6 +46,18 @@ public class Hero extends GameObjects {
         this.currentWeapon = weapon;
     }
 
+    public void moveHeroBackX(float x){
+        imageView.setX(imageView.getX() - x);
+        setXY((float) imageView.getX(), (float) imageView.getY());
+        for(int i = 0; i < gameObjects.size(); i++){
+            gameObjects.get(i).getImageView().setLayoutX(gameObjects.get(i).getImageView().getLayoutX() + x);
+            gameObjects.get(i).setLayoutXY((float) gameObjects.get(i).getImageView().getLayoutX(), (float) gameObjects.get(i).getImageView().getLayoutY());
+
+            if (gameObjects.get(i) instanceof TNT) {
+                ((TNT) gameObjects.get(i)).moveAllTNTcomponents(x);
+            }
+        }
+    }
 
 
     public Timeline getyMovementTimeline() {
@@ -52,6 +66,10 @@ public class Hero extends GameObjects {
 
     public Timeline getxMovementTimeline() {
         return xMovementTimeline;
+    }
+
+    public void setGameObjects(ArrayList<GameObjects> gameObjects) {
+        this.gameObjects = gameObjects;
     }
 
 

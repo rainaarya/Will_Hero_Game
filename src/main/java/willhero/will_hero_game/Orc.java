@@ -17,6 +17,9 @@ public class Orc extends GameObjects {
 
     public int dy = 1;
     private transient Timeline timeline2;
+    public Timeline getTimeline2() {
+        return timeline2;
+    }
 
 
     Orc(float x, float y) {

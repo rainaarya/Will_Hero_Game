@@ -1,0 +1,77 @@
+package willhero.will_hero_game;
+
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.scene.layout.AnchorPane;
+import javafx.util.Duration;
+
+public class Boss extends Orc {
+    Boss(float x, float y) {
+        super(x, y);
+        getImageView().setFitWidth(100);
+
+    }
+
+    @Override
+    public boolean onCollide(GameObjects collider) {
+
+        AnchorPane anch = (AnchorPane) getImageView().getParent();
+        if (anch != null) {
+            if (collider instanceof Hero) {
+                if (((Hero) collider).getImageView().getBoundsInParent().intersects(getImageView().getBoundsInParent())) {
+                    if (Math.abs(((Hero) collider).getImageView().getBoundsInParent().getMinY() - getImageView().getBoundsInParent().getMaxY()) <= 3) {
+                        //System.out.println("hero is below orc");
+                        getTimeline2().stop();
+                        return true;
+
+                    } else if (Math.abs(((Hero) collider).getImageView().getBoundsInParent().getMaxY() - getImageView().getBoundsInParent().getMinY()) <= 5) {
+                        //System.out.println("hero is above orc");
+                        ((Hero) collider).dy = 1;
+
+                    } else {
+                        //System.out.println(getImageView().getBoundsInParent().getMaxY() + ", " + ((Hero) collider).getImageView().getBoundsInParent().getMinY());
+                        //((Hero) collider).moveHeroBackX(20);
+                        Timeline timeline0=new Timeline(new KeyFrame(Duration.millis(10), e -> {
+                            ((Hero) collider).moveHeroBackX(2);
+                        }
+                        ));
+                        timeline0.setCycleCount(2);
+
+
+                        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(5), e -> {
+                            getImageView().setX(getImageView().getX() + 1);
+
+                            setXY((float) getImageView().getX(), (float) getImageView().getY());
+                        }
+                        ));
+                        timeline.setCycleCount(3);
+                        timeline.play();
+                        timeline0.play();
+                        //getImageView().setX(getImageView().getX() + 30);
+                        //setXY((float) getImageView().getX(), (float) getImageView().getY());
+                    }
+
+                }
+
+            }
+            if (collider instanceof Orc) {
+                if ((Orc) collider != this) {
+                    if (((Orc) collider).getImageView().getBoundsInParent().intersects(getImageView().getBoundsInParent())) {
+                        if (((Orc) collider).getImageView().getLayoutX() > getImageView().getLayoutX()) {
+                            ((Orc) collider).getImageView().setX(((Orc) collider).getImageView().getX() + 20);
+                            ((Orc) collider).setXY((float) ((Orc) collider).getImageView().getX(), (float) ((Orc) collider).getImageView().getY());
+                            return false;
+                        } else {
+                            ((Orc) collider).getImageView().setX(getImageView().getX() + 20);
+                            ((Orc) collider).setXY((float) ((Orc) collider).getImageView().getX(), (float) ((Orc) collider).getImageView().getY());
+                            return false;
+                        }
+
+                    }
+                }
+            }
+
+        }
+        return false;
+    }
+}

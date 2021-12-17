@@ -99,6 +99,7 @@ public class Test implements Initializable {
 
             if (obj.getObjectType().equals("Hero")) {
                 hero = (Hero) obj;
+                hero.setGameObjects(gameObjects);
             } else if (obj.getObjectType().equals("Orc")) {
                 orcs.add((Orc) obj);
             } else if (obj.getObjectType().equals("CoinChest")) {
@@ -111,8 +112,7 @@ public class Test implements Initializable {
                 obj.getImageView().toBack();
             } else if (obj.getObjectType().equals("Cloud")) {
                 obj.getImageView().toBack();
-            }
-            else if(obj.getObjectType().equals("TNT")){
+            } else if (obj.getObjectType().equals("TNT")) {
                 tnts.add((TNT) obj);
             }
 
@@ -232,6 +232,26 @@ public class Test implements Initializable {
 
 
             previousX = previousX + distance + (float) obs1.getImageView().getBoundsInParent().getWidth();
+        }
+        if (c == 4) {
+            GameObjects obs0 = f.createObject(1, previousX + distance, 333);
+            obs0.display(gamePlayAnchorPane);
+            gameObjects.add(obs0);
+            previousX = previousX + distance + (float) obs0.getImageView().getBoundsInParent().getWidth();
+
+            obs1 = f.createObject(1, previousX, 333);
+            obs1.display(gamePlayAnchorPane);
+            gameObjects.add(obs1);
+
+            Boss orc = new Boss((float) obs0.getImageView().getBoundsInParent().getMinX() + 100, 292);
+            orc.display(gamePlayAnchorPane);
+            gameObjects.add(orc);
+            orcs.add(orc);
+
+            addEnvironment(obs1);
+
+            previousX = previousX + distance + (float) obs1.getImageView().getBoundsInParent().getWidth();
+
         }
 
 
@@ -400,6 +420,7 @@ public class Test implements Initializable {
             chests = new ArrayList<>();
             tnts = new ArrayList<>();
             hero = new Hero(140, 292);
+            hero.setGameObjects(gameObjects);
             hero.display(gamePlayAnchorPane);
             gameObjects.add(hero);
 //        addObject(1);
@@ -419,6 +440,7 @@ public class Test implements Initializable {
                 }
                 numOfislands++;
             }
+            addObject(4); //boss island
         }
 
 //        Island island = new Island(75, 333);
