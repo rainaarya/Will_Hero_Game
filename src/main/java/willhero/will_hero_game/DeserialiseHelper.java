@@ -113,6 +113,16 @@ public class DeserialiseHelper {
                 trees.getImageView().setX(obj.getCoordinatesX());
                 trees.getImageView().setY(obj.getCoordinatesY());
                 finalList.add(trees);
+            } else if (obj.getObjectType().equals("TNT")) {
+                TNT tnt = new TNT(obj.getLayoutX(), obj.getLayoutY());
+                tnt.getImageView().setX(obj.getCoordinatesX());
+                tnt.getImageView().setY(obj.getCoordinatesY());
+                tnt.makeCircle(((TNT) obj).getCircleLayoutX(), ((TNT) obj).getCircleLayoutY(), ((TNT) obj).getRadius());
+                System.out.println(((TNT) obj).getCircleLayoutX() + "   " + ((TNT) obj).getCircleLayoutY() + "   " + ((TNT) obj).getRadius());
+                tnt.setCollided(((TNT) obj).getCollided());
+                tnt.setisExploded(((TNT) obj).getisExploded());
+                finalList.add(tnt);
+
             }
 
 

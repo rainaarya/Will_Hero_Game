@@ -32,6 +32,7 @@ public class Test implements Initializable {
     private Hero hero;
     private ArrayList<Orc> orcs;
     private ArrayList<Chest> chests;
+    private ArrayList<TNT> tnts;
     private float previousX = 0;
     private Integer moves = 0;
     private static Integer coins = 0;
@@ -92,6 +93,7 @@ public class Test implements Initializable {
         gameObjects = deserialiseHelper.regenerateGameObjects();
         orcs = new ArrayList<>();
         chests = new ArrayList<>();
+        tnts = new ArrayList<>();
         for (GameObjects obj : gameObjects) {
             obj.display(gamePlayAnchorPane);
 
@@ -110,9 +112,12 @@ public class Test implements Initializable {
             } else if (obj.getObjectType().equals("Cloud")) {
                 obj.getImageView().toBack();
             }
+            else if(obj.getObjectType().equals("TNT")){
+                tnts.add((TNT) obj);
+            }
 
         }
-        previousX = (int) gameObjects.get((gameObjects.size() - 1)).getImageView().getBoundsInParent().getMaxX(); //check??
+        previousX = (int) gameObjects.get((gameObjects.size() - 1)).getImageView().getBoundsInParent().getMaxX(); //check??!!!!!!!
     }
 
     private void addEnvironment(GameObjects obs1) {
@@ -181,7 +186,7 @@ public class Test implements Initializable {
             obs1.display(gamePlayAnchorPane);
             gameObjects.add(obs1);
 
-            WeaponChest chest = new WeaponChest((float) obs1.getImageView().getBoundsInParent().getMinX() + 50, (float) obs1.getImageView().getBoundsInParent().getMinY());
+            WeaponChest chest = new WeaponChest((float) obs1.getImageView().getBoundsInParent().getMinX() + 100, (float) obs1.getImageView().getBoundsInParent().getMinY());
             chest.getImageView().setLayoutY(chest.getImageView().getLayoutY() - chest.getImageView().getBoundsInParent().getHeight());
             chest.setLayoutXY((float) chest.getImageView().getLayoutX(), (float) chest.getImageView().getLayoutY());
             chest.display(gamePlayAnchorPane);
@@ -190,6 +195,14 @@ public class Test implements Initializable {
             chests.add(chest);
 
             addEnvironment(obs1);
+
+            TNT tnt = new TNT((float) obs1.getImageView().getBoundsInParent().getMinX() + 30, (float) obs1.getImageView().getBoundsInParent().getMinY());
+            tnt.getImageView().setLayoutY(tnt.getImageView().getLayoutY() - tnt.getImageView().getBoundsInParent().getHeight());
+            tnt.setLayoutXY((float) tnt.getImageView().getLayoutX(), (float) tnt.getImageView().getLayoutY());
+            tnt.display(gamePlayAnchorPane);
+            //tnt.getImageView().toBack();
+            gameObjects.add(tnt);
+            tnts.add(tnt);
 
 
             previousX = previousX + distance + (float) obs1.getImageView().getBoundsInParent().getWidth();
@@ -208,6 +221,15 @@ public class Test implements Initializable {
             chests.add(chest);
 
             addEnvironment(obs1);
+
+            TNT tnt = new TNT((float) obs1.getImageView().getBoundsInParent().getMinX() + 40, (float) obs1.getImageView().getBoundsInParent().getMinY());
+            tnt.getImageView().setLayoutY(tnt.getImageView().getLayoutY() - tnt.getImageView().getBoundsInParent().getHeight());
+            tnt.setLayoutXY((float) tnt.getImageView().getLayoutX(), (float) tnt.getImageView().getLayoutY());
+            tnt.display(gamePlayAnchorPane);
+            //tnt.getImageView().toBack();
+            gameObjects.add(tnt);
+            tnts.add(tnt);
+
 
             previousX = previousX + distance + (float) obs1.getImageView().getBoundsInParent().getWidth();
         }
@@ -229,8 +251,7 @@ public class Test implements Initializable {
                 if (gameObjects.get(i) instanceof Island) {
                     if (((Island) gameObjects.get(i)).getImageView().getBoundsInParent().getMinX() < hero.getImageView().getBoundsInParent().getMinX()) {
                         prevIsland = (Island) gameObjects.get(i);
-                    }
-                    else {
+                    } else {
                         break;
                     }
                 }
@@ -259,12 +280,15 @@ public class Test implements Initializable {
 
                 for (int i = 0; i < gameObjects.size(); i++) {
 
-                        gameObjects.get(i).getImageView().setLayoutX(gameObjects.get(i).getImageView().getLayoutX() + amttraveled);
-                        gameObjects.get(i).setLayoutXY((float) gameObjects.get(i).getImageView().getLayoutX(), (float) gameObjects.get(i).getImageView().getLayoutY());
+                    gameObjects.get(i).getImageView().setLayoutX(gameObjects.get(i).getImageView().getLayoutX() + amttraveled);
+                    if (gameObjects.get(i) instanceof TNT) {
+                        ((TNT) gameObjects.get(i)).moveAllTNTcomponents(amttraveled); //check and pls serialise this !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    }
+                    gameObjects.get(i).setLayoutXY((float) gameObjects.get(i).getImageView().getLayoutX(), (float) gameObjects.get(i).getImageView().getLayoutY());
 
                 }
 
-                coins-=1;
+                coins -= 1;
                 timesRevived++;
                 hero.getxMovementTimeline().play();
                 hero.getyMovementTimeline().play();
@@ -274,10 +298,10 @@ public class Test implements Initializable {
             timeline.play();
 
         } else {
-            if(timesRevived == 1) {
+            if (timesRevived == 1) {
                 System.out.println("You have already used your revive!");
             }
-            if(coins < 1) {
+            if (coins < 1) {
                 System.out.println("You do not have enough coins to revive!");
             }
         }
@@ -296,12 +320,12 @@ public class Test implements Initializable {
 
     public boolean detectCollision() {
         boolean tmp = false;
-        boolean orcCollision = false;
+        boolean checkHeroCollision = false;
         for (int i = 0; i < gameObjects.size(); i++) {
             GameObjects o = gameObjects.get(i);
             tmp = o.onCollide(hero);
             if (tmp) {
-                orcCollision = true;
+                checkHeroCollision = true;
                 collidedObject = o;
             }
             if (o instanceof Island) {
@@ -311,6 +335,9 @@ public class Test implements Initializable {
                 }
                 for (int j = 0; j < chests.size(); j++) {
                     o.onCollide(chests.get(j));
+                }
+                for (int j = 0; j < tnts.size(); j++) {
+                    o.onCollide(tnts.get(j));
                 }
             }
             if (o instanceof Orc) {
@@ -323,10 +350,19 @@ public class Test implements Initializable {
                     o.onCollide(orcs.get(j));
                 }
             }
+            if (o instanceof TNT) {
+                for (int j = 0; j < orcs.size(); j++) {
+                    o.onCollide(orcs.get(j));
+                }
+                if (((TNT) o).getisExploded()) {
+                    System.out.println("TNT exploded");
+                    ((TNT) o).setCheckedAllNearbyEntities(true);
+                }
+            }
 
         }
 
-        return orcCollision;
+        return checkHeroCollision;
     }
 
 //    @Override
@@ -362,6 +398,7 @@ public class Test implements Initializable {
             gameObjects = new ArrayList<>();
             orcs = new ArrayList<>();
             chests = new ArrayList<>();
+            tnts = new ArrayList<>();
             hero = new Hero(140, 292);
             hero.display(gamePlayAnchorPane);
             gameObjects.add(hero);
@@ -464,6 +501,10 @@ public class Test implements Initializable {
 
                         gameObjects.get(i).getImageView().setLayoutX(gameObjects.get(i).getImageView().getLayoutX() - 2);
                         gameObjects.get(i).setLayoutXY((float) gameObjects.get(i).getImageView().getLayoutX(), (float) gameObjects.get(i).getImageView().getLayoutY());
+
+                        if (gameObjects.get(i) instanceof TNT) {
+                            ((TNT) gameObjects.get(i)).moveAllTNTcomponents(-2);
+                        }
 
                     }
                 }

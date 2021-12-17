@@ -68,6 +68,11 @@ public class Island extends GameObjects {
                     ((Chest) collider).setDy(1);
                 }
             }
+            else if (collider instanceof TNT) {
+                if (((TNT) collider).getImageView().getBoundsInParent().intersects(imageView.getBoundsInParent())) {
+                    ((TNT) collider).setDy(1);
+                }
+            }
 
         }
         return false;
