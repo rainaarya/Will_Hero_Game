@@ -117,6 +117,11 @@ public class DeserialiseHelper {
                 throwingKnife.getImageView().setX(obj.getCoordinatesX());
                 throwingKnife.getImageView().setY(obj.getCoordinatesY());
                 finalList.add(throwingKnife);
+            } else if (obj instanceof Shuriken) {
+                Shuriken shuriken = new Shuriken(obj.getLayoutX(), obj.getLayoutY(), hero);
+                shuriken.getImageView().setX(obj.getCoordinatesX());
+                shuriken.getImageView().setY(obj.getCoordinatesY());
+                finalList.add(shuriken);
             } else if (obj instanceof Trees) {
                 Trees trees = new Trees(obj.getLayoutX(), obj.getLayoutY());
                 trees.getImageView().setX(obj.getCoordinatesX());

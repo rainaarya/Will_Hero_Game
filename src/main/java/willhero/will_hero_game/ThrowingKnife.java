@@ -100,7 +100,7 @@ public class ThrowingKnife extends GameObjects {
     @Override
     public void display(AnchorPane gamePane) {
         gamePane.getChildren().add(imageView);
-        timeline = new Timeline(new KeyFrame(Duration.millis(12), e -> {
+        timeline = new Timeline(new KeyFrame(Duration.millis(7), e -> {
             imageView.setX(imageView.getX() + 4);
             setXY((float) imageView.getX(), (float) imageView.getY());
         }

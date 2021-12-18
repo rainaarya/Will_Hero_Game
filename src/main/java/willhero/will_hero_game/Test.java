@@ -142,7 +142,7 @@ public class Test implements Initializable {
 
     }
 
-    private void throwKnife(Hero hero) {
+    private void throwWeapon(Hero hero) {
         if (hero.getcurrentWeapon() == 1) {
             ThrowingKnife knife = new ThrowingKnife(0, 0, hero);
             knife.display(gamePlayAnchorPane);
@@ -150,10 +150,14 @@ public class Test implements Initializable {
             knife.throwKnife();
             //gameObjects.remove(knife);
         }
-
-
+        if (hero.getcurrentWeapon() == 2) {
+            Shuriken shuriken = new Shuriken(0, 0, hero);
+            shuriken.display(gamePlayAnchorPane);
+            gameObjects.add(shuriken);
+            shuriken.throwShuriken();
+            //gameObjects.remove(shuriken);
+        }
     }
-
 
     public static void setCoins(int coins) {
         Test.coins += coins;
@@ -365,7 +369,7 @@ public class Test implements Initializable {
                     o.onCollide(orcs.get(j));
                 }
             }
-            if (o instanceof ThrowingKnife) {
+            if (o instanceof ThrowingKnife || o instanceof Shuriken) {
                 for (int j = 0; j < orcs.size(); j++) {
                     o.onCollide(orcs.get(j));
                 }
@@ -420,8 +424,8 @@ public class Test implements Initializable {
             chests = new ArrayList<>();
             tnts = new ArrayList<>();
             hero = new Hero(140, 292);
-            hero.setGameObjects(gameObjects);
             hero.display(gamePlayAnchorPane);
+            hero.setGameObjects(gameObjects);
             gameObjects.add(hero);
 //        addObject(1);
 //        addObject(1);
@@ -445,6 +449,7 @@ public class Test implements Initializable {
             }
 
         }
+
 
 //        Island island = new Island(75, 333);
 //        island.display(gamePlayAnchorPane);
@@ -517,7 +522,7 @@ public class Test implements Initializable {
             if (heroCollision == 0) {
 
                 hero.moveHero(60);
-                throwKnife(hero);
+                throwWeapon(hero);
                 moves++;
 
                 //move all game objects to the left
