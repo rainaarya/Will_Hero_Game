@@ -42,26 +42,56 @@ public class ThrowingKnife extends GameObjects {
     public boolean onCollide(GameObjects collider) {
         if (imageView.isVisible()) {
             if (collider instanceof Orc) {
-                if (((Orc) collider).getImageView().getBoundsInParent().intersects(imageView.getBoundsInParent())) {
-                    //TranslateTransition translateTransition = new TranslateTransition(Duration.millis(500), ((Orc) collider).getImageView());
-                    ((Orc) collider).getImageView().setY(260);
-                    ((Orc) collider).setXY((float) ((Orc) collider).getImageView().getX(), (float) ((Orc) collider).getImageView().getY());
+                if (collider instanceof Boss) {
+
+                    if (((Boss) collider).getImageView().getBoundsInParent().intersects(imageView.getBoundsInParent())) {
+                        System.out.println(((Boss) collider).getHealth());
+                        //TranslateTransition translateTransition = new TranslateTransition(Duration.millis(500), ((Orc) collider).getImageView());
+                        if (((Boss) collider).getHealth() == 1) {
+                            ((Boss) collider).getImageView().setY(260);
+                            ((Boss) collider).setXY((float) ((Boss) collider).getImageView().getX(), (float) ((Boss) collider).getImageView().getY());
+                            ((Boss) collider).setHealth(-1);
+                        }
+                        ((Boss) collider).setHealth(-1);
+
+                        if (hero.getweapon1Level() == 1) {
+                            timeline.stop();
+                            imageView.setY(260);
+                            setXY((float) imageView.getX(), (float) imageView.getY());
+                            imageView.setVisible(false);
+                        }
+                        if (hero.getweapon1Level() == 2) {
+                            //continue throwing knife
+                        }
 
 
-                    if (hero.getweapon1Level() == 1) {
-                        timeline.stop();
-                        imageView.setY(260);
-                        setXY((float) imageView.getX(), (float) imageView.getY());
-                        imageView.setVisible(false);
+                    } else {
+                        //System.out.println("No collision with Orc");
                     }
-                    if(hero.getweapon1Level() == 2){
-                        //continue throwing knife
-                    }
-
 
                 } else {
-                    //System.out.println("No collision with Orc");
+                    if (((Orc) collider).getImageView().getBoundsInParent().intersects(imageView.getBoundsInParent())) {
+                        //TranslateTransition translateTransition = new TranslateTransition(Duration.millis(500), ((Orc) collider).getImageView());
+                        ((Orc) collider).getImageView().setY(260);
+                        ((Orc) collider).setXY((float) ((Orc) collider).getImageView().getX(), (float) ((Orc) collider).getImageView().getY());
+
+
+                        if (hero.getweapon1Level() == 1) {
+                            timeline.stop();
+                            imageView.setY(260);
+                            setXY((float) imageView.getX(), (float) imageView.getY());
+                            imageView.setVisible(false);
+                        }
+                        if (hero.getweapon1Level() == 2) {
+                            //continue throwing knife
+                        }
+
+
+                    } else {
+                        //System.out.println("No collision with Orc");
+                    }
                 }
+
             }
         }
         return false;

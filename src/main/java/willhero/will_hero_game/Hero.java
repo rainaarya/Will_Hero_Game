@@ -5,6 +5,8 @@ import javafx.animation.Timeline;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
 import java.util.ArrayList;
@@ -86,7 +88,15 @@ public class Hero extends GameObjects {
     @Override
     public boolean onCollide(GameObjects collider) {
 
+        if (imageView.getY() > 100) {
+            xMovementTimeline.stop();
+            yMovementTimeline.stop();
+            return true;
+
+
+        }
         return false;
+
 
     }
 
@@ -115,13 +125,7 @@ public class Hero extends GameObjects {
 
             // check if hero is on island
 
-            if (imageView.getY() > 100) {
-                System.out.println("hero dead");
-                xMovementTimeline.stop();
-                yMovementTimeline.stop();
 
-
-            }
         }
         ));
         yMovementTimeline.setCycleCount(Timeline.INDEFINITE);
@@ -143,6 +147,9 @@ public class Hero extends GameObjects {
 
         xMovementTimeline.setCycleCount(6);
         xMovementTimeline.play();
+        MediaPlayer mediaPlayer = new MediaPlayer(new Media(getClass().getResource("move.mp3").toString()));
+        mediaPlayer.play();
+
 
     }
 

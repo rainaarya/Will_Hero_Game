@@ -97,22 +97,22 @@ public class Test implements Initializable {
         for (GameObjects obj : gameObjects) {
             obj.display(gamePlayAnchorPane);
 
-            if (obj.getObjectType().equals("Hero")) {
+            if (obj instanceof Hero) {
                 hero = (Hero) obj;
                 hero.setGameObjects(gameObjects);
-            } else if (obj.getObjectType().equals("Orc")) {
+            } else if (obj instanceof Orc) {
                 orcs.add((Orc) obj);
-            } else if (obj.getObjectType().equals("CoinChest")) {
+            } else if (obj instanceof CoinChest) {
                 chests.add((CoinChest) obj);
                 obj.getImageView().toBack();
-            } else if (obj.getObjectType().equals("WeaponChest")) {
+            } else if (obj instanceof WeaponChest) {
                 chests.add((WeaponChest) obj);
                 obj.getImageView().toBack();
-            } else if (obj.getObjectType().equals("Trees")) {
+            } else if (obj instanceof Trees) {
                 obj.getImageView().toBack();
-            } else if (obj.getObjectType().equals("Cloud")) {
+            } else if (obj instanceof Cloud) {
                 obj.getImageView().toBack();
-            } else if (obj.getObjectType().equals("TNT")) {
+            } else if (obj instanceof TNT) {
                 tnts.add((TNT) obj);
             }
 
@@ -432,14 +432,19 @@ public class Test implements Initializable {
 //        addObject(1);
 //        addObject(1);
 //        addObject(1);
-            while (numOfislands <= 20) {
-                if (numOfislands % 3 == 0) {
-                    addObject((int) (Math.random() * 2) + 2);
-                } else {
-                    addObject(1);
-                }
-                numOfislands++;
-            }
+//            while (numOfislands <= 20) {
+//                if (numOfislands % 3 == 0) {
+//                    addObject((int) (Math.random() * 2) + 2);
+//                } else if(numOfislands == 20) {
+//                    addObject(4);
+//                }
+//                else {
+//                    addObject(1);
+//                }
+//                numOfislands++;
+//            }
+            addObject(2);
+            addObject(1);
             addObject(4); //boss island
         }
 

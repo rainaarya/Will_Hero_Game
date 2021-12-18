@@ -31,7 +31,7 @@ public class DeserialiseHelper {
             while (true) {
                 try {
                     GameObjects tmp = (GameObjects) in.readObject();
-                    if (tmp.getObjectType().equals("Hero")) {
+                    if (tmp instanceof Hero) {
                         hero = new Hero(tmp.getLayoutX(), tmp.getLayoutY());
                         hero.getImageView().setX(tmp.getCoordinatesX());
                         hero.getImageView().setY(tmp.getCoordinatesY());
@@ -68,52 +68,61 @@ public class DeserialiseHelper {
 
         for (int i = 0; i < myList.size(); i++) {
             GameObjects obj = myList.get(i);
-            System.out.println(obj.getLayoutX() + "   " + obj.getLayoutY() + "   " + obj.getCoordinatesX() + "   " + obj.getCoordinatesY() + "   " + obj.getObjectType());
+            System.out.println(obj.getLayoutX() + "   " + obj.getLayoutY() + "   " + obj.getCoordinatesX() + "   " + obj.getCoordinatesY() + "   " + obj.getClass().getName());
 //            if(obj.getObjectType().equals("Hero")) {
 //                Hero hero = new Hero(obj.getLayoutX(), obj.getLayoutY());
 //                hero.getImageView().setX(obj.getCoordinatesX());
 //                hero.getImageView().setY(obj.getCoordinatesY());
 //                finalList.add(hero);
 //            }
-            if (obj.getObjectType().equals("Cloud")) {
+            if (obj instanceof Cloud) {
                 Cloud cloud = new Cloud(obj.getLayoutX(), obj.getLayoutY());
                 cloud.getImageView().setX(obj.getCoordinatesX());
                 cloud.getImageView().setY(obj.getCoordinatesY());
                 finalList.add(cloud);
-            } else if (obj.getObjectType().equals("CoinChest")) {
+            } else if (obj instanceof CoinChest) {
                 CoinChest coinChest = new CoinChest(obj.getLayoutX(), obj.getLayoutY());
                 coinChest.getImageView().setX(obj.getCoordinatesX());
                 coinChest.getImageView().setY(obj.getCoordinatesY());
                 coinChest.setCollided(((CoinChest) obj).getCollided());
                 finalList.add(coinChest);
-            } else if (obj.getObjectType().equals("WeaponChest")) {
+            } else if (obj instanceof WeaponChest) {
                 WeaponChest weaponChest = new WeaponChest(obj.getLayoutX(), obj.getLayoutY());
                 weaponChest.getImageView().setX(obj.getCoordinatesX());
                 weaponChest.getImageView().setY(obj.getCoordinatesY());
                 weaponChest.setCollided(((WeaponChest) obj).getCollided());
                 finalList.add(weaponChest);
-            } else if (obj.getObjectType().equals("Island")) {
+            } else if (obj instanceof Island) {
                 Island island = new Island(obj.getLayoutX(), obj.getLayoutY());
                 island.getImageView().setX(obj.getCoordinatesX());
                 island.getImageView().setY(obj.getCoordinatesY());
                 finalList.add(island);
-            } else if (obj.getObjectType().equals("Orc")) {
-                Orc orc = new Orc(obj.getLayoutX(), obj.getLayoutY());
-                orc.getImageView().setX(obj.getCoordinatesX());
-                orc.getImageView().setY(obj.getCoordinatesY());
-                finalList.add(orc);
+            } else if (obj instanceof Orc) {
+                if (obj instanceof Boss) {
+                    Boss orc = new Boss(obj.getLayoutX(), obj.getLayoutY());
+                    orc.getImageView().setX(obj.getCoordinatesX());
+                    orc.getImageView().setY(obj.getCoordinatesY());
+                    orc.setHealth(-orc.getHealth());
+                    orc.setHealth(((Boss) obj).getHealth());
+                    finalList.add(orc);
+                } else {
+                    Orc orc = new Orc(obj.getLayoutX(), obj.getLayoutY());
+                    orc.getImageView().setX(obj.getCoordinatesX());
+                    orc.getImageView().setY(obj.getCoordinatesY());
+                    finalList.add(orc);
+                }
 
-            } else if (obj.getObjectType().equals("ThrowingKnife")) {
+            } else if (obj instanceof ThrowingKnife) {
                 ThrowingKnife throwingKnife = new ThrowingKnife(obj.getLayoutX(), obj.getLayoutY(), hero);
                 throwingKnife.getImageView().setX(obj.getCoordinatesX());
                 throwingKnife.getImageView().setY(obj.getCoordinatesY());
                 finalList.add(throwingKnife);
-            } else if (obj.getObjectType().equals("Trees")) {
+            } else if (obj instanceof Trees) {
                 Trees trees = new Trees(obj.getLayoutX(), obj.getLayoutY());
                 trees.getImageView().setX(obj.getCoordinatesX());
                 trees.getImageView().setY(obj.getCoordinatesY());
                 finalList.add(trees);
-            } else if (obj.getObjectType().equals("TNT")) {
+            } else if (obj instanceof TNT) {
                 TNT tnt = new TNT(obj.getLayoutX(), obj.getLayoutY());
                 tnt.getImageView().setX(obj.getCoordinatesX());
                 tnt.getImageView().setY(obj.getCoordinatesY());

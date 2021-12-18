@@ -3,12 +3,15 @@ package willhero.will_hero_game;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
 import java.util.Random;
 
 public class Island extends GameObjects {
     private transient ImageView imageView;
     private String path;
+    private transient MediaPlayer mediaPlayer;
 
     public ImageView getImageView() {
         return imageView;
@@ -32,6 +35,15 @@ public class Island extends GameObjects {
         imageView.setFitWidth(200);
         imageView.setPreserveRatio(true);
         setObjectType("Island");
+        mediaPlayer = new MediaPlayer(new Media(getClass().getResource("jump.mp3").toString()));
+        mediaPlayer.setOnEndOfMedia(new Runnable() {
+            public void run() {
+                mediaPlayer.stop();
+                //mediaPlayer.seek(mediaPlayer.getStartTime());
+            }
+        }
+        );
+
     }
 
     @Override
@@ -45,6 +57,11 @@ public class Island extends GameObjects {
                     if (((Hero) collider).getImageView().getBoundsInParent().getMaxY()-20 <= imageView.getBoundsInParent().getMinY()) {
                         //System.out.println("on island");
                         ((Hero) collider).dy = 1;
+                        //check if media player is currently playing
+                        if (!mediaPlayer.getStatus().equals(MediaPlayer.Status.PLAYING)) {
+                            mediaPlayer.play();
+                        }
+                        System.out.println("on island");
                         return false;
                     } else {
                         return true;

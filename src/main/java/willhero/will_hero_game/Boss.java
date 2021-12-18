@@ -6,6 +6,17 @@ import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 
 public class Boss extends Orc {
+
+    private int health = 10;
+
+    public int getHealth() {
+        return health;
+    }
+
+    public void setHealth(int health) {
+        this.health += health;
+    }
+
     Boss(float x, float y) {
         super(x, y);
         getImageView().setFitWidth(100);
@@ -31,7 +42,7 @@ public class Boss extends Orc {
                     } else {
                         //System.out.println(getImageView().getBoundsInParent().getMaxY() + ", " + ((Hero) collider).getImageView().getBoundsInParent().getMinY());
                         //((Hero) collider).moveHeroBackX(20);
-                        Timeline timeline0=new Timeline(new KeyFrame(Duration.millis(10), e -> {
+                        Timeline timeline0 = new Timeline(new KeyFrame(Duration.millis(10), e -> {
                             ((Hero) collider).moveHeroBackX(2);
                         }
                         ));
