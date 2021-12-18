@@ -47,12 +47,17 @@ public class ThrowingKnife extends GameObjects {
                     if (((Boss) collider).getImageView().getBoundsInParent().intersects(imageView.getBoundsInParent())) {
                         System.out.println(((Boss) collider).getHealth());
                         //TranslateTransition translateTransition = new TranslateTransition(Duration.millis(500), ((Orc) collider).getImageView());
-                        if (((Boss) collider).getHealth() == 1) {
+                        if (((Boss) collider).getHealth() <= 1) {
                             ((Boss) collider).getImageView().setY(260);
                             ((Boss) collider).setXY((float) ((Boss) collider).getImageView().getX(), (float) ((Boss) collider).getImageView().getY());
                             ((Boss) collider).setHealth(-1);
                         }
-                        ((Boss) collider).setHealth(-1);
+                        if (hero.getweapon1Level() == 1) {
+                            ((Boss) collider).setHealth(-1);    // -1 health
+                        } else if (hero.getweapon1Level() == 2) {
+                            ((Boss) collider).setHealth(-3);    // -3 health, more damage compared to level 1
+                        }
+
 
                         if (hero.getweapon1Level() == 1) {
                             timeline.stop();
@@ -61,7 +66,10 @@ public class ThrowingKnife extends GameObjects {
                             imageView.setVisible(false);
                         }
                         if (hero.getweapon1Level() == 2) {
-                            //continue throwing knife
+                            timeline.stop();
+                            imageView.setY(260);
+                            setXY((float) imageView.getX(), (float) imageView.getY());
+                            imageView.setVisible(false);
                         }
 
 

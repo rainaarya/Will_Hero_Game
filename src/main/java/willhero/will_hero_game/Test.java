@@ -423,7 +423,7 @@ public class Test implements Initializable {
             orcs = new ArrayList<>();
             chests = new ArrayList<>();
             tnts = new ArrayList<>();
-            hero = new Hero(140, 292);
+            hero = new Hero(140, 232);
             hero.display(gamePlayAnchorPane);
             hero.setGameObjects(gameObjects);
             gameObjects.add(hero);

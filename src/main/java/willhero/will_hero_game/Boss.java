@@ -7,7 +7,7 @@ import javafx.util.Duration;
 
 public class Boss extends Orc {
 
-    private int health = 10;
+    private int health = 20;
 
     public int getHealth() {
         return health;

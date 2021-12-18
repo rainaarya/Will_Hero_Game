@@ -88,7 +88,7 @@ public class Hero extends GameObjects {
     @Override
     public boolean onCollide(GameObjects collider) {
 
-        if (imageView.getY() > 100) {
+        if (imageView.getY() > 160) {
             xMovementTimeline.stop();
             yMovementTimeline.stop();
             return true;
