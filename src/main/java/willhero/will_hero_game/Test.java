@@ -432,20 +432,18 @@ public class Test implements Initializable {
 //        addObject(1);
 //        addObject(1);
 //        addObject(1);
-//            while (numOfislands <= 20) {
-//                if (numOfislands % 3 == 0) {
-//                    addObject((int) (Math.random() * 2) + 2);
-//                } else if(numOfislands == 20) {
-//                    addObject(4);
-//                }
-//                else {
-//                    addObject(1);
-//                }
-//                numOfislands++;
-//            }
-            addObject(2);
-            addObject(1);
-            addObject(4); //boss island
+            while (numOfislands <= 20) {
+                if (numOfislands % 3 == 0) {
+                    addObject((int) (Math.random() * 2) + 2);
+                } else if(numOfislands == 20) {
+                    addObject(4);
+                }
+                else {
+                    addObject(1);
+                }
+                numOfislands++;
+            }
+
         }
 
 //        Island island = new Island(75, 333);
