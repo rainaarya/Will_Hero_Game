@@ -138,6 +138,12 @@ public class DeserialiseHelper {
                 finalList.add(tnt);
 
             }
+            else if (obj instanceof Princess) {
+                Princess princess = new Princess(obj.getLayoutX(), obj.getLayoutY());
+                princess.getImageView().setX(obj.getCoordinatesX());
+                princess.getImageView().setY(obj.getCoordinatesY());
+                finalList.add(princess);
+            }
 
 
         }

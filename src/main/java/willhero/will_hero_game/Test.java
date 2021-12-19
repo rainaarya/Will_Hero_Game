@@ -4,6 +4,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.SequentialTransition;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -13,8 +14,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -30,6 +34,7 @@ public class Test implements Initializable {
 
     private ArrayList<GameObjects> gameObjects;
     private Hero hero;
+    private Princess princess;
     private ArrayList<Orc> orcs;
     private ArrayList<Chest> chests;
     private ArrayList<TNT> tnts;
@@ -53,6 +58,56 @@ public class Test implements Initializable {
     private Text coinLabel;
     @FXML
     private Group reviveGroup;
+
+    @FXML
+    private Group pauseGroup;
+
+
+    @FXML
+    void quitGame(MouseEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("mainMenu.fxml"));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    @FXML
+    void restartGame(MouseEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("GameplayNew.fxml"));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    @FXML
+    void resumeGame(MouseEvent event) {
+        hero.getxMovementTimeline().play();
+        hero.getyMovementTimeline().play();
+        pauseGroup.setVisible(false);
+        pauseGroup.setDisable(true);
+    }
+
+    @FXML
+    void saveGame(MouseEvent event) throws IOException {
+        serialize();
+        System.out.println("Game Saved!");
+        pauseGroup.setVisible(false);
+        pauseGroup.setDisable(true);
+        hero.getxMovementTimeline().play();
+        hero.getyMovementTimeline().play();
+    }
+
+    @FXML
+    public void pause(MouseEvent event) {
+        hero.getxMovementTimeline().pause();
+        hero.getyMovementTimeline().pause();
+        pauseGroup.setVisible(true);
+        pauseGroup.setDisable(false);
+        pauseGroup.toFront();
+
+    }
 
 
     public static void setSerialised(boolean serialised) {
@@ -114,6 +169,8 @@ public class Test implements Initializable {
                 obj.getImageView().toBack();
             } else if (obj instanceof TNT) {
                 tnts.add((TNT) obj);
+            } else if (obj instanceof Princess) {
+                princess = (Princess) obj;
             }
 
         }
@@ -257,6 +314,25 @@ public class Test implements Initializable {
             previousX = previousX + distance + (float) obs1.getImageView().getBoundsInParent().getWidth();
 
         }
+        if (c == 5) {
+            GameObjects obs0 = f.createObject(1, previousX + distance, 333);
+            obs0.display(gamePlayAnchorPane);
+            gameObjects.add(obs0);
+            previousX = previousX + distance + (float) obs0.getImageView().getBoundsInParent().getWidth();
+
+            obs1 = f.createObject(1, previousX, 333);
+            obs1.display(gamePlayAnchorPane);
+            gameObjects.add(obs1);
+
+            Princess princess = new Princess((float) obs1.getImageView().getBoundsInParent().getMinX() + 100, 292);
+            this.princess = princess;
+            princess.display(gamePlayAnchorPane);
+            gameObjects.add(princess);
+
+            addEnvironment(obs1);
+
+            previousX = previousX + distance + (float) obs1.getImageView().getBoundsInParent().getWidth();
+        }
 
 
     }
@@ -363,6 +439,8 @@ public class Test implements Initializable {
                 for (int j = 0; j < tnts.size(); j++) {
                     o.onCollide(tnts.get(j));
                 }
+                o.onCollide(princess);
+
             }
             if (o instanceof Orc) {
                 for (int j = 0; j < orcs.size(); j++) {
@@ -379,7 +457,7 @@ public class Test implements Initializable {
                     o.onCollide(orcs.get(j));
                 }
                 if (((TNT) o).getisExploded()) {
-                    System.out.println("TNT exploded");
+                    //System.out.println("TNT exploded");
                     ((TNT) o).setCheckedAllNearbyEntities(true);
                 }
             }
@@ -387,21 +465,6 @@ public class Test implements Initializable {
         }
 
         return checkHeroCollision;
-    }
-
-//    @Override
-//    public void start(Stage stage) throws Exception {
-//
-//
-//    }
-
-    @FXML
-    public void pause(MouseEvent event) throws IOException {
-        serialize();
-        System.out.println(hero.getImageView().getLayoutX() + " " + hero.getImageView().getLayoutY() + " " + hero.getImageView().getX() + " " + hero.getImageView().getY());
-        //exit the game
-        System.exit(0);
-
     }
 
     @Override
@@ -427,43 +490,20 @@ public class Test implements Initializable {
             hero.display(gamePlayAnchorPane);
             hero.setGameObjects(gameObjects);
             gameObjects.add(hero);
-//        addObject(1);
-//        addObject(1);
-//        addObject(1);
-//        addObject(2);
-//        addObject(1);
-//        addObject(1);
-//        addObject(1);
-//        addObject(1);
-//        addObject(1);
+
             while (numOfislands <= 20) {
                 if (numOfislands % 3 == 0) {
                     addObject((int) (Math.random() * 2) + 2);
-                } else if(numOfislands == 20) {
+                } else if (numOfislands == 20) {
                     addObject(4);
-                }
-                else {
+                    addObject(5);
+                } else {
                     addObject(1);
                 }
                 numOfislands++;
             }
 
         }
-
-
-//        Island island = new Island(75, 333);
-//        island.display(gamePlayAnchorPane);
-//        gameObjects.add(island);
-//
-//        Island island2 = new Island(340, 333);
-//        island2.display(gamePlayAnchorPane);
-//        gameObjects.add(island2);
-//
-//        Orc orc = new Orc(217, 292);
-//        orc.display(gamePlayAnchorPane);
-//        orcs = new ArrayList<>();
-//        orcs.add(orc);
-//        gameObjects.add(orc);
 
         temporary = new Timeline(new KeyFrame(Duration.millis(6), e -> {
             detectCollision();

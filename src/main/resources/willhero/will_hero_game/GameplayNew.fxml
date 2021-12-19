@@ -31,18 +31,60 @@
       </Text>
       <Group fx:id="reviveGroup" disable="true" visible="false">
          <children>
-            <AnchorPane layoutX="231.0" layoutY="20.0" prefHeight="459.0" prefWidth="415.0" style="-fx-background-color: #333333;">
+            <AnchorPane layoutX="234.0" layoutY="17.0" prefHeight="459.0" prefWidth="415.0" style="-fx-background-color: #333333; -fx-background-radius: 5%;">
                <children>
                   <Group>
                      <children>
-                        <ImageView fitHeight="98.0" fitWidth="325.0" layoutX="56.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="98.0" fitWidth="325.0" layoutX="49.0" layoutY="37.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@gameover.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="62.0" fitWidth="200.0" layoutX="108.0" layoutY="178.0" onMouseClicked="#reviveHero" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@button_revive-hero%20(2).png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="64.0" fitWidth="195.0" layoutX="109.0" layoutY="253.0" onMouseClicked="#quitGame" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@button_quit-game.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Group>
+               </children>
+            </AnchorPane>
+         </children>
+      </Group>
+      <Group fx:id="pauseGroup" disable="true" layoutX="10.0" layoutY="10.0" visible="false">
+         <children>
+            <AnchorPane layoutX="231.0" layoutY="7.0" prefHeight="459.0" prefWidth="415.0" style="-fx-background-color: #333333; -fx-background-radius: 5%;">
+               <children>
+                  <Group>
+                     <children>
+                        <ImageView fitHeight="98.0" fitWidth="325.0" layoutX="52.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@pause.png" />
                            </image>
                         </ImageView>
-                        <ImageView fitHeight="52.0" fitWidth="202.0" layoutX="110.0" layoutY="124.0" onMouseClicked="#reviveHero" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="52.0" fitWidth="202.0" layoutX="110.0" layoutY="122.0" onMouseClicked="#resumeGame" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@button_resume-game.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="52.0" fitWidth="202.0" layoutX="112.0" layoutY="184.0" onMouseClicked="#restartGame" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@button_restart-game.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="62.0" fitWidth="189.0" layoutX="112.0" layoutY="245.0" onMouseClicked="#saveGame" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@button_save-game.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="59.0" fitWidth="190.0" layoutX="114.0" layoutY="314.0" onMouseClicked="#quitGame" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@button_quit-game.png" />
                            </image>
                         </ImageView>
                      </children>

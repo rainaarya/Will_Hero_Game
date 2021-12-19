@@ -90,6 +90,11 @@ public class Island extends GameObjects {
                     ((TNT) collider).setDy(1);
                 }
             }
+            else if(collider instanceof Princess) {
+                if (((Princess) collider).getImageView().getBoundsInParent().intersects(imageView.getBoundsInParent())) {
+                    ((Princess) collider).setDy(1);
+                }
+            }
 
         }
         return false;
