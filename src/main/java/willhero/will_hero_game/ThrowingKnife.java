@@ -139,4 +139,12 @@ public class ThrowingKnife extends GameObjects {
         }
     }
 
+    @Override
+    public void cleanup(AnchorPane gamePane) {
+        gamePane.getChildren().remove(imageView);
+        if(timeline != null) {
+            timeline.stop();
+        }
+    }
+
 }

@@ -1,6 +1,7 @@
 package willhero.will_hero_game;
 
 import javafx.scene.Group;
+import javafx.scene.image.Image;
 
 import java.io.EOFException;
 import java.io.FileInputStream;
@@ -79,6 +80,7 @@ public class DeserialiseHelper {
                 Cloud cloud = new Cloud(obj.getLayoutX(), obj.getLayoutY());
                 cloud.getImageView().setX(obj.getCoordinatesX());
                 cloud.getImageView().setY(obj.getCoordinatesY());
+                cloud.getImageView().setImage(new Image(getClass().getResourceAsStream(((Cloud) obj).getPathName())));
                 finalList.add(cloud);
             } else if (obj instanceof CoinChest) {
                 CoinChest coinChest = new CoinChest(obj.getLayoutX(), obj.getLayoutY());
@@ -96,6 +98,7 @@ public class DeserialiseHelper {
                 Island island = new Island(obj.getLayoutX(), obj.getLayoutY());
                 island.getImageView().setX(obj.getCoordinatesX());
                 island.getImageView().setY(obj.getCoordinatesY());
+                island.getImageView().setImage(new Image(getClass().getResourceAsStream(((Island) obj).getPathName())));
                 finalList.add(island);
             } else if (obj instanceof Orc) {
                 if (obj instanceof Boss) {
@@ -104,11 +107,13 @@ public class DeserialiseHelper {
                     orc.getImageView().setY(obj.getCoordinatesY());
                     orc.setHealth(-orc.getHealth());
                     orc.setHealth(((Boss) obj).getHealth());
+                    orc.getImageView().setImage(new Image(getClass().getResourceAsStream(((Boss) obj).getPathName())));
                     finalList.add(orc);
                 } else {
                     Orc orc = new Orc(obj.getLayoutX(), obj.getLayoutY());
                     orc.getImageView().setX(obj.getCoordinatesX());
                     orc.getImageView().setY(obj.getCoordinatesY());
+                    orc.getImageView().setImage(new Image(getClass().getResourceAsStream(((Orc) obj).getPathName())));
                     finalList.add(orc);
                 }
 
@@ -126,6 +131,7 @@ public class DeserialiseHelper {
                 Trees trees = new Trees(obj.getLayoutX(), obj.getLayoutY());
                 trees.getImageView().setX(obj.getCoordinatesX());
                 trees.getImageView().setY(obj.getCoordinatesY());
+                trees.getImageView().setImage(new Image(getClass().getResourceAsStream(((Trees) obj).getPathName())));
                 finalList.add(trees);
             } else if (obj instanceof TNT) {
                 TNT tnt = new TNT(obj.getLayoutX(), obj.getLayoutY());

@@ -65,15 +65,30 @@ public class Test implements Initializable {
 
     @FXML
     void quitGame(MouseEvent event) throws IOException {
+        serialised = false;
+        coins = 0;
+        timeline.stop();
+        temporary.stop();
+        for(GameObjects gameObject : gameObjects) {
+            gameObject.cleanup(gamePlayAnchorPane);
+        }
         Parent root = FXMLLoader.load(getClass().getResource("mainMenu.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+
     }
 
     @FXML
     void restartGame(MouseEvent event) throws IOException {
+        serialised = false;
+        coins = 0;
+        timeline.stop();
+        temporary.stop();
+        for(GameObjects gameObject : gameObjects) {
+            gameObject.cleanup(gamePlayAnchorPane);
+        }
         Parent root = FXMLLoader.load(getClass().getResource("GameplayNew.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
@@ -469,7 +484,6 @@ public class Test implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
         if (serialised) {
             System.out.println("serialised");
             try {
@@ -502,6 +516,10 @@ public class Test implements Initializable {
                 }
                 numOfislands++;
             }
+//            addObject(1);
+//            addObject(1);
+//            addObject(1);
+//            addObject(1);
 
         }
 

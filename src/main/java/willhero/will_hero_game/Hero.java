@@ -134,7 +134,7 @@ public class Hero extends GameObjects {
         xMovementTimeline = new Timeline(new KeyFrame(Duration.millis(9), e -> {
 
             imageView.setX(imageView.getX() + 10);
-            System.out.println(imageView.getX() + " " + imageView.getY());
+            //System.out.println(imageView.getX() + " " + imageView.getY());
             //System.out.println("Layout " + imageView.getLayoutX() + ", " + imageView.getLayoutY());
             //setXY((float) imageView.getX(), (float) imageView.getY());
 
@@ -173,6 +173,17 @@ public class Hero extends GameObjects {
             }
         }
 
+    }
+
+    @Override
+    public void cleanup(AnchorPane gamePane){
+        if(xMovementTimeline != null){
+            xMovementTimeline.stop();
+        }
+        if(yMovementTimeline != null){
+            yMovementTimeline.stop();
+        }
+        gamePane.getChildren().remove(imageView);
     }
 
 

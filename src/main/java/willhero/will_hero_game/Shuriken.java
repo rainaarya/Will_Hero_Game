@@ -216,4 +216,23 @@ public class Shuriken extends GameObjects {
 
     }
 
+    @Override
+    public void cleanup(AnchorPane gamePane) {
+        gamePane.getChildren().remove(imageView);
+        gamePane.getChildren().remove(imageView2);
+        if (timeline != null) {
+            timeline.stop();
+        }
+        if (timeline2 != null) {
+            timeline2.stop();
+        }
+        if (rotateTransition != null) {
+            rotateTransition.stop();
+        }
+        if (rotateTransition2 != null) {
+            rotateTransition2.stop();
+        }
+
+    }
+
 }

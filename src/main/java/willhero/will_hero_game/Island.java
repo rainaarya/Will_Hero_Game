@@ -17,11 +17,15 @@ public class Island extends GameObjects {
         return imageView;
     }
 
-    private void setPathName() {
+    public void setPathName() {
         Random ran = new Random();
         int x = ran.nextInt(4) + 1;
         path = "T_Islands_0" + x + ".png";
     }
+    public String getPathName(){
+        return path;
+    }
+
 
 
     Island(float x, float y) {
@@ -61,7 +65,7 @@ public class Island extends GameObjects {
                         if (!mediaPlayer.getStatus().equals(MediaPlayer.Status.PLAYING)) {
                             mediaPlayer.play();
                         }
-                        System.out.println("on island");
+                        //System.out.println("on island");
                         return false;
                     } else {
                         return true;
@@ -103,8 +107,14 @@ public class Island extends GameObjects {
     @Override
     public void display(AnchorPane gamePane) {
         gamePane.getChildren().add(imageView);
+    }
 
-
+    @Override
+    public void cleanup(AnchorPane gamePane) {
+        if(mediaPlayer != null) {
+            mediaPlayer.stop();
+        }
+        gamePane.getChildren().remove(imageView);
     }
 
 }

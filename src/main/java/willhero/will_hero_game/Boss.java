@@ -2,12 +2,15 @@ package willhero.will_hero_game;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 
 public class Boss extends Orc {
 
     private int health = 20;
+    private transient Timeline timeline0;
+    private transient Timeline timeline;
 
     public int getHealth() {
         return health;
@@ -20,6 +23,7 @@ public class Boss extends Orc {
     Boss(float x, float y) {
         super(x, y);
         getImageView().setFitWidth(100);
+        getImageView().setImage(new Image(getClass().getResourceAsStream("orc1.png")));
 
     }
 
@@ -42,14 +46,14 @@ public class Boss extends Orc {
                     } else {
                         //System.out.println(getImageView().getBoundsInParent().getMaxY() + ", " + ((Hero) collider).getImageView().getBoundsInParent().getMinY());
                         //((Hero) collider).moveHeroBackX(20);
-                        Timeline timeline0 = new Timeline(new KeyFrame(Duration.millis(10), e -> {
+                        timeline0 = new Timeline(new KeyFrame(Duration.millis(10), e -> {
                             ((Hero) collider).moveHeroBackX(2);
                         }
                         ));
                         timeline0.setCycleCount(2);
 
 
-                        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(5), e -> {
+                        timeline = new Timeline(new KeyFrame(Duration.millis(5), e -> {
                             getImageView().setX(getImageView().getX() + 1);
 
                             setXY((float) getImageView().getX(), (float) getImageView().getY());
@@ -84,5 +88,16 @@ public class Boss extends Orc {
 
         }
         return false;
+    }
+
+    @Override
+    public void cleanup(AnchorPane anchorPane) {
+        if(timeline != null)
+            timeline.stop();
+        if(timeline0 != null)
+            timeline0.stop();
+        if(getTimeline2() != null)
+            getTimeline2().stop();
+        anchorPane.getChildren().remove(getImageView());
     }
 }

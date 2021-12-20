@@ -50,5 +50,13 @@ public class WeaponChest extends Chest {
         return collided;
     }
 
+    @Override
+    public void cleanup(AnchorPane anchorPane) {
+        if(getTimeline() != null) {
+            getTimeline().stop();
+        }
+        anchorPane.getChildren().remove(getImageView());
+    }
+
 
 }

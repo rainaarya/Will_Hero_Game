@@ -50,14 +50,22 @@ public class Princess extends GameObjects {
                     dy = -1;
                 }
 
-                if (imageView.getY() > 250) {
-                    timeline2.stop();
-                    imageView.setVisible(false);
-                }
+//                if (imageView.getY() > 250) {
+//                    timeline2.stop();
+//                    imageView.setVisible(false);
+//                }
             }
             ));
             timeline2.setCycleCount(Timeline.INDEFINITE);
             timeline2.play();
+        }
+    }
+
+    @Override
+    public void cleanup(AnchorPane gamePane) {
+        gamePane.getChildren().remove(imageView);
+        if(timeline2 != null) {
+            timeline2.stop();
         }
     }
 

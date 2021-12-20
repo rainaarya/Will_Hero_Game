@@ -14,6 +14,10 @@ public abstract class Chest extends GameObjects {
     private int dy = 1;
     private transient Timeline timeline;
 
+    protected Timeline getTimeline() {
+        return timeline;
+    }
+
     public Chest(float x, float y, String imagePath) {
         super(x, y);
         imageView = new ImageView(new Image(getClass().getResourceAsStream(imagePath)));
@@ -51,6 +55,14 @@ public abstract class Chest extends GameObjects {
 
     public void setDy(int dy) {
         this.dy = dy;
+    }
+
+    @Override
+    public void cleanup(AnchorPane gamePane) {
+        if(timeline != null) {
+            timeline.stop();
+        }
+        gamePane.getChildren().remove(imageView);
     }
 
 }

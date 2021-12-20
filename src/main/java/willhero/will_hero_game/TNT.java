@@ -20,6 +20,7 @@ public class TNT extends GameObjects {
     private transient Circle circle;
     private boolean collided;
     private boolean isExploded;
+    private transient Timeline timeline;
 
     public boolean getisExploded() {
         return isExploded;
@@ -99,9 +100,6 @@ public class TNT extends GameObjects {
         setCircleLayoutXY((float) circle.getCenterX(), (float) circle.getCenterY(), (float) circle.getRadius());
     }
 
-    private transient Timeline timeline;
-
-
     TNT(float x, float y) {
         super(x, y);
         imageView = new ImageView(new Image(getClass().getResourceAsStream("TNT.png")));
@@ -126,6 +124,19 @@ public class TNT extends GameObjects {
                         collided = true;
                     }
 
+                }
+                if(collider instanceof ThrowingKnife){
+                    if(collider.getImageView().getBoundsInParent().intersects(imageView.getBoundsInParent())){
+                        timeline.play();
+                        collided = true;
+                    }
+
+                }
+                if(collider instanceof Shuriken){
+                    if(collider.getImageView().getBoundsInParent().intersects(imageView.getBoundsInParent())){
+                        timeline.play();
+                        collided = true;
+                    }
                 }
             }
             if (collided && isExploded) {
@@ -189,6 +200,15 @@ public class TNT extends GameObjects {
             if (imageView.getY() < 250) {
                 timeline.play();
             }
+        }
+    }
+
+    @Override
+    public void cleanup(AnchorPane gamePane){
+        gamePane.getChildren().remove(imageView);
+        gamePane.getChildren().remove(circle);
+        if(timeline != null){
+            timeline.stop();
         }
     }
 

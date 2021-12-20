@@ -28,6 +28,7 @@ public abstract class GameObjects implements Serializable {
     public abstract boolean onCollide(GameObjects collider);
     public abstract void display(AnchorPane gameAnchor);
     public abstract ImageView getImageView();
+    public abstract void cleanup(AnchorPane gamePane);
 
     public float getLayoutX() {return position[0];}
     public float getLayoutY() {return position[1];}

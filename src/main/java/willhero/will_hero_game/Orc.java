@@ -7,9 +7,23 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 
+import java.util.Random;
+
 public class Orc extends GameObjects {
-    private String imagepath;
+    private String path;
     private transient ImageView imageView;
+
+    public String getPathName() {
+        return path;
+    }
+
+    public void setPathName() {
+        //generate random number from 1 to 2
+        Random random = new Random();
+        int randomNumber = random.nextInt(2) + 1;
+        this.path = "Orc" + randomNumber + ".png";
+    }
+
 
     public ImageView getImageView() {
         return imageView;
@@ -17,6 +31,7 @@ public class Orc extends GameObjects {
 
     public int dy = 1;
     private transient Timeline timeline2;
+
     public Timeline getTimeline2() {
         return timeline2;
     }
@@ -24,7 +39,10 @@ public class Orc extends GameObjects {
 
     Orc(float x, float y) {
         super(x, y);
-        imageView = new ImageView(new Image(getClass().getResourceAsStream("big.png")));
+        if(path == null) {
+            setPathName();
+        }
+        imageView = new ImageView(new Image(getClass().getResourceAsStream(path)));
         imageView.setLayoutX(x);
         imageView.setLayoutY(y);
         imageView.setFitWidth(41);
@@ -109,7 +127,7 @@ public class Orc extends GameObjects {
                 if (imageView.getY() > 250) {
                     System.out.println("orc dead");
                     timeline2.stop();
-                    imageView.setVisible(false);
+                    //imageView.setVisible(false);
                     Test.setCoins(1);
 
 
@@ -118,6 +136,14 @@ public class Orc extends GameObjects {
             ));
             timeline2.setCycleCount(Timeline.INDEFINITE);
             timeline2.play();
+        }
+    }
+
+    @Override
+    public void cleanup(AnchorPane gamePane) {
+        gamePane.getChildren().remove(imageView);
+        if(timeline2 != null) {
+            timeline2.stop();
         }
     }
 

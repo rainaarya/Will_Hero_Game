@@ -17,10 +17,14 @@ public class Cloud extends GameObjects {
         return imageView;
     }
 
-    private void setPathName() {
+    public void setPathName() {
         Random ran = new Random();
         int x = ran.nextInt(6) + 1;
         path = "Cloud_" + x + ".png";
+    }
+
+    public String getPathName() {
+        return path;
     }
 
 
@@ -45,6 +49,11 @@ public class Cloud extends GameObjects {
     @Override
     public void display(AnchorPane gamePane) {
         gamePane.getChildren().add(imageView);
+    }
+
+    @Override
+    public void cleanup(AnchorPane gamePane) {
+        gamePane.getChildren().remove(imageView);
     }
 
 }
