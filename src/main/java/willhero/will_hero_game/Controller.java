@@ -109,6 +109,7 @@ public class Controller implements Initializable {
         root = FXMLLoader.load(getClass().getResource("GameplayNew.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
+        scene.getRoot().requestFocus();
         stage.setScene(scene);
         stage.show();
     }
@@ -147,6 +148,7 @@ public class Controller implements Initializable {
             root = loader.load();
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             scene = new Scene(root);
+            scene.getRoot().requestFocus();
             stage.setScene(scene);
             stage.show();
         } else {

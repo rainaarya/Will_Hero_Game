@@ -106,7 +106,9 @@ public class Test implements Initializable {
 
     @FXML
     void resumeGame(MouseEvent event) {
-        hero.getxMovementTimeline().play();
+        if (hero.getxMovementTimeline().getStatus() == Timeline.Status.RUNNING) {
+            hero.getxMovementTimeline().play();
+        }
         hero.getyMovementTimeline().play();
         pauseGroup.setVisible(false);
         pauseGroup.setDisable(true);
@@ -118,7 +120,10 @@ public class Test implements Initializable {
         System.out.println("Game Saved!");
         pauseGroup.setVisible(false);
         pauseGroup.setDisable(true);
-        hero.getxMovementTimeline().play();
+        //get status of xMovementTimeline
+        if (hero.getxMovementTimeline().getStatus() == Timeline.Status.RUNNING) {
+            hero.getxMovementTimeline().play();
+        }
         hero.getyMovementTimeline().play();
     }
 
@@ -503,6 +508,8 @@ public class Test implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        //get focus on the anchor pane
+        //gamePlayAnchorPane.setFocusTraversable(true);
         if (serialised) {
             System.out.println("serialised");
             try {
@@ -561,64 +568,43 @@ public class Test implements Initializable {
                 temporary.play();
                 reviveScreen();
 
-//                System.out.println("Lets Revive you!");
-//                if (collidedObject instanceof Orc) {
-//                    collidedObject.getImageView().setY(260); //disappear
-//                }
-//
-//                Island prevIsland = null;
-//                for (int i = 0; i < gameObjects.size(); i++) {
-//                    if (gameObjects.get(i) instanceof Island) {
-//                        if (((Island) gameObjects.get(i)).getImageView().getBoundsInParent().getMinX() < hero.getImageView().getBoundsInParent().getMinX()) {
-//                            prevIsland = (Island) gameObjects.get(i);
-//                        }
-//                    }
-//
-//                }
-//                if (prevIsland != null) {
-//                    hero.getImageView().setLayoutX(prevIsland.getImageView().getBoundsInParent().getMinX() + 10);
-//                    hero.getImageView().setX(0);
-//                    hero.getImageView().setLayoutY(prevIsland.getImageView().getBoundsInParent().getMinY() - 100);
-//                    heroCollision = 0;//
-//
-//                    hero.getxMovementTimeline().play();
-//                    hero.getyMovementTimeline().play();
-//
-//                }
-
-
             }
         }
         ));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
-
+        //add key listener
+//        gamePlayAnchorPane.setOnKeyPressed(e -> {
+//            if(e.getCode() == KeyCode.LEFT) {
+//                }
 
         //add mouse click to anchor pane
-        gamePlayAnchorPane.setOnMouseClicked(e -> {
-            if (heroCollision == 0) {
+        gamePlayAnchorPane.setOnKeyPressed(e -> {
+            if (e.getCode() == KeyCode.SPACE) {
+                if (heroCollision == 0) {
 
-                hero.moveHero(60);
-                throwWeapon(hero);
-                moves++;
+                    hero.moveHero(60);
+                    throwWeapon(hero);
+                    moves++;
 
-                //move all game objects to the left
-                Timeline timeline1 = new Timeline(new KeyFrame(Duration.millis(10), e1 -> {
-                    for (int i = 0; i < gameObjects.size(); i++) {
+                    //move all game objects to the left
+                    Timeline timeline1 = new Timeline(new KeyFrame(Duration.millis(10), e1 -> {
+                        for (int i = 0; i < gameObjects.size(); i++) {
 
-                        gameObjects.get(i).getImageView().setLayoutX(gameObjects.get(i).getImageView().getLayoutX() - 2);
-                        gameObjects.get(i).setLayoutXY((float) gameObjects.get(i).getImageView().getLayoutX(), (float) gameObjects.get(i).getImageView().getLayoutY());
+                            gameObjects.get(i).getImageView().setLayoutX(gameObjects.get(i).getImageView().getLayoutX() - 2);
+                            gameObjects.get(i).setLayoutXY((float) gameObjects.get(i).getImageView().getLayoutX(), (float) gameObjects.get(i).getImageView().getLayoutY());
 
-                        if (gameObjects.get(i) instanceof TNT) {
-                            ((TNT) gameObjects.get(i)).moveAllTNTcomponents(-2);
+                            if (gameObjects.get(i) instanceof TNT) {
+                                ((TNT) gameObjects.get(i)).moveAllTNTcomponents(-2);
+                            }
+
                         }
-
                     }
-                }
-                ));
-                timeline1.setCycleCount(30);
-                timeline1.play();
+                    ));
+                    timeline1.setCycleCount(30);
+                    timeline1.play();
 
+                }
             }
         });
 
