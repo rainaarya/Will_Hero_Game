@@ -49,6 +49,12 @@ public class Test implements Initializable {
     private Timeline temporary;
     private GameObjects collidedObject;
     private Integer timesRevived = 0;
+    private static String loadgame;
+
+    public static void setLoadgame(String loadgame) {
+        Test.loadgame = loadgame;
+    }
+
 
     @FXML
     private AnchorPane gamePlayAnchorPane;
@@ -66,10 +72,11 @@ public class Test implements Initializable {
     @FXML
     void quitGame(MouseEvent event) throws IOException {
         serialised = false;
+        loadgame = null;
         coins = 0;
         timeline.stop();
         temporary.stop();
-        for(GameObjects gameObject : gameObjects) {
+        for (GameObjects gameObject : gameObjects) {
             gameObject.cleanup(gamePlayAnchorPane);
         }
         Parent root = FXMLLoader.load(getClass().getResource("mainMenu.fxml"));
@@ -83,10 +90,11 @@ public class Test implements Initializable {
     @FXML
     void restartGame(MouseEvent event) throws IOException {
         serialised = false;
+        loadgame = null;
         coins = 0;
         timeline.stop();
         temporary.stop();
-        for(GameObjects gameObject : gameObjects) {
+        for (GameObjects gameObject : gameObjects) {
             gameObject.cleanup(gamePlayAnchorPane);
         }
         Parent root = FXMLLoader.load(getClass().getResource("GameplayNew.fxml"));
@@ -132,7 +140,17 @@ public class Test implements Initializable {
     public void serialize() throws IOException {
         ObjectOutputStream out = null;
         try {
-            out = new ObjectOutputStream(new FileOutputStream("save.ser"));
+            //make new files with number as last character
+            int count = 1;
+            File file;
+            while (true) {
+                file = new File("src\\main\\savedGames\\save" + count + ".ser");
+                if (!file.exists()) {
+                    break;
+                }
+                count++;
+            }
+            out = new ObjectOutputStream(new FileOutputStream(file));
             out.writeObject(moves);
             Integer coins_temp = coins;
             out.writeObject(coins_temp);
@@ -152,7 +170,8 @@ public class Test implements Initializable {
 
     public void deserialize() throws IOException, ClassNotFoundException {
         DeserialiseHelper deserialiseHelper = new DeserialiseHelper();
-        deserialiseHelper.deserialize("save.ser");
+        System.out.println("src\\main\\savedGames\\" + loadgame);
+        deserialiseHelper.deserialize("src\\main\\savedGames\\" + loadgame);
 
         ArrayList<Integer> gameInfo = deserialiseHelper.getGameInfo();
         moves = gameInfo.get(0);
