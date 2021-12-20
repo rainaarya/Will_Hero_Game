@@ -132,6 +132,9 @@ public class Controller implements Initializable {
         for (File file : directory) {
             games.add(file.getName());
         }
+        if (games.contains(".gitkeep")) {
+            games.remove(".gitkeep");
+        }
         choiceBox.getItems().addAll(games);
 
     }
