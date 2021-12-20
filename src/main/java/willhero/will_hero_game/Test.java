@@ -100,6 +100,7 @@ public class Test implements Initializable {
         Parent root = FXMLLoader.load(getClass().getResource("GameplayNew.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
+        scene.getRoot().requestFocus();
         stage.setScene(scene);
         stage.show();
     }
