@@ -9,6 +9,9 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -364,8 +367,7 @@ public class Game implements Initializable {
 
     }
 
-    @FXML
-    void reviveHero(MouseEvent event) {
+    private void reviveHeroFunction() throws AlreadyRevivedException, InsufficientCoinsException {
         if (coins >= 1 && timesRevived == 0) {
             System.out.println("Lets Revive you!");
             if (collidedObject instanceof Orc) {
@@ -423,18 +425,44 @@ public class Game implements Initializable {
             }
             temporary.stop();
             timeline.play();
+            reviveGroup.setVisible(false);
+            reviveGroup.setDisable(true);
 
         } else {
             if (timesRevived == 1) {
-                System.out.println("You have already used your revive!");
+                throw new AlreadyRevivedException();
             }
             if (coins < 1) {
-                System.out.println("You do not have enough coins to revive!");
+                throw new InsufficientCoinsException();
             }
         }
-        reviveGroup.setVisible(false);
-        reviveGroup.setDisable(true);
 
+    }
+
+    @FXML
+    public void reviveHero(MouseEvent event) {
+        try {
+            reviveHeroFunction();
+        }
+        catch (AlreadyRevivedException e) {
+            //give an alert
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Already Revived");
+            alert.setHeaderText("You have already revived once");
+            //alert.setContentText("You can only revive once");
+            alert.showAndWait();
+
+
+        }
+        catch (InsufficientCoinsException e) {
+            //give an alert
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Insufficient Coins");
+            alert.setHeaderText("You don't have enough coins to revive");
+            //alert.setContentText(e.getMessage());
+            alert.showAndWait();
+
+        }
     }
 
     private void reviveScreen() {
