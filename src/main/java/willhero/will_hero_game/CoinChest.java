@@ -1,7 +1,6 @@
 package willhero.will_hero_game;
 
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
 public class CoinChest extends Chest {
@@ -21,7 +20,7 @@ public class CoinChest extends Chest {
                 if (!collided) {
 
                     System.out.println("You found 15 coins!");
-                    Test.setCoins(15);
+                    Game.setCoins(15);
                     collided = true;
                     getImageView().setImage(new Image(getClass().getResourceAsStream("coinchest_opened.png")));
                     getImageView().setFitWidth(70);

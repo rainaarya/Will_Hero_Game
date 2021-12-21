@@ -5,7 +5,6 @@ import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -15,7 +14,6 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.image.ImageView;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -52,7 +50,7 @@ public class Controller implements Initializable {
     private Stage stage;
     private Scene scene;
     private Parent root;
-    private Test gameController;
+    private Game gameController;
 
     private TranslateTransition transition(ImageView imageView, double time, double ByY) {
         TranslateTransition tt = new TranslateTransition(javafx.util.Duration.millis(time), imageView);
@@ -145,8 +143,8 @@ public class Controller implements Initializable {
         System.out.println(game);
 
         if (game != null) {
-            Test.setSerialised(true);
-            Test.setLoadgame(game);
+            Game.setSerialised(true);
+            Game.setLoadgame(game);
             FXMLLoader loader = new FXMLLoader(getClass().getResource("GameplayNew.fxml"));
             root = loader.load();
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

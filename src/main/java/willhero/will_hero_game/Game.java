@@ -1,10 +1,7 @@
 package willhero.will_hero_game;
 
 import javafx.animation.KeyFrame;
-import javafx.animation.SequentialTransition;
 import javafx.animation.Timeline;
-import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -12,13 +9,9 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -26,11 +19,9 @@ import javafx.util.Duration;
 import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.ResourceBundle;
-import java.util.Scanner;
 
-public class Test implements Initializable {
+public class Game implements Initializable {
 
     private ArrayList<GameObjects> gameObjects;
     private Hero hero;
@@ -52,7 +43,7 @@ public class Test implements Initializable {
     private static String loadgame;
 
     public static void setLoadgame(String loadgame) {
-        Test.loadgame = loadgame;
+        Game.loadgame = loadgame;
     }
 
 
@@ -140,7 +131,7 @@ public class Test implements Initializable {
 
 
     public static void setSerialised(boolean serialised) {
-        Test.serialised = serialised;
+        Game.serialised = serialised;
     }
 
     public void serialize() throws IOException {
@@ -257,19 +248,16 @@ public class Test implements Initializable {
     }
 
     public static void setCoins(int coins) {
-        Test.coins += coins;
+        Game.coins += coins;
     }
 
     private void addObject(int c) {
         int distance = 120;
-        ObjectFactory f = new ObjectFactory();
         GameObjects obs1 = null;
-//        if(c==6||c==9)obs1=f.createObstacle(c,263,prevobstacley-(2*distance));
-
 
         if (c == 1) {
 
-            obs1 = f.createObject(c, previousX + distance, 333);
+            obs1 = new Island(previousX + distance, 333);
             obs1.display(gamePlayAnchorPane);
             gameObjects.add(obs1);
 
@@ -283,7 +271,7 @@ public class Test implements Initializable {
             previousX = previousX + distance + (float) obs1.getImageView().getBoundsInParent().getWidth();
         }
         if (c == 2) {
-            obs1 = f.createObject(1, previousX + distance, 333);
+            obs1 = new Island(previousX + distance, 333);
             obs1.display(gamePlayAnchorPane);
             gameObjects.add(obs1);
 
@@ -309,7 +297,7 @@ public class Test implements Initializable {
             previousX = previousX + distance + (float) obs1.getImageView().getBoundsInParent().getWidth();
         }
         if (c == 3) {
-            obs1 = f.createObject(1, previousX + distance, 333);
+            obs1 = new Island(previousX + distance, 333);
             obs1.display(gamePlayAnchorPane);
             gameObjects.add(obs1);
 
@@ -335,12 +323,12 @@ public class Test implements Initializable {
             previousX = previousX + distance + (float) obs1.getImageView().getBoundsInParent().getWidth();
         }
         if (c == 4) {
-            GameObjects obs0 = f.createObject(1, previousX + distance, 333);
+            Island obs0 = new Island(previousX + distance, 333);
             obs0.display(gamePlayAnchorPane);
             gameObjects.add(obs0);
             previousX = previousX + distance + (float) obs0.getImageView().getBoundsInParent().getWidth();
 
-            obs1 = f.createObject(1, previousX, 333);
+            obs1 = new Island(previousX, 333);
             obs1.display(gamePlayAnchorPane);
             gameObjects.add(obs1);
 
@@ -355,12 +343,12 @@ public class Test implements Initializable {
 
         }
         if (c == 5) {
-            GameObjects obs0 = f.createObject(1, previousX + distance, 333);
+            Island obs0 = new Island(previousX + distance, 333);
             obs0.display(gamePlayAnchorPane);
             gameObjects.add(obs0);
             previousX = previousX + distance + (float) obs0.getImageView().getBoundsInParent().getWidth();
 
-            obs1 = f.createObject(1, previousX, 333);
+            obs1 = new Island(previousX, 333);
             obs1.display(gamePlayAnchorPane);
             gameObjects.add(obs1);
 
@@ -373,7 +361,6 @@ public class Test implements Initializable {
 
             previousX = previousX + distance + (float) obs1.getImageView().getBoundsInParent().getWidth();
         }
-
 
     }
 
@@ -574,12 +561,7 @@ public class Test implements Initializable {
         ));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
-        //add key listener
-//        gamePlayAnchorPane.setOnKeyPressed(e -> {
-//            if(e.getCode() == KeyCode.LEFT) {
-//                }
 
-        //add mouse click to anchor pane
         gamePlayAnchorPane.setOnKeyPressed(e -> {
             if (e.getCode() == KeyCode.SPACE) {
                 if (heroCollision == 0) {

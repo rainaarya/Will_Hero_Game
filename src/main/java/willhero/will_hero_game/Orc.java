@@ -128,7 +128,7 @@ public class Orc extends GameObjects {
                     System.out.println("orc dead");
                     timeline2.stop();
                     //imageView.setVisible(false);
-                    Test.setCoins(1);
+                    Game.setCoins(1);
 
 
                 }

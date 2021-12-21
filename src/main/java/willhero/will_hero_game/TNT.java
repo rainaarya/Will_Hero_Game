@@ -81,7 +81,7 @@ public class TNT extends GameObjects {
         ft.play();
         ft.setOnFinished(event -> {
             circle.setCenterY(260);
-            System.out.println("TNT is gone");
+            //System.out.println("TNT is gone");
         });
 
 
@@ -141,7 +141,7 @@ public class TNT extends GameObjects {
             }
             if (collided && isExploded) {
                 circle.setVisible(true);
-                System.out.println("TNT is exploding");
+                //System.out.println("TNT is exploding");
                 if (collider instanceof Hero || collider instanceof Orc) {
                     if (collider.getImageView().getBoundsInParent().intersects(circle.getBoundsInParent())) {
                         if (collider instanceof Hero) {
