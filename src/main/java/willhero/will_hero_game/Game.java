@@ -155,13 +155,19 @@ public class Game implements Initializable {
         hero.getxMovementTimeline().pause();
         hero.getyMovementTimeline().pause();
         for (int i = 0; i < orcs.size(); i++) {
-            orcs.get(i).getTimeline2().pause();
+            if (orcs.get(i).getTimeline2() != null) {
+                orcs.get(i).getTimeline2().pause();
+            }
         }
         for (int i = 0; i < chests.size(); i++) {
-            chests.get(i).getTimeline().pause();
+            if (chests.get(i).getTimeline() != null) {
+                chests.get(i).getTimeline().pause();
+            }
         }
         for (int i = 0; i < tnts.size(); i++) {
-            tnts.get(i).getTimeline().pause();
+            if (tnts.get(i).getTimeline() != null) {
+                tnts.get(i).getTimeline().pause();
+            }
         }
         pauseGroup.setVisible(true);
         pauseGroup.setDisable(false);
@@ -519,13 +525,19 @@ public class Game implements Initializable {
         reviveGroup.setDisable(false);
         reviveGroup.toFront();
         for (int i = 0; i < orcs.size(); i++) {
-            orcs.get(i).getTimeline2().pause();
+            if (orcs.get(i).getTimeline2() != null) {
+                orcs.get(i).getTimeline2().pause();
+            }
         }
         for (int i = 0; i < chests.size(); i++) {
-            chests.get(i).getTimeline().pause();
+            if (chests.get(i).getTimeline() != null) {
+                chests.get(i).getTimeline().pause();
+            }
         }
         for (int i = 0; i < tnts.size(); i++) {
-            tnts.get(i).getTimeline().pause();
+            if (tnts.get(i).getTimeline() != null) {
+                tnts.get(i).getTimeline().pause();
+            }
         }
 
     }

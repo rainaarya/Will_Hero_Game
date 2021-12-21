@@ -37,7 +37,7 @@ public abstract class Chest extends GameObjects {
         //System.out.println("Chest added to gamePane");
         timeline = new Timeline(new KeyFrame(Duration.millis(18), e -> {
             imageView.setY(imageView.getY() - dy);
-            setXY((float) imageView.getX(), (float) imageView.getY());
+            //setXY((float) imageView.getX(), (float) imageView.getY());
             if (imageView.getY() == -18) {
                 dy = -1;
             }
