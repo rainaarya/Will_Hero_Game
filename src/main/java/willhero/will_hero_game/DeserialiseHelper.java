@@ -108,12 +108,14 @@ public class DeserialiseHelper {
                     orc.setHealth(-orc.getHealth());
                     orc.setHealth(((Boss) obj).getHealth());
                     orc.getImageView().setImage(new Image(getClass().getResourceAsStream(((Boss) obj).getPathName())));
+                    orc.setVisible(((Boss) obj).getIsVisible());
                     finalList.add(orc);
                 } else {
                     Orc orc = new Orc(obj.getLayoutX(), obj.getLayoutY());
                     orc.getImageView().setX(obj.getCoordinatesX());
                     orc.getImageView().setY(obj.getCoordinatesY());
                     orc.getImageView().setImage(new Image(getClass().getResourceAsStream(((Orc) obj).getPathName())));
+                    orc.setVisible(((Orc) obj).getIsVisible());
                     finalList.add(orc);
                 }
 

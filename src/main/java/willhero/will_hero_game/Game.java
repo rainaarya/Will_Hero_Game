@@ -1,5 +1,6 @@
 package willhero.will_hero_game;
 
+import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
@@ -105,6 +106,19 @@ public class Game implements Initializable {
             hero.getxMovementTimeline().play();
         }
         hero.getyMovementTimeline().play();
+        for (int i = 0; i < orcs.size(); i++) {
+            if (orcs.get(i).getIsVisible()) {
+                orcs.get(i).getTimeline2().play();
+            }
+        }
+        for (int i = 0; i < chests.size(); i++) {
+            chests.get(i).getTimeline().play();
+        }
+        for (int i = 0; i < tnts.size(); i++) {
+            if (!tnts.get(i).getisExploded() && tnts.get(i).getCollided() && tnts.get(i).getImageView().getY() < 250) {
+                tnts.get(i).getTimeline().play();
+            }
+        }
         pauseGroup.setVisible(false);
         pauseGroup.setDisable(true);
     }
@@ -112,7 +126,7 @@ public class Game implements Initializable {
     @FXML
     void saveGame(MouseEvent event) throws IOException {
         serialize();
-        System.out.println("Game Saved!");
+        System.out.println("Game Saved Successfully!");
         pauseGroup.setVisible(false);
         pauseGroup.setDisable(true);
         //get status of xMovementTimeline
@@ -120,12 +134,35 @@ public class Game implements Initializable {
             hero.getxMovementTimeline().play();
         }
         hero.getyMovementTimeline().play();
+        for (int i = 0; i < orcs.size(); i++) {
+            if (orcs.get(i).getIsVisible()) {
+                orcs.get(i).getTimeline2().play();
+            }
+        }
+        for (int i = 0; i < chests.size(); i++) {
+            chests.get(i).getTimeline().play();
+        }
+        for (int i = 0; i < tnts.size(); i++) {
+            if (!tnts.get(i).getisExploded() && tnts.get(i).getCollided() && tnts.get(i).getImageView().getY() < 250) {
+                tnts.get(i).getTimeline().play();
+            }
+        }
+
     }
 
     @FXML
     public void pause(MouseEvent event) {
         hero.getxMovementTimeline().pause();
         hero.getyMovementTimeline().pause();
+        for (int i = 0; i < orcs.size(); i++) {
+            orcs.get(i).getTimeline2().pause();
+        }
+        for (int i = 0; i < chests.size(); i++) {
+            chests.get(i).getTimeline().pause();
+        }
+        for (int i = 0; i < tnts.size(); i++) {
+            tnts.get(i).getTimeline().pause();
+        }
         pauseGroup.setVisible(true);
         pauseGroup.setDisable(false);
         pauseGroup.toFront();
@@ -421,6 +458,20 @@ public class Game implements Initializable {
                 timesRevived++;
                 hero.getxMovementTimeline().play();
                 hero.getyMovementTimeline().play();
+                for (int i = 0; i < orcs.size(); i++) {
+                    if (orcs.get(i).getIsVisible()) {
+                        orcs.get(i).getTimeline2().play();
+                    }
+                }
+                for (int i = 0; i < chests.size(); i++) {
+                    chests.get(i).getTimeline().play();
+                }
+                for (int i = 0; i < tnts.size(); i++) {
+                    //if timeline has started
+                    if (!tnts.get(i).getisExploded() && tnts.get(i).getCollided() && tnts.get(i).getImageView().getY() < 250) {
+                        tnts.get(i).getTimeline().play();
+                    }
+                }
 
             }
             temporary.stop();
@@ -443,8 +494,7 @@ public class Game implements Initializable {
     public void reviveHero(MouseEvent event) {
         try {
             reviveHeroFunction();
-        }
-        catch (AlreadyRevivedException e) {
+        } catch (AlreadyRevivedException e) {
             //give an alert
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Already Revived");
@@ -453,8 +503,7 @@ public class Game implements Initializable {
             alert.showAndWait();
 
 
-        }
-        catch (InsufficientCoinsException e) {
+        } catch (InsufficientCoinsException e) {
             //give an alert
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Insufficient Coins");
@@ -469,6 +518,15 @@ public class Game implements Initializable {
         reviveGroup.setVisible(true);
         reviveGroup.setDisable(false);
         reviveGroup.toFront();
+        for (int i = 0; i < orcs.size(); i++) {
+            orcs.get(i).getTimeline2().pause();
+        }
+        for (int i = 0; i < chests.size(); i++) {
+            chests.get(i).getTimeline().pause();
+        }
+        for (int i = 0; i < tnts.size(); i++) {
+            tnts.get(i).getTimeline().pause();
+        }
 
     }
 

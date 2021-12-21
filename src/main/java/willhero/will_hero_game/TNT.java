@@ -22,6 +22,10 @@ public class TNT extends GameObjects {
     private boolean isExploded;
     private transient Timeline timeline;
 
+    public Timeline getTimeline() {
+        return timeline;
+    }
+
     public boolean getisExploded() {
         return isExploded;
     }
@@ -62,7 +66,7 @@ public class TNT extends GameObjects {
         circlePositionandRadius[0] = x;
         circlePositionandRadius[1] = y;
         circlePositionandRadius[2] = radius;
-        System.out.println(x+" "+y+" "+radius);
+        //System.out.println(x+" "+y+" "+radius);
         circle.setFill(RED);
         circle.setStroke(BLACK);
         circle.setStrokeWidth(1);

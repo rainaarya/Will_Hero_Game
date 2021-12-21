@@ -74,7 +74,7 @@ public class Island extends GameObjects {
                 }
             } else if (collider instanceof Orc) {
                 if (((Orc) collider).getImageView().getBoundsInParent().intersects(imageView.getBoundsInParent())) {
-                    if (((Orc) collider).getImageView().getBoundsInParent().getMaxY()-3 <= imageView.getBoundsInParent().getMinY()) {
+                    if (((Orc) collider).getImageView().getBoundsInParent().getMaxY()-40 <= imageView.getBoundsInParent().getMinY()) {
                         //System.out.println("on island");
                         ((Orc) collider).dy = 1;
                         return false;

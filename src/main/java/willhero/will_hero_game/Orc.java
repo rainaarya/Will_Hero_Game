@@ -12,6 +12,7 @@ import java.util.Random;
 public class Orc extends GameObjects {
     private String path;
     private transient ImageView imageView;
+    private boolean isVisible;
 
     public String getPathName() {
         return path;
@@ -22,6 +23,15 @@ public class Orc extends GameObjects {
         Random random = new Random();
         int randomNumber = random.nextInt(2) + 1;
         this.path = "Orc" + randomNumber + ".png";
+    }
+
+    public boolean getIsVisible() {
+        return isVisible;
+    }
+
+    public void setVisible(boolean isVisible) {
+        this.isVisible = isVisible;
+        imageView.setVisible(isVisible);
     }
 
 
@@ -39,7 +49,7 @@ public class Orc extends GameObjects {
 
     Orc(float x, float y) {
         super(x, y);
-        if(path == null) {
+        if (path == null) {
             setPathName();
         }
         imageView = new ImageView(new Image(getClass().getResourceAsStream(path)));
@@ -47,6 +57,7 @@ public class Orc extends GameObjects {
         imageView.setLayoutY(y);
         imageView.setFitWidth(41);
         imageView.setPreserveRatio(true);
+        isVisible = true;
         setObjectType("Orc");
     }
 
@@ -106,7 +117,7 @@ public class Orc extends GameObjects {
     @Override
     public void display(AnchorPane gamePane) {
         gamePane.getChildren().add(imageView);
-        if (imageView.getY() < 250) {
+        if (imageView.getY() < 250 && imageView.isVisible() && isVisible) {
             timeline2 = new Timeline(new KeyFrame(Duration.millis(8), e -> {
                 //System.out.println(hero.getX() + ", " + hero.getY());
                 //System.out.println(hero.getLayoutX() + ", " + hero.getLayoutY());
@@ -118,16 +129,13 @@ public class Orc extends GameObjects {
                     dy = -1;
 
                 }
-//            if (hero.getY() == 0) {
-//                dy.set(1);
-//            }
 
-                // check if hero is on island
-
-                if (imageView.getY() > 250) {
-                    System.out.println("orc dead");
+                if (imageView.getY() > 250 && imageView.isVisible() && isVisible) {
+                    System.out.println("orc dead" + imageView.getX() + ", " + imageView.getY());
+                    imageView.setVisible(false);
+                    isVisible = false;
+                    //System.out.println(imageView.getLayoutX() + ", " + imageView.getLayoutY());
                     timeline2.stop();
-                    //imageView.setVisible(false);
                     Game.setCoins(1);
 
 
@@ -142,7 +150,7 @@ public class Orc extends GameObjects {
     @Override
     public void cleanup(AnchorPane gamePane) {
         gamePane.getChildren().remove(imageView);
-        if(timeline2 != null) {
+        if (timeline2 != null) {
             timeline2.stop();
         }
     }
