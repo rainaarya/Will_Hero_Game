@@ -41,7 +41,7 @@ public class Boss extends Orc {
 
                     } else if (Math.abs(((Hero) collider).getImageView().getBoundsInParent().getMaxY() - getImageView().getBoundsInParent().getMinY()) <= 5) {
                         //System.out.println("hero is above orc");
-                        ((Hero) collider).dy = 1;
+                        ((Hero) collider).setDy(1);
 
                     } else {
                         //System.out.println(getImageView().getBoundsInParent().getMaxY() + ", " + ((Hero) collider).getImageView().getBoundsInParent().getMinY());

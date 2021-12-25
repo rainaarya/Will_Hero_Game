@@ -60,7 +60,7 @@ public class Island extends GameObjects {
 
                     if (((Hero) collider).getImageView().getBoundsInParent().getMaxY()-20 <= imageView.getBoundsInParent().getMinY()) {
                         //System.out.println("on island");
-                        ((Hero) collider).dy = 1;
+                        ((Hero) collider).setDy(1);
                         //check if media player is currently playing
                         if (!mediaPlayer.getStatus().equals(MediaPlayer.Status.PLAYING)) {
                             mediaPlayer.play();
