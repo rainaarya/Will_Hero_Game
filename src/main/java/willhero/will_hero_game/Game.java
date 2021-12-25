@@ -16,6 +16,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -59,9 +61,10 @@ public class Game implements Initializable {
     private Text coinLabel;
     @FXML
     private Group reviveGroup;
-
     @FXML
     private Group pauseGroup;
+    @FXML
+    private Group gameOverGroup;
 
 
     @FXML
@@ -655,6 +658,15 @@ public class Game implements Initializable {
                 reviveScreen();
 
             }
+            if (Math.abs(hero.getImageView().getBoundsInParent().getMaxX() - princess.getImageView().getBoundsInParent().getMinX()) < 65) {
+                hero.getxMovementTimeline().stop();
+                heroCollision = 1;
+                //hero.getyMovementTimeline().stop();
+                timeline.stop();
+                temporary.play();
+                gameOverScreen();
+
+            }
         }
         ));
         timeline.setCycleCount(Timeline.INDEFINITE);
@@ -687,6 +699,43 @@ public class Game implements Initializable {
 
                 }
             }
+        });
+
+
+    }
+
+    private void gameOverScreen() {
+
+        //play winning sound
+        MediaPlayer mediaPlayer = new MediaPlayer(new Media(getClass().getResource("win.mp3").toString()));
+        mediaPlayer.play();
+
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(3000), e -> {
+            //wait 3 seconds
+        }
+        ));
+        timeline.setCycleCount(1);
+        timeline.play();
+        timeline.setOnFinished(e -> {
+            gameOverGroup.setVisible(true);
+            gameOverGroup.setDisable(false);
+            gameOverGroup.toFront();
+            for (int i = 0; i < orcs.size(); i++) {
+                if (orcs.get(i).getTimeline2() != null) {
+                    orcs.get(i).getTimeline2().pause();
+                }
+            }
+            for (int i = 0; i < chests.size(); i++) {
+                if (chests.get(i).getTimeline() != null) {
+                    chests.get(i).getTimeline().pause();
+                }
+            }
+            for (int i = 0; i < tnts.size(); i++) {
+                if (tnts.get(i).getTimeline() != null) {
+                    tnts.get(i).getTimeline().pause();
+                }
+            }
+
         });
 
 

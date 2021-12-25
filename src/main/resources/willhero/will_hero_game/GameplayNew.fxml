@@ -93,5 +93,32 @@
             </AnchorPane>
          </children>
       </Group>
+      <Group fx:id="gameOverGroup" disable="true" layoutX="10.0" layoutY="10.0" visible="false">
+         <children>
+            <AnchorPane layoutX="234.0" layoutY="6.0" prefHeight="459.0" prefWidth="415.0" style="-fx-background-color: #333333; -fx-background-radius: 5%;">
+               <children>
+                  <Group>
+                     <children>
+                        <ImageView fitHeight="53.0" fitWidth="315.0" layoutX="61.0" layoutY="39.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@youwon.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="64.0" fitWidth="195.0" layoutX="109.0" layoutY="253.0" onMouseClicked="#quitGame" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@button_quit-game.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="54.0" fitWidth="196.0" layoutX="109.0" layoutY="186.0" onMouseClicked="#restartGame" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@button_restart-game.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Group>
+               </children>
+            </AnchorPane>
+         </children>
+      </Group>
    </children>
 </AnchorPane>
