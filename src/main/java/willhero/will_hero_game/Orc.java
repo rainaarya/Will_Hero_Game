@@ -39,7 +39,10 @@ public class Orc extends GameObjects {
         return imageView;
     }
 
-    public int dy = 1;
+    private int dy = 1;
+    public void setDy(int dy) {
+        this.dy = dy;
+    }
     private transient Timeline timeline2;
 
     public Timeline getTimeline2() {
