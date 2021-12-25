@@ -16,6 +16,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Text;
@@ -65,6 +66,18 @@ public class Game implements Initializable {
     private Group pauseGroup;
     @FXML
     private Group gameOverGroup;
+    @FXML
+    private Group knifeGroup;
+    @FXML
+    private Text knifeLevelText;
+    @FXML
+    private Group shurikenGroup;
+    @FXML
+    private Text shurikenLevelText;
+    @FXML
+    private BorderPane weapon1border;
+    @FXML
+    private BorderPane weapon2border;
 
 
     @FXML
@@ -178,6 +191,20 @@ public class Game implements Initializable {
 
     }
 
+    @FXML
+    void onKnifeClick(MouseEvent event) {
+        if (hero.getweapon1Level() != 0) {
+            hero.setcurrentWeapon(1);
+        }
+    }
+
+    @FXML
+    void onShurikenClick(MouseEvent event) {
+        if (hero.getweapon2Level() != 0) {
+            hero.setcurrentWeapon(2);
+        }
+    }
+
 
     public static void setSerialised(boolean serialised) {
         Game.serialised = serialised;
@@ -235,6 +262,30 @@ public class Game implements Initializable {
             if (obj instanceof Hero) {
                 hero = (Hero) obj;
                 hero.setGameObjects(gameObjects);
+                if (hero.getweapon1Level() == 1) {
+                    knifeGroup.setOpacity(1);
+                    knifeLevelText.setText("1");
+                } else if (hero.getweapon1Level() == 2) {
+                    knifeGroup.setOpacity(1);
+                    knifeLevelText.setText("2");
+                }
+
+                if (hero.getweapon2Level() == 1) {
+                    shurikenGroup.setOpacity(1);
+                    shurikenLevelText.setText("1");
+                } else if (hero.getweapon2Level() == 2) {
+                    shurikenGroup.setOpacity(1);
+                    shurikenLevelText.setText("2");
+                }
+
+                if (hero.getcurrentWeapon() == 1) {
+                    weapon1border.setVisible(true);
+                    weapon2border.setVisible(false);
+                } else if (hero.getcurrentWeapon() == 2) {
+                    weapon1border.setVisible(false);
+                    weapon2border.setVisible(true);
+                }
+
             } else if (obj instanceof Orc) {
                 orcs.add((Orc) obj);
             } else if (obj instanceof CoinChest) {
@@ -648,6 +699,31 @@ public class Game implements Initializable {
         timeline = new Timeline(new KeyFrame(Duration.millis(6), e -> {
             coinLabel.setText("" + coins);
             movesLabel.setText("Moves: " + moves);
+            if (hero.getweapon1Level() == 1) {
+                knifeLevelText.setText("1");
+                knifeGroup.setOpacity(1);
+            } else if (hero.getweapon1Level() == 2) {
+                knifeLevelText.setText("2");
+                knifeGroup.setOpacity(1);
+            }
+
+            if (hero.getweapon2Level() == 1) {
+                shurikenLevelText.setText("1");
+                shurikenGroup.setOpacity(1);
+            } else if (hero.getweapon2Level() == 2) {
+                shurikenLevelText.setText("2");
+                shurikenGroup.setOpacity(1);
+            }
+
+            if (hero.getcurrentWeapon() == 1) {
+                weapon1border.setVisible(true);
+                weapon2border.setVisible(false);
+            } else if (hero.getcurrentWeapon() == 2) {
+                weapon2border.setVisible(true);
+                weapon1border.setVisible(false);
+            }
+
+
             if (detectCollision()) {
                 System.out.println("collision");
                 heroCollision = 1;

@@ -4,10 +4,11 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="gamePlayAnchorPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="495.0" prefWidth="846.0" style="-fx-background-color: #00FFFF;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="willhero.will_hero_game.Game">
+<AnchorPane fx:id="gamePlayAnchorPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="846.0" style="-fx-background-color: #00FFFF;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="willhero.will_hero_game.Game">
    <children>
       <ImageView fx:id="pause" fitHeight="52.0" fitWidth="58.0" layoutX="29.0" layoutY="29.0" onMouseClicked="#pause" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -118,6 +119,36 @@
                   </Group>
                </children>
             </AnchorPane>
+         </children>
+      </Group>
+      <Group fx:id="knifeGroup" layoutX="54.0" layoutY="475.0" opacity="0.5">
+         <children>
+            <BorderPane fx:id="weapon1border" layoutX="-7.0" layoutY="-6.0" prefHeight="64.0" prefWidth="67.0" style="-fx-border-color: #FF0000; -fx-border-width: 4; -fx-border-radius: 10%;" visible="false" />
+            <ImageView fitHeight="52.0" fitWidth="80.0" onMouseClicked="#onKnifeClick" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Knifes.png" />
+               </image>
+            </ImageView>
+            <Text fx:id="knifeLevelText" layoutX="39.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" wrappingWidth="17.199981689453125">
+               <font>
+                  <Font name="Gill Sans MT" size="18.0" />
+               </font>
+            </Text>
+         </children>
+      </Group>
+      <Group fx:id="shurikenGroup" layoutX="123.0" layoutY="475.0" opacity="0.5">
+         <children>
+            <BorderPane fx:id="weapon2border" layoutX="-7.0" layoutY="-6.0" prefHeight="65.0" prefWidth="65.0" style="-fx-border-color: #FF0000; -fx-border-width: 4; -fx-border-radius: 10%;" visible="false" />
+            <ImageView fitHeight="52.0" fitWidth="80.0" onMouseClicked="#onShurikenClick" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Shurikens.png" />
+               </image>
+            </ImageView>
+            <Text fx:id="shurikenLevelText" layoutX="39.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" wrappingWidth="17.199981689453125">
+               <font>
+                  <Font name="Gill Sans MT" size="18.0" />
+               </font>
+            </Text>
          </children>
       </Group>
    </children>
