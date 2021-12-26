@@ -132,19 +132,24 @@
                               <Font name="Segoe UI Semibold" size="21.0" />
                            </font>
                         </Text>
-                        <Text fx:id="movesText" fill="WHITE" layoutX="39.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Moves:" wrappingWidth="164.79998779296875">
+                        <Text fx:id="movesText" fill="WHITE" layoutX="39.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Moves:" wrappingWidth="164.79998779296875">
                            <font>
                               <Font name="Segoe UI Semibold" size="21.0" />
                            </font>
                         </Text>
-                        <ImageView fitHeight="35.0" fitWidth="31.0" layoutX="3.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="35.0" fitWidth="31.0" layoutX="3.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@Knight.png" />
                            </image>
                         </ImageView>
-                        <ImageView fitHeight="42.0" fitWidth="195.0" layoutX="38.0" layoutY="118.0" onMouseClicked="#loadGameSave" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="54.0" fitWidth="187.0" layoutX="51.0" layoutY="75.0" onMouseClicked="#loadGameSave" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@loadgame.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="48.0" fitWidth="116.0" layoutX="83.0" layoutY="126.0" onMouseClicked="#deleteSave" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@delbutton.png" />
                            </image>
                         </ImageView>
                      </children>

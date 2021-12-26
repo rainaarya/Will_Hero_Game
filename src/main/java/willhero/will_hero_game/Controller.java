@@ -158,6 +158,22 @@ public class Controller implements Initializable {
 
     }
 
+    @FXML
+    public void deleteSave(MouseEvent event) throws IOException {
+        String game = choiceBox.getValue();
+        //delete the file named game from the savedGames folder if it exists
+        File file = new File("src\\main\\savedGames\\" + game);
+        if (file.exists()) {
+            file.delete();
+            choiceBox.getItems().remove(game);
+            choiceBox.setValue(null);
+            gameSelectedGroup.setDisable(true);
+            gameSelectedGroup.setVisible(false);
+        }
+
+
+    }
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

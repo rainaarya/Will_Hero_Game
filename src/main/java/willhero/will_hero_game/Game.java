@@ -25,7 +25,10 @@ import javafx.util.Duration;
 
 import java.io.*;
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 public class Game implements Initializable {
@@ -214,14 +217,20 @@ public class Game implements Initializable {
         ObjectOutputStream out = null;
         try {
             //make new files with number as last character
-            int count = 1;
+            //int count = 1;
             File file;
+
             while (true) {
-                file = new File("src\\main\\savedGames\\save" + count + ".ser");
+                //set file name as the current date and time
+                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
+                Date date = new Date();
+                String fileNamestr = dateFormat.format(date);
+                System.out.println("FileName is " + fileNamestr + ".ser");
+                file = new File("src\\main\\savedGames\\" + fileNamestr + ".ser");
                 if (!file.exists()) {
                     break;
                 }
-                count++;
+                //count++;
             }
             out = new ObjectOutputStream(new FileOutputStream(file));
             out.writeObject(moves);
