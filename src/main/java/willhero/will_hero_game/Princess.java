@@ -26,7 +26,7 @@ public class Princess extends GameObjects {
 
     Princess(float x, float y) {
         super(x, y);
-        imageView = new ImageView(new Image(getClass().getResourceAsStream("Princess_happy.png")));
+        imageView = new ImageView(new Image(getClass().getResourceAsStream("Princess.png")));
         imageView.setLayoutX(x);
         imageView.setLayoutY(y);
         imageView.setFitWidth(41);

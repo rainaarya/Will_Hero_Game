@@ -146,27 +146,6 @@ public class Game implements Initializable {
     void saveGame(MouseEvent event) throws IOException {
         serialize();
         System.out.println("Game Saved Successfully!");
-        pauseGroup.setVisible(false);
-        pauseGroup.setDisable(true);
-        //get status of xMovementTimeline
-        if (hero.getxMovementTimeline().getStatus() == Timeline.Status.RUNNING) {
-            hero.getxMovementTimeline().play();
-        }
-        hero.getyMovementTimeline().play();
-        for (int i = 0; i < orcs.size(); i++) {
-            if (orcs.get(i).getIsVisible()) {
-                orcs.get(i).getTimeline2().play();
-            }
-        }
-        for (int i = 0; i < chests.size(); i++) {
-            chests.get(i).getTimeline().play();
-        }
-        for (int i = 0; i < tnts.size(); i++) {
-            if (!tnts.get(i).getisExploded() && tnts.get(i).getCollided() && tnts.get(i).getImageView().getY() < 250) {
-                tnts.get(i).getTimeline().play();
-            }
-        }
-
     }
 
     @FXML
@@ -219,12 +198,13 @@ public class Game implements Initializable {
             //make new files with number as last character
             //int count = 1;
             File file;
+            String fileNamestr;
 
             while (true) {
                 //set file name as the current date and time
                 DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
                 Date date = new Date();
-                String fileNamestr = dateFormat.format(date);
+                fileNamestr = dateFormat.format(date);
                 System.out.println("FileName is " + fileNamestr + ".ser");
                 file = new File("src\\main\\savedGames\\" + fileNamestr + ".ser");
                 if (!file.exists()) {
@@ -242,6 +222,11 @@ public class Game implements Initializable {
             for (GameObjects obj : gameObjects) {
                 out.writeObject(obj);
             }
+            //display alert that game has been saved
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Game Saved");
+            alert.setHeaderText("Game Saved Successfully with filename as " + fileNamestr);
+            alert.showAndWait();
 
         } finally {
             assert out != null;
@@ -744,6 +729,7 @@ public class Game implements Initializable {
 
             }
             if (Math.abs(hero.getImageView().getBoundsInParent().getMaxX() - princess.getImageView().getBoundsInParent().getMinX()) < 65) {
+                princess.getImageView().setImage(new Image(getClass().getResourceAsStream("Princess_happy.png")));
                 hero.getxMovementTimeline().stop();
                 heroCollision = 1;
                 //hero.getyMovementTimeline().stop();
