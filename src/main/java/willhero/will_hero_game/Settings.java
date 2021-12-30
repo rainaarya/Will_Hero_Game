@@ -23,6 +23,36 @@ public class Settings implements Initializable {
 
     private static MediaPlayer mediaPlayer;
 
+    public static void setMediaPlayer(String path) {
+        if(mediaPlayer != null) {
+            mediaPlayer.stop();
+        }
+        Settings.mediaPlayer = new MediaPlayer(new Media(Settings.class.getResource(path).toString()));
+        mediaPlayer.setOnEndOfMedia(new Runnable() {
+            public void run() {
+                mediaPlayer.seek(mediaPlayer.getStartTime());
+            }
+        });
+    }
+
+    public static MediaPlayer getMediaPlayer() {
+        return mediaPlayer;
+    }
+
+    public static void initMediaPlayer() {
+        if (mediaPlayer == null) {
+            URL resource = Settings.class.getResource("GameMusic.mp3");
+            assert resource != null;
+            mediaPlayer = new MediaPlayer(new Media(resource.toString()));
+            mediaPlayer.play();
+            mediaPlayer.setOnEndOfMedia(new Runnable() {
+                public void run() {
+                    mediaPlayer.seek(mediaPlayer.getStartTime());
+                }
+            });
+        }
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         if (mediaPlayer == null) {
@@ -58,7 +88,7 @@ public class Settings implements Initializable {
 
     public void switchToMain(MouseEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("mainMenu.fxml"));
-        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();

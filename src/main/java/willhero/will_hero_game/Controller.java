@@ -110,6 +110,11 @@ public class Controller implements Initializable {
         scene.getRoot().requestFocus();
         stage.setScene(scene);
         stage.show();
+        //change the song of the media
+        Settings.setMediaPlayer("willherodrums_1.mp3");
+        Settings.getMediaPlayer().setVolume(0.5);
+        Settings.getMediaPlayer().play();
+
     }
 
     @FXML
@@ -177,6 +182,8 @@ public class Controller implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        Settings.initMediaPlayer();
         // make all jump using TranslateTransition princessMsg, princess, orc, island
 
         ArrayList<TranslateTransition> transitions = new ArrayList<>();

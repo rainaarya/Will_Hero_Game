@@ -85,16 +85,6 @@
             <Image url="@exit.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="339.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@Coin.png" />
-         </image>
-      </ImageView>
-      <Text layoutX="367.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" wrappingWidth="59.64215087890625">
-         <font>
-            <Font name="Gill Sans MT Bold" size="24.0" />
-         </font>
-      </Text>
       <Group fx:id="LoadGameWindowGroup" disable="true" layoutX="-46.0" layoutY="95.0" visible="false">
          <children>
             <AnchorPane layoutX="90.0" layoutY="552.0" prefHeight="486.0" prefWidth="324.0" style="-fx-background-color: #333333; -fx-background-radius: 5%;">
