@@ -39,6 +39,7 @@ public class DeserialiseHelper {
                         hero.setcurrentWeapon(((Hero) tmp).getcurrentWeapon());
                         hero.setweapon1Level(((Hero) tmp).getweapon1Level());
                         hero.setweapon2Level(((Hero) tmp).getweapon2Level());
+                        hero.setisFlying(((Hero) tmp).getisFlying());
                         finalList.add(hero);
                     }
                     myList.add(tmp);

@@ -151,5 +151,10 @@
             </Text>
          </children>
       </Group>
+      <ImageView fx:id="fly" fitHeight="52.0" fitWidth="80.0" layoutX="772.0" layoutY="474.0" onMouseClicked="#onFlyClick" opacity="0.25" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@fly.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

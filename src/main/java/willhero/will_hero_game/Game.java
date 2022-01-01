@@ -3,6 +3,7 @@ package willhero.will_hero_game;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -81,6 +82,8 @@ public class Game implements Initializable {
     private BorderPane weapon1border;
     @FXML
     private BorderPane weapon2border;
+    @FXML
+    private ImageView fly;
 
 
     @FXML
@@ -124,10 +127,24 @@ public class Game implements Initializable {
 
     @FXML
     void resumeGame(MouseEvent event) {
+        heroCollision = 0;
         if (hero.getxMovementTimeline().getStatus() == Timeline.Status.RUNNING) {
             hero.getxMovementTimeline().play();
         }
-        hero.getyMovementTimeline().play();
+        if (!hero.getisFlying()) {
+            hero.getyMovementTimeline().play();
+        }
+        if (hero.getisFlying()) {
+            if (hero.getupanddown() != null) {
+                hero.getupanddown().play();
+            }
+            if (hero.getupanddown2() != null) {
+                hero.getupanddown2().play();
+            }
+            if (hero.getgoUp() != null) {
+                hero.getgoUp().play();
+            }
+        }
         for (int i = 0; i < orcs.size(); i++) {
             if (orcs.get(i).getIsVisible()) {
                 orcs.get(i).getTimeline2().play();
@@ -153,8 +170,21 @@ public class Game implements Initializable {
 
     @FXML
     public void pause(MouseEvent event) {
+        heroCollision = 1;
         hero.getxMovementTimeline().pause();
         hero.getyMovementTimeline().pause();
+        if (hero.getisFlying()) {
+            if (hero.getupanddown() != null) {
+                hero.getupanddown().pause();
+            }
+            if (hero.getupanddown2() != null) {
+                hero.getupanddown2().pause();
+            }
+            if (hero.getgoUp() != null) {
+                hero.getgoUp().pause();
+            }
+        }
+
         for (int i = 0; i < orcs.size(); i++) {
             if (orcs.get(i).getTimeline2() != null) {
                 orcs.get(i).getTimeline2().pause();
@@ -188,6 +218,11 @@ public class Game implements Initializable {
         if (hero.getweapon2Level() != 0) {
             hero.setcurrentWeapon(2);
         }
+    }
+
+    @FXML
+    void onFlyClick(MouseEvent event) {
+        hero.useJetPack(fly);
     }
 
 
@@ -228,7 +263,7 @@ public class Game implements Initializable {
             //display alert that game has been saved
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Game Saved");
-            alert.setHeaderText("Game Saved Successfully with filename as " + fileNamestr);
+            alert.setHeaderText("Game Saved Successfully with filename as " + fileNamestr + ".ser");
             alert.showAndWait();
 
         } finally {
@@ -513,6 +548,7 @@ public class Game implements Initializable {
 
                 coins -= 1;
                 timesRevived++;
+                hero.getJetpack().setVisible(false);
                 hero.getxMovementTimeline().play();
                 hero.getyMovementTimeline().play();
                 for (int i = 0; i < orcs.size(); i++) {
@@ -575,6 +611,17 @@ public class Game implements Initializable {
         reviveGroup.setVisible(true);
         reviveGroup.setDisable(false);
         reviveGroup.toFront();
+        if (hero.getisFlying()) {
+            if (hero.getupanddown() != null) {
+                hero.getupanddown().stop();
+            }
+            if (hero.getupanddown2() != null) {
+                hero.getupanddown2().stop();
+            }
+            if (hero.getgoUp() != null) {
+                hero.getgoUp().stop();
+            }
+        }
         for (int i = 0; i < orcs.size(); i++) {
             if (orcs.get(i).getTimeline2() != null) {
                 orcs.get(i).getTimeline2().pause();
@@ -696,6 +743,15 @@ public class Game implements Initializable {
         timeline = new Timeline(new KeyFrame(Duration.millis(6), e -> {
             coinLabel.setText("" + coins);
             movesLabel.setText("Moves: " + moves);
+            if (!hero.getisFlying()) {
+                if (coins >= 5) {
+                    fly.setDisable(false);
+                    fly.setOpacity(1);
+                } else {
+                    fly.setDisable(true);
+                    fly.setOpacity(0.25);
+                }
+            }
             if (hero.getweapon1Level() == 1) {
                 knifeLevelText.setText("1");
                 knifeGroup.setOpacity(1);
@@ -728,6 +784,8 @@ public class Game implements Initializable {
                 hero.getyMovementTimeline().stop();
                 timeline.stop();
                 temporary.play();
+                fly.setDisable(true);
+                fly.setOpacity(0.25);
                 reviveScreen();
 
             }
@@ -763,6 +821,9 @@ public class Game implements Initializable {
 
                             if (gameObjects.get(i) instanceof TNT) {
                                 ((TNT) gameObjects.get(i)).moveAllTNTcomponents(-2);
+                            }
+                            if (gameObjects.get(i) instanceof Hero) {
+                                ((Hero) gameObjects.get(i)).moveHeroJetpack(-2);
                             }
 
                         }
