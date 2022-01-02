@@ -110,10 +110,12 @@ public class Controller implements Initializable {
         scene.getRoot().requestFocus();
         stage.setScene(scene);
         stage.show();
-        //change the song of the media
-        Settings.setMediaPlayer("willherodrums_1.mp3");
-        Settings.getMediaPlayer().setVolume(0.5);
-        Settings.getMediaPlayer().play();
+        //change the song of the media if media is playing
+        if (Settings.getMediaPlayer().getStatus() == javafx.scene.media.MediaPlayer.Status.PLAYING) {
+            Settings.setMediaPlayer("willherodrums_1.mp3");
+            Settings.getMediaPlayer().setVolume(0.5);
+            Settings.getMediaPlayer().play();
+        }
 
     }
 
@@ -157,10 +159,12 @@ public class Controller implements Initializable {
             scene.getRoot().requestFocus();
             stage.setScene(scene);
             stage.show();
-            //change the song of the media
-            Settings.setMediaPlayer("willherodrums_1.mp3");
-            Settings.getMediaPlayer().setVolume(0.5);
-            Settings.getMediaPlayer().play();
+            //change the song of the media if media is playing
+            if (Settings.getMediaPlayer().getStatus() == javafx.scene.media.MediaPlayer.Status.PLAYING) {
+                Settings.setMediaPlayer("willherodrums_1.mp3");
+                Settings.getMediaPlayer().setVolume(0.5);
+                Settings.getMediaPlayer().play();
+            }
         } else {
             System.out.println("No game selected");
         }

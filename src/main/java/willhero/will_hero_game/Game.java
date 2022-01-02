@@ -101,9 +101,11 @@ public class Game implements Initializable {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
-        Settings.getMediaPlayer().stop();
-        Settings.setMediaPlayer("GameMusic.mp3");
-        Settings.getMediaPlayer().play();
+        if (Settings.getMediaPlayer().getStatus() == javafx.scene.media.MediaPlayer.Status.PLAYING) {
+            Settings.getMediaPlayer().stop();
+            Settings.setMediaPlayer("GameMusic.mp3");
+            Settings.getMediaPlayer().play();
+        }
 
     }
 
