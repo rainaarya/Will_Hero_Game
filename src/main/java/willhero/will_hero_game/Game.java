@@ -521,6 +521,7 @@ public class Game implements Initializable {
                 while (loop) {
                     if (prevIsland.getImageView().getBoundsInParent().getMinX() < hero.getImageView().getBoundsInParent().getMinX()) {
                         hero.getImageView().setX(hero.getImageView().getX() - 1);
+                        hero.getJetpack().setX(hero.getJetpack().getX() - 1);
                         hero.setXY((float) hero.getImageView().getX(), (float) hero.getImageView().getY());
                         amttraveled++;
                     } else {
@@ -531,6 +532,7 @@ public class Game implements Initializable {
                     }
                 }
                 hero.getImageView().setY(-80);
+                hero.getJetpack().setY(-80);
                 hero.setXY((float) hero.getImageView().getX(), (float) hero.getImageView().getY());
 
 
@@ -542,10 +544,12 @@ public class Game implements Initializable {
                     if (gameObjects.get(i) instanceof TNT) {
                         ((TNT) gameObjects.get(i)).moveAllTNTcomponents(amttraveled); //check and pls serialise this !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                     }
+                    if (gameObjects.get(i) instanceof Hero) {
+                        ((Hero) gameObjects.get(i)).moveHeroJetpack(amttraveled);
+                    }
                     gameObjects.get(i).setLayoutXY((float) gameObjects.get(i).getImageView().getLayoutX(), (float) gameObjects.get(i).getImageView().getLayoutY());
 
                 }
-
                 coins -= 1;
                 timesRevived++;
                 hero.getJetpack().setVisible(false);
