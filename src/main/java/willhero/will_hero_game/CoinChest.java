@@ -9,7 +9,6 @@ public class CoinChest extends Chest {
 
     public CoinChest(float x, float y) {
         super(x, y, "coinchest.png");
-        setObjectType("CoinChest");
     }
 
 

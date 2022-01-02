@@ -112,8 +112,6 @@ public class TNT extends GameObjects {
         imageView.setFitWidth(41);
         imageView.setPreserveRatio(true);
         circlePositionandRadius = new float[3];
-
-        setObjectType("TNT");
     }
 
     @Override

@@ -35,7 +35,6 @@ public class ThrowingKnife extends GameObjects {
         imageView.setFitWidth(40);
         imageView.setPreserveRatio(true);
         imageView.setVisible(false);
-        setObjectType("ThrowingKnife");
     }
 
     @Override

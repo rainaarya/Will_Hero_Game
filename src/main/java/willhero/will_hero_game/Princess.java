@@ -31,7 +31,6 @@ public class Princess extends GameObjects {
         imageView.setLayoutY(y);
         imageView.setFitWidth(41);
         imageView.setPreserveRatio(true);
-        setObjectType("Princess");
     }
 
     @Override

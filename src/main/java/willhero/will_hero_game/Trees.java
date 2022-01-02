@@ -38,7 +38,6 @@ public class Trees extends GameObjects {
         imageView.setLayoutY(y);
         imageView.setFitHeight(60);
         imageView.setPreserveRatio(true);
-        setObjectType("Trees");
     }
 
     @Override

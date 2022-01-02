@@ -123,7 +123,6 @@ public class Hero extends GameObjects {
         imageView.setLayoutY(y);
         imageView.setFitWidth(37);
         imageView.setPreserveRatio(true);
-        setObjectType("Hero");
     }
 
     @Override

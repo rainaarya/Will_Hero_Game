@@ -38,7 +38,6 @@ public class Cloud extends GameObjects {
         imageView.setLayoutY(y);
         imageView.setFitHeight(70);
         imageView.setPreserveRatio(true);
-        setObjectType("Cloud");
     }
 
     @Override

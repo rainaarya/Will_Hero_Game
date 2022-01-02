@@ -9,7 +9,6 @@ import java.io.Serializable;
 public abstract class GameObjects implements Serializable {
     private float [] position;
     private float [] coordinates;
-    private String objectType;
 
     public GameObjects(float x, float y) {
         position = new float[2];
@@ -18,7 +17,6 @@ public abstract class GameObjects implements Serializable {
         position[1] = y;
         coordinates[0] = 0;
         coordinates[1] = 0;
-
     }
 
     public GameObjects(float [] positionArr) {
@@ -34,8 +32,6 @@ public abstract class GameObjects implements Serializable {
     public float getLayoutY() {return position[1];}
     public float getCoordinatesX() {return coordinates[0];}
     public float getCoordinatesY() {return coordinates[1];}
-    public String getObjectType() {return objectType;}
-    public void setObjectType(String p_type) {this.objectType = p_type;}
     public void setLayoutXY(float x,float y) {
         this.position[0] = x;
         this.position[1] = y;

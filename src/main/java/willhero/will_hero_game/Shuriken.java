@@ -58,7 +58,6 @@ public class Shuriken extends GameObjects {
         rotateTransition2.setCycleCount(1);
         rotateTransition2.setAutoReverse(true);
 
-        setObjectType("Shuriken");
     }
 
     @Override

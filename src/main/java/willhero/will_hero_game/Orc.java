@@ -61,7 +61,6 @@ public class Orc extends GameObjects {
         imageView.setFitWidth(41);
         imageView.setPreserveRatio(true);
         isVisible = true;
-        setObjectType("Orc");
     }
 
     @Override

@@ -38,7 +38,6 @@ public class Island extends GameObjects {
         imageView.setLayoutY(y);
         imageView.setFitWidth(200);
         imageView.setPreserveRatio(true);
-        setObjectType("Island");
         mediaPlayer = new MediaPlayer(new Media(getClass().getResource("jump.mp3").toString()));
         mediaPlayer.setOnEndOfMedia(new Runnable() {
             public void run() {

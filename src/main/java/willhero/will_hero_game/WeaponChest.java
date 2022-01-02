@@ -15,7 +15,6 @@ public class WeaponChest extends Chest {
 
     public WeaponChest(float x, float y) {
         super(x, y, "weaponchest.png");
-        setObjectType("WeaponChest");
     }
 
 
