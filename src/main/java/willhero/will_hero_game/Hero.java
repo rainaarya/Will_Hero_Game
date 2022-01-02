@@ -32,6 +32,7 @@ public class Hero extends GameObjects {
     public ImageView getImageView() {
         return imageView;
     }
+
     public ImageView getJetpack() {
         return jetpack;
     }
@@ -101,9 +102,11 @@ public class Hero extends GameObjects {
     public TranslateTransition getupanddown() {
         return upanddown;
     }
+
     public TranslateTransition getupanddown2() {
         return upanddown2;
     }
+
     public Timeline getgoUp() {
         return goUp;
     }
@@ -143,9 +146,11 @@ public class Hero extends GameObjects {
         jetpack.setFitWidth(getImageView().getFitWidth());
         jetpack.setPreserveRatio(true);
         //place jetpack below the hero
-        jetpack.setLayoutY(getImageView().getBoundsInParent().getMaxY());
+        jetpack.setLayoutY(getImageView().getLayoutY() + getImageView().getBoundsInParent().getHeight());
+        jetpack.setY(getImageView().getY());
         //place jetpack in the middle of the hero
-        jetpack.setLayoutX(getImageView().getBoundsInParent().getMinX() + getImageView().getFitWidth() / 2 - jetpack.getFitWidth() / 2);
+        jetpack.setLayoutX(getImageView().getLayoutX() + getImageView().getFitWidth() / 2 - jetpack.getFitWidth() / 2);
+        jetpack.setX(getImageView().getX());
         //add jetpack to the game
         jetpack.setVisible(false);
         gamePane.getChildren().add(jetpack);
@@ -187,6 +192,10 @@ public class Hero extends GameObjects {
         xMovementTimeline = new Timeline(new KeyFrame(Duration.millis(9), e -> {
 
             imageView.setX(imageView.getX() + 10);
+            //if ymovement is not playing, then play it
+            if (!yMovementTimeline.getStatus().equals(Animation.Status.RUNNING)) {
+                setXY((float) imageView.getX(), (float) imageView.getY());
+            }
             jetpack.setX(jetpack.getX() + 10);
             //System.out.println(imageView.getX() + " " + imageView.getY());
             //System.out.println("Layout " + imageView.getLayoutX() + ", " + imageView.getLayoutY());
@@ -241,13 +250,13 @@ public class Hero extends GameObjects {
         if (yMovementTimeline != null) {
             yMovementTimeline.stop();
         }
-        if(upanddown != null){
+        if (upanddown != null) {
             upanddown.stop();
         }
-        if(upanddown2 != null){
+        if (upanddown2 != null) {
             upanddown2.stop();
         }
-        if(goUp != null){
+        if (goUp != null) {
             goUp.stop();
         }
         gamePane.getChildren().remove(jetpack);

@@ -282,6 +282,9 @@ public class Game implements Initializable {
         moves = gameInfo.get(0);
         coins = gameInfo.get(1);
         heroCollision = gameInfo.get(2);
+        if (heroCollision == 1) {
+            heroCollision = 0;
+        }
         timesRevived = gameInfo.get(3);
 
         gameObjects = deserialiseHelper.regenerateGameObjects();
@@ -534,7 +537,6 @@ public class Game implements Initializable {
                 hero.getImageView().setY(-80);
                 hero.getJetpack().setY(-80);
                 hero.setXY((float) hero.getImageView().getX(), (float) hero.getImageView().getY());
-
 
                 heroCollision = 0;
 
