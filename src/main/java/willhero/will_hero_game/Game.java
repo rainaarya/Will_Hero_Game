@@ -500,11 +500,12 @@ public class Game implements Initializable {
     }
 
     private void reviveHeroFunction() throws AlreadyRevivedException, InsufficientCoinsException {
-        if (coins >= 1 && timesRevived == 0) {
+        if (coins >= 3 && timesRevived == 0) {
             System.out.println("Lets Revive you!");
             if (collidedObject instanceof Orc) {
                 collidedObject.getImageView().setY(260); //disappear
                 collidedObject.setXY((float) collidedObject.getImageView().getX(), (float) collidedObject.getImageView().getY());
+                coins--; //because when orc dies, it gives 1 coin, so we need to subtract 1 coin
             }
 
             Island prevIsland = null;
@@ -552,7 +553,7 @@ public class Game implements Initializable {
                     gameObjects.get(i).setLayoutXY((float) gameObjects.get(i).getImageView().getLayoutX(), (float) gameObjects.get(i).getImageView().getLayoutY());
 
                 }
-                coins -= 1;
+                coins -= 3;
                 timesRevived++;
                 hero.getJetpack().setVisible(false);
                 hero.getxMovementTimeline().play();
@@ -582,7 +583,7 @@ public class Game implements Initializable {
             if (timesRevived == 1) {
                 throw new AlreadyRevivedException();
             }
-            if (coins < 1) {
+            if (coins < 3) {
                 throw new InsufficientCoinsException();
             }
         }
@@ -606,7 +607,7 @@ public class Game implements Initializable {
             //give an alert
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Insufficient Coins");
-            alert.setHeaderText("You don't have enough coins to revive");
+            alert.setHeaderText("You don't have enough coins to revive. At least 3 coins are required");
             //alert.setContentText(e.getMessage());
             alert.showAndWait();
 

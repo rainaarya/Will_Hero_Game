@@ -8,7 +8,7 @@ import javafx.util.Duration;
 
 public class Boss extends Orc {
 
-    private int health = 20;
+    private int health = 30;
     private transient Timeline timeline0;
     private transient Timeline timeline;
 
