@@ -14,25 +14,18 @@
 * Coordinates of different elements have been accessed and updated to change their positions as the game proceeds to give a seamless and smooth experience.
 
 ## :camera: Screenshots From The Game
-<img src="screenshots/Untitled1.png" height="550">
+<img src="screenshots/Untitled1.png" height="600">
 <br>
+<img src="screenshots/Untitled2.png" width=750">
 <br>
-<img src="screenshots/Untitled2.png" width=550">
+<img src="screenshots/Untitled3.png" width="750">
 <br>
+<img src="screenshots/Untitled4.png" height="600">
 <br>
-<img src="screenshots/Untitled3.png" width="550">
+<img src="screenshots/Untitled5.png" width="750">
 <br>
+<img src="screenshots/Untitled6.png" width="750">
 <br>
-<img src="screenshots/Untitled4.png" height="550">
+<img src="screenshots/Untitled7.png" width="750">
 <br>
-<br>
-<img src="screenshots/Untitled5.png" width="550">
-<br>
-<br>
-<img src="screenshots/Untitled6.png" width="550">
-<br>
-<br>
-<img src="screenshots/Untitled7.png" width="550">
-<br>
-<br>
-<img src="screenshots/Untitled8.png" width="550">
+<img src="screenshots/Untitled8.png" width="750">
