@@ -23,7 +23,7 @@ public class Boss extends Orc {
     Boss(float x, float y) {
         super(x, y);
         getImageView().setFitWidth(100);
-        getImageView().setImage(new Image(getClass().getResourceAsStream("orc1.png")));
+        getImageView().setImage(new Image(getClass().getResourceAsStream("Orc1.png")));
 
     }
 

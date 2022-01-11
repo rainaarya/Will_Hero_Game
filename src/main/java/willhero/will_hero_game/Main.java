@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 
 public class Main extends Application {
@@ -17,6 +18,10 @@ public class Main extends Application {
             stage.setScene(scene);
             stage.getIcons().add(new javafx.scene.image.Image(getClass().getResourceAsStream("Knight.png")));
             stage.show();
+            File folder = new File("src\\main\\savedGames");
+            if (!folder.isDirectory()) {
+                folder.mkdirs();
+            }
         }
         catch(Exception e){
             e.printStackTrace();
